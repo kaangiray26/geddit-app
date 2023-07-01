@@ -1,0 +1,20 @@
+{
+    "manifest_version": 2,
+    "version": "0.1",
+    "name": "Vue.js App",
+    "short_name": "Vue",
+    "icons": [
+        {
+            "src": "/images/50x43.png",
+            "sizes": "50x43",
+            "type": "image/png"
+        }
+    ],
+    "id": "/",
+    "start_url": "/",
+    "description": "description",
+    "orientation": "portrait",
+    "display": "standalone",
+    "background_color": "#FFFFFF",
+    "theme_color": "#FFFFFF"
+}

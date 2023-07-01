@@ -1,0 +1,70 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
+
+html {
+    margin: 0;
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+    background-color: black;
+}
+
+#app {
+    height: 100%;
+}
+
+.complete-view {
+    height: 100vh;
+    /* Fallback for browsers that do not support Custom Properties */
+    height: calc(var(--vh, 1vh) * 100);
+}
+
+.side-view {
+    flex: 1 1 auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.content-view {
+    flex: 1 1 auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.player-view {
+    flex: 0 1;
+}
+
+.theme-shadow {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.subreddit {
+    color: crimson;
+}
+
+.cover {
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+}
+
+.list-group-item {
+    background-color: #1C1C1C;
+}
+
+.btn-touch {
+    border: 0 !important;
+}
+
+.btn-touch:active,
+.btn-touch-border:active {
+    color: firebrick !important;
+}
+
+.downvote {
+    transform: rotate(180deg);
+}
