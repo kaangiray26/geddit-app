@@ -1,6 +1,6 @@
 <div align="center">
-    <a href="https://github.com/kaangiray26/endless">
-        <img src="https://raw.githubusercontent.com/kaangiray26/endless/main/src/public/images/logo_compressed.png" alt="Endless Logo" width="80" height="80">
+    <a href="https://github.com/kaangiray26/geddit-app">
+        <img src="https://raw.githubusercontent.com/kaangiray26/geddit-app/main/src/public/images/logo_compressed.png" alt="Endless Logo" width="80" height="80">
     </a>
     <h1 align="center">Geddit</h1>
     <p align="center">
