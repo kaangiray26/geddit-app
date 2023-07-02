@@ -11,17 +11,18 @@
     "@capacitor/android": "^5.1.0",
     "@capacitor/app": "^5.0.5",
     "@capacitor/core": "^5.1.0",
-    "@popperjs/core": "^2.11.6",
+    "@popperjs/core": "^2.11.8",
     "@vueuse/core": "^10.2.1",
-    "bootstrap": "^5.3.0-alpha1",
+    "bootstrap": "^5.3.0",
     "dashjs": "^4.7.1",
-    "vue": "^3.2.45",
-    "vue-router": "^4.1.6"
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.2"
   },
   "devDependencies": {
+    "@capacitor/assets": "^2.0.4",
     "@capacitor/cli": "^5.1.0",
-    "@vitejs/plugin-vue": "^4.0.0",
-    "sass": "^1.57.1",
-    "vite": "^4.0.3"
+    "@vitejs/plugin-vue": "^4.2.3",
+    "sass": "^1.63.6",
+    "vite": "^4.3.9"
   }
 }
