@@ -2,13 +2,13 @@
     <div class="bg-dark">
         <ul class="nav nav-pills nav-fill">
             <li class="nav-item">
-                <router-link to="/" class="nav-link text-white fw-bold" aria-current="page">
+                <button class="nav-link text-white fw-bold" aria-current="page" @click="go_home">
                     <div class="d-flex flex-column align-items-center">
                         <h5 class="py-1 m-0 bi"
                             :class="{ 'bi-house-door-fill': path == '/', 'bi-house-door': path != '/' }">
                         </h5>
                     </div>
-                </router-link>
+                </button>
             </li>
             <li class="nav-item">
                 <router-link to="/search" class="nav-link text-white fw-bold" aria-current="page">
@@ -56,4 +56,18 @@ App.addListener('backButton', () => {
         router.back();
     }
 });
+
+async function go_home() {
+    console.log(path.value);
+    if (path.value == '/') {
+        // Scroll to top
+        let view = document.querySelector('.content-view');
+        view.scroll({
+            top: 0,
+            behavior: 'smooth'
+        })
+        return
+    }
+    router.push('/');
+}
 </script>
