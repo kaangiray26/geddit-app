@@ -13,19 +13,57 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, computed, onBeforeMount, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { App } from '@capacitor/app';
 import ImageViewer from './ImageViewer.vue';
 import Toolbar from './Toolbar.vue';
 
 const router = useRouter();
 
 const image_viewer = ref(null);
+const path = computed(() => router.currentRoute.value.path);
+
+async function back_handler() {
+    // Check if the image viewer is open
+    if (await image_viewer.value.is_open()) {
+        image_viewer.value.hide();
+        return;
+    }
+
+    // Check if video player is open
+    if (document.fullscreenElement?.nodeName === "VIDEO") {
+        document.exitFullscreen();
+        return;
+    }
+
+    // Exit if we are on the home page
+    if (path.value == '/') {
+        App.exitApp();
+        return
+    }
+
+    // Otherwise, go back
+    router.back();
+}
 
 onBeforeMount(() => {
+    App.removeAllListeners().then(
+        App.addListener('backButton', back_handler)
+    )
+
     // Add event listeners for image viewer
     window.addEventListener("image_viewer", (event) => {
         image_viewer.value.handle(event.detail);
+    })
+})
+
+onMounted(() => {
+    // Scroll to top
+    let view = document.querySelector('.content-view');
+    view.scroll({
+        top: 0,
+        behavior: 'smooth'
     })
 })
 </script>

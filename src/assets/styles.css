@@ -4,13 +4,13 @@ html {
     margin: 0;
     height: 100%;
     scroll-behavior: smooth;
-
+    user-select: none;
 }
 
 body {
     margin: 0;
     height: 100%;
-    background-color: #1C1B20;
+    background-color: black;
 }
 
 #app {
@@ -58,10 +58,10 @@ body {
     height: auto;
 }
 
-.img-contain {
-    object-fit: contain;
-    width: 100%;
+.cover-scale {
+    max-width: 100%;
     height: auto;
+    object-fit: cover;
 }
 
 .cover-50 {
@@ -71,8 +71,14 @@ body {
     max-height: 50vh;
 }
 
+.contain {
+    object-fit: contain;
+    width: 100%;
+    height: auto;
+}
+
 .background {
-    background-color: #1C1B20;
+    background-color: black;
 }
 
 .foreground {
@@ -99,4 +105,21 @@ body {
 .circle {
     border-radius: 50% !important;
     aspect-ratio: 1/1 !important;
+}
+
+.img-placeholder {
+    background-color: #302F34;
+    z-index: 0;
+}
+
+.fade-in {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.25s linear;
+}
+
+.fade-out {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 0.25s, opacity 0.25s linear;
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-dark">
+    <div class="background">
         <ul class="nav nav-pills nav-fill">
             <li class="nav-item">
                 <button class="nav-link text-white fw-bold" aria-current="page" @click="go_home">
@@ -43,19 +43,10 @@
 
 <script setup>
 import { computed } from 'vue';
-import { App } from '@capacitor/app';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const path = computed(() => router.currentRoute.value.path);
-
-App.addListener('backButton', () => {
-    if (path.value == '/') {
-        App.exitApp();
-    } else {
-        router.back();
-    }
-});
 
 async function go_home() {
     console.log(path.value);

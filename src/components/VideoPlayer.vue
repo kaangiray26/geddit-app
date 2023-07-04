@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex cover-all position-relative mb-3">
+    <div class="d-flex cover-50 position-relative bg-dark mb-3" :style="options.style">
         <video ref="video" data-dashjs-player="" class="cover-50" @click="fullscreen" muted loop></video>
         <div class="position-absolute bottom-0 start-0 m-2" @click="mute">
             <div class="position-relative">
@@ -84,11 +84,17 @@ onMounted(() => {
 
     // Events for fullscreen
     video.value.addEventListener('fullscreenchange', () => {
+        // Set fullscreen options
         if (document.fullscreenElement?.nodeName === "VIDEO") {
+            console.log("Adding fullscreen options.");
+            video.value.className = 'contain';
             video.value.setAttribute('controls', '');
             is_fullscreen.value = true;
             return
         }
+
+        // Remove fullscreen options
+        video.value.className = 'cover-50';
         video.value.removeAttribute('controls');
         is_fullscreen.value = false;
     })

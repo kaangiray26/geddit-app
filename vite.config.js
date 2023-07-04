@@ -16,7 +16,8 @@ export default defineConfig({
     resolve: {
         alias: {
             '@': fileURLToPath(new URL('./src', import.meta.url)),
-            '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap')
+            'bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
+            'hammerjs': path.resolve(__dirname, 'node_modules/hammerjs')
         }
     }
 })

@@ -10,8 +10,8 @@
                 </div>
             </div>
             <div v-if="type == 'image'">
-                <div class="cover-all mb-3">
-                    <img :src="image_src" class="cover-50" @click="fullscreen" loading="lazy">
+                <div class="d-flex cover-50 position-relative bg-dark mb-3" :style="image_options.style">
+                    <img :src="image_options.preview" class="position-relative cover-50" @click="fullscreen" loading="lazy">
                 </div>
             </div>
             <div v-if="type == 'video'">
@@ -19,17 +19,24 @@
             </div>
         </div>
         <div class="d-flex flex-column p-3 py-0 mb-3">
-            <div class="d-flex">
+            <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex">
-                    <small class="bi bi-arrow-up text-light me-1"></small>
-                    <small class="text-light">{{ format_num(data.score) }}</small>
-                </div>
-                <div class="d-flex mx-2">
-                    <small class="text-light">●</small>
+                    <div class="d-flex">
+                        <small class="bi bi-arrow-up text-light me-1"></small>
+                        <small class="text-light">{{ format_num(data.score) }}</small>
+                    </div>
+                    <div class="d-flex mx-2">
+                        <small class="text-light">●</small>
+                    </div>
+                    <div class="d-flex">
+                        <small class="bi bi-chat-fill text-light me-1"></small>
+                        <small class="text-light">{{ format_num(data.num_comments) }}</small>
+                    </div>
                 </div>
                 <div class="d-flex">
-                    <small class="bi bi-chat-fill text-light me-1"></small>
-                    <small class="text-light">{{ format_num(data.num_comments) }}</small>
+                    <button class="btn btn-touch text-white py-0" @click="open_post">
+                        <span class="bi bi-arrow-right"></span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -49,43 +56,70 @@ const props = defineProps({
     }
 })
 
-const video_player = ref(null);
 const type = ref("text");
 const image_src = ref(null);
+const image_options = ref({});
+
 const video_options = ref({});
+const video_player = ref(null);
 
 async function get_sources() {
     if (props.data.is_self) return;
 
     // video
     if (props.data.domain == "v.redd.it") {
-        type.value = "video";
         video_options.value = {
             src: props.data.secure_media.reddit_video.dash_url,
             poster: props.data.preview.images[0].source.url.replaceAll("&amp;", "&"),
             duration: props.data.secure_media.reddit_video.duration,
+            style: {
+                'aspect-ratio': `${props.data.secure_media.reddit_video.width} / ${props.data.secure_media.reddit_video.height}`
+            }
         }
+
+        type.value = "video";
         return
     }
 
     // image
     if (props.data.domain == "i.redd.it") {
+        image_options.value = {
+            src: props.data.url,
+            preview: props.data.preview.images[0].resolutions.pop().url.replaceAll("&amp;", "&"),
+            style: {
+                'aspect-ratio': `${props.data.preview.images[0].resolutions.slice(-1)[0].width} / ${props.data.preview.images[0].resolutions.slice(-1)[0].height}`
+            }
+        }
+
         type.value = "image";
-        image_src.value = props.data.url;
         return
     }
 
     // Gallery
     if (props.data.gallery_data) {
+        image_options.value = {
+            src: `https://i.redd.it/${props.data.gallery_data.items[0].media_id}.jpg`,
+            preview: props.data.preview.images[0].resolutions.pop().url.replaceAll("&amp;", "&"),
+            style: {
+                'aspect-ratio': `${props.data.preview.images[0].source.width} / ${props.data.preview.images[0].source.height}`
+            }
+        }
+
         type.value = "image";
-        image_src.value = `https://i.redd.it/${props.data.gallery_data.items[0].media_id}.jpg`;
         return
     }
 
     // Link
     if (props.data.preview) {
+        image_options.value = {
+            src: props.data.preview.images[0].source.url.replaceAll("&amp;", "&"),
+            preview: props.data.preview.images[0].resolutions.pop().url.replaceAll("&amp;", "&"),
+            style: {
+                'aspect-ratio': `${props.data.preview.images[0].source.width} / ${props.data.preview.images[0].source.height}`
+            }
+        }
+
         type.value = "image";
-        image_src.value = props.data.preview.images[0].source.url.replaceAll("&amp;", "&");
     }
 
     // No source
@@ -101,7 +135,7 @@ function format_num(points) {
 
 async function fullscreen() {
     open_image_viewer({
-        src: image_src.value,
+        src: image_options.value.src,
         title: props.data.title,
         num_comments: props.data.num_comments
     });
