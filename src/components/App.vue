@@ -26,7 +26,7 @@ const path = computed(() => router.currentRoute.value.path);
 
 async function back_handler() {
     // Check if the image viewer is open
-    if (await image_viewer.value.is_open()) {
+    if (image_viewer.value.is_open()) {
         image_viewer.value.hide();
         return;
     }

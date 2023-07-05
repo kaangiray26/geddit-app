@@ -1,10 +1,10 @@
 <template>
-    <div class="d-flex cover-50 position-relative bg-dark mb-3" :style="options.style">
+    <div class="d-flex cover-50 position-relative bg-dark" :style="options.style">
         <video ref="video" data-dashjs-player="" class="cover-50" @click="fullscreen" muted loop></video>
         <div class="position-absolute bottom-0 start-0 m-2" @click="mute">
             <div class="position-relative">
                 <div class="position-absolute bg-dark cover-all opacity-75 circle"></div>
-                <button class="position-relative btn btn-touch text-white circle bi px-2 py-1"
+                <button class="position-relative btn btn-touch text-4 circle bi px-2 py-1"
                     :class="{ 'bi-volume-mute-fill': muted, 'bi-volume-up-fill': !muted }">
                 </button>
             </div>
@@ -12,7 +12,7 @@
         <div class="position-absolute bottom-0 end-0 m-2">
             <div class="d-flex position-relative">
                 <div class="position-absolute bg-dark cover-all opacity-75 rounded"></div>
-                <small class="position-relative text-white px-1">{{ remaining }}</small>
+                <small class="position-relative text-4 px-1">{{ remaining }}</small>
             </div>
         </div>
     </div>
@@ -46,6 +46,7 @@ async function play() {
 }
 
 async function reset() {
+    video.value.muted = true;
     video.value.currentTime = 0;
     video.value.pause();
 }
@@ -86,7 +87,6 @@ onMounted(() => {
     video.value.addEventListener('fullscreenchange', () => {
         // Set fullscreen options
         if (document.fullscreenElement?.nodeName === "VIDEO") {
-            console.log("Adding fullscreen options.");
             video.value.className = 'contain';
             video.value.setAttribute('controls', '');
             is_fullscreen.value = true;

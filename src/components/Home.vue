@@ -1,16 +1,14 @@
 <template>
     <ul class="list-group border-0 pt-0 mt-3">
-        <Post v-for="post in posts" :data="post" />
+        <Item v-for="post in posts" :data="post" />
     </ul>
 </template>
 
 <script setup>
 import { ref, onBeforeMount, onActivated } from 'vue';
-import { useRouter } from 'vue-router';
 import { Geddit } from "/js/geddit.js";
-import Post from './CompactPost.vue';
+import Item from '../types/Item.vue';
 
-const router = useRouter();
 const geddit = new Geddit();
 
 const posts = ref([]);
@@ -54,5 +52,13 @@ onBeforeMount(() => {
             scroll();
         }
     })
+})
+
+onActivated(() => {
+    let pages = JSON.parse(localStorage.getItem("pages"));
+    let this_page = pages.find(page => page.path == window.location.pathname);
+    if (this_page) {
+        document.querySelector('.content-view').scrollTop = parseInt(this_page.scroll);
+    }
 })
 </script>

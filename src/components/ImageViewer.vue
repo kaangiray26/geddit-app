@@ -6,19 +6,19 @@
                     <div class="d-flex justify-content-center align-items-center cover-all position-relative">
                         <div class="position-relative">
                             <img ref="image" :src="data.src" class="contain position-relative"
-                                :style="{ left: left + 'px', top: top + 'px', scale: scale, transform: transform_scale + ' ' + transform_translate }">
+                                :style="{ 'left': left + 'px', 'top': top + 'px', 'scale': scale, 'transform': transform_scale + ' ' + transform_translate }">
                         </div>
                         <div class="w-100 position-absolute bottom-0 start-0 p-2"
                             :class="{ 'fade-in': controls_visible, 'fade-out': !controls_visible }">
                             <div class="d-flex position-relative">
-                                <div class="d-flex position-absolute bg-dark cover-all opacity-75 rounded"></div>
+                                <div class="d-flex position-absolute background cover-all rounded"></div>
                                 <div class="d-flex flex-column position-relative p-2">
-                                    <h6 class="text-white">{{ data.title }}</h6>
+                                    <h6 class="text-4">{{ data.title }}</h6>
                                     <div class="d-flex justify-content-start align-items-center">
-                                        <button class="btn btn-touch-border text-white me-2" @click="hide">
+                                        <button class="btn btn-touch-border text-4 me-2" @click="hide">
                                             <span class="bi bi-arrow-return-left"></span>
                                         </button>
-                                        <button class="btn btn-touch-border text-white me-2" @click="comments">
+                                        <button class="btn btn-touch-border text-4 me-2" @click="comments">
                                             <span class="bi bi-chat-fill me-1"></span>
                                             <span>{{ format_num(data.num_comments) }}</span>
                                         </button>
@@ -109,15 +109,15 @@ function format_num(points) {
 }
 
 async function comments() {
-    await hide();
     router.push("/post/" + data.value.id);
+    hide();
 }
 
 async function download() {
     //
 }
 
-async function is_open() {
+function is_open() {
     return modal.value._isShown;
 }
 

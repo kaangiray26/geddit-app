@@ -1,0 +1,57 @@
+<template>
+    <li class="list-group-item foreground border-0 rounded m-3 mt-0 p-0">
+        <div class="d-flex justify-content-between align-items-center p-3">
+            <div class="d-flex align-items-center">
+                <div>
+                    <img :src="get_icon_src()" class="snoovatar-icon me-2">
+                </div>
+                <div class="d-flex flex-column">
+                    <div class="d-flex align-items-center">
+                        <h6 class="text-4 m-0 me-2">{{ data.name }}</h6>
+                        <img v-if="data.is_gold" src="/images/premium.svg" class="icon-small">
+                    </div>
+                    <small class="text-4">{{ format_karma() }}</small>
+                    <small v-if="data.is_suspended" class="text-4">suspended</small>
+                </div>
+            </div>
+            <div class="d-flex">
+                <button class="btn btn-touch text-4" @click="open_user">
+                    <span class="bi bi-arrow-right"></span>
+                </button>
+            </div>
+        </div>
+    </li>
+</template>
+
+<script setup>
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const props = defineProps({
+    data: {
+        type: Object,
+        required: true
+    }
+})
+
+function get_icon_src() {
+    if (props.data.icon_img) {
+        return props.data.icon_img.split("?")[0];
+    }
+    return "/images/user.svg";
+}
+
+function format_karma() {
+    if (!props.data.link_karma) {
+        return null;
+    }
+
+    let karma = props.data.link_karma + props.data.comment_karma;
+    return karma.toLocaleString() + " karma";
+}
+
+async function open_user() {
+    router.push("/u/" + props.data.name)
+}
+</script>

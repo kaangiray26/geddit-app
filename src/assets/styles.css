@@ -1,4 +1,10 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
+@import url("./nord.css");
+
+:root {
+    --background: black;
+    --foreground: var(--nord0);
+}
 
 html {
     margin: 0;
@@ -10,11 +16,19 @@ html {
 body {
     margin: 0;
     height: 100%;
-    background-color: black;
+    background-color: var(--background);
 }
 
 #app {
     height: 100%;
+}
+
+.background {
+    background-color: var(--background);
+}
+
+.foreground {
+    background-color: var(--foreground);
 }
 
 .complete-view {
@@ -77,14 +91,6 @@ body {
     height: auto;
 }
 
-.background {
-    background-color: black;
-}
-
-.foreground {
-    background-color: #302F34;
-}
-
 .btn-touch {
     border: 0 !important;
 }
@@ -93,9 +99,14 @@ body {
     border: 1px solid #dee2e6 !important;
 }
 
+.btn-touch:hover,
+.btn-touch-border:hover {
+    color: var(--nord11) !important;
+}
+
 .btn-touch:active,
 .btn-touch-border:active {
-    color: firebrick !important;
+    color: var(--nord11) !important;
 }
 
 .downvote {
@@ -122,4 +133,108 @@ body {
     visibility: hidden;
     opacity: 0;
     transition: visibility 0s 0.25s, opacity 0.25s linear;
+}
+
+.vh-25 {
+    max-height: 25vh;
+}
+
+.text-post>*:nth-last-child(1) {
+    margin: 0;
+}
+
+.progress {
+    height: 0.25rem;
+    background-color: black;
+}
+
+.progress-bar {
+    animation: loading 1s linear reverse infinite;
+    background-color: firebrick;
+}
+
+@keyframes loading {
+    0% {
+        width: 25%;
+        margin-left: -25%;
+    }
+
+    100% {
+        width: 25%;
+        margin-left: 100%;
+    }
+}
+
+.text-highlight {
+    color: var(--highlight);
+}
+
+.snoovatar {
+    width: 64px;
+    height: auto;
+    object-fit: cover;
+    border: 0.25rem solid var(--nord6);
+    border-radius: 50%;
+    background-color: var(--nord6);
+    aspect-ratio: 1/1 !important;
+}
+
+.snoovatar-icon {
+    width: 36px;
+    height: auto;
+    object-fit: cover;
+    border: 0.25rem solid var(--nord6);
+    border-radius: 50%;
+    background-color: var(--nord6);
+    aspect-ratio: 1/1 !important;
+}
+
+.banner {
+    min-height: 64px;
+}
+
+.search-bar {
+    color: var(--nord4) !important;
+    background-color: var(--nord1) !important;
+    border: none;
+    box-shadow: unset !important;
+}
+
+.search-bar::placeholder {
+    color: var(--nord4) !important;
+}
+
+.btn-outline-4 {
+    border: 0.25rem solid var(--nord1) !important;
+}
+
+.icon {
+    width: 36px;
+    height: 36px;
+    aspect-ratio: 1/1 !important;
+    border-radius: 50% !important;
+}
+
+.icon-small {
+    width: 20px;
+    height: 20px;
+    aspect-ratio: 1/1 !important;
+    border-radius: 50% !important;
+}
+
+.min-w-0 {
+    flex: 1;
+    min-width: 0 !important;
+}
+
+.ellipsis {
+    display: grid;
+}
+
+.ellipsis>* {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: calc(100%);
 }

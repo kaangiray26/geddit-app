@@ -6,4 +6,8 @@ import router from '/router'
 import '/scss/styles.scss'
 import '/assets/styles.css'
 
+if (!localStorage.getItem("pages")) {
+    localStorage.setItem("pages", JSON.stringify([]));
+}
+
 createApp(App).use(router).mount('#app');

@@ -2,7 +2,7 @@ class Geddit {
     constructor() {
         this.host = "https://www.reddit.com";
         this.parameters = {
-            limit: 12
+            limit: 12,
         }
     }
 
@@ -13,7 +13,7 @@ class Geddit {
             .then(json => json.data)
             .then(data => ({
                 after: data.after,
-                posts: data.children.map(child => child.data)
+                posts: data.children
             }))
             .catch(err => null);
     }
@@ -25,7 +25,7 @@ class Geddit {
             .then(json => json.data)
             .then(data => ({
                 after: data.after,
-                posts: data.children.map(child => child.data)
+                posts: data.children
             }))
             .catch(err => null);
     }
@@ -37,7 +37,7 @@ class Geddit {
             .then(json => json.data)
             .then(data => ({
                 after: data.after,
-                posts: data.children.map(child => child.data)
+                posts: data.children
             }))
             .catch(err => null);
     }
@@ -49,7 +49,7 @@ class Geddit {
             .then(json => json.data)
             .then(data => ({
                 after: data.after,
-                posts: data.children.map(child => child.data)
+                posts: data.children
             }))
             .catch(err => null);
     }
@@ -61,7 +61,7 @@ class Geddit {
             .then(json => json.data)
             .then(data => ({
                 after: data.after,
-                posts: data.children.map(child => child.data)
+                posts: data.children
             }))
             .catch(err => null);
     }
@@ -73,7 +73,7 @@ class Geddit {
             .then(json => json.data)
             .then(data => ({
                 after: data.after,
-                posts: data.children.map(child => child.data)
+                posts: data.children
             }))
             .catch(err => null);
     }
@@ -84,7 +84,7 @@ class Geddit {
             .then(json => json.data)
             .then(data => ({
                 after: data.after,
-                posts: data.children.map(child => child.data)
+                posts: data.children
             }))
             .catch(err => null);
     }
@@ -95,7 +95,7 @@ class Geddit {
             .then(json => json.data)
             .then(data => ({
                 after: data.after,
-                posts: data.children.map(child => child.data)
+                posts: data.children
             }))
             .catch(err => null);
     }
@@ -106,7 +106,7 @@ class Geddit {
             .then(json => json.data)
             .then(data => ({
                 after: data.after,
-                posts: data.children.map(child => child.data)
+                posts: data.children
             }))
             .catch(err => null);
     }
@@ -117,7 +117,7 @@ class Geddit {
             .then(json => json.data)
             .then(data => ({
                 after: data.after,
-                posts: data.children.map(child => child.data)
+                posts: data.children
             }))
             .catch(err => null);
     }
@@ -128,7 +128,7 @@ class Geddit {
             .then(json => json.data)
             .then(data => ({
                 after: data.after,
-                posts: data.children.map(child => child.data)
+                posts: data.children
             }))
             .catch(err => null);
     }
@@ -139,7 +139,7 @@ class Geddit {
             .then(json => json.data)
             .then(data => ({
                 after: data.after,
-                posts: data.children.map(child => child.data)
+                posts: data.children
             }))
             .catch(err => null);
     }
@@ -195,7 +195,7 @@ class Geddit {
             .then(json => json.data)
             .then(data => ({
                 after: data.after,
-                subreddits: data.children.map(child => child.data)
+                subreddits: data.children
             }))
             .catch(err => null);
     }
@@ -206,7 +206,7 @@ class Geddit {
             .then(json => json.data)
             .then(data => ({
                 after: data.after,
-                subreddits: data.children.map(child => child.data)
+                subreddits: data.children
             }))
             .catch(err => null);
     }
@@ -217,7 +217,7 @@ class Geddit {
             .then(json => json.data)
             .then(data => ({
                 after: data.after,
-                subreddits: data.children.map(child => child.data)
+                subreddits: data.children
             }))
             .catch(err => null);
     }
@@ -228,7 +228,7 @@ class Geddit {
             .then(json => json.data)
             .then(data => ({
                 after: data.after,
-                subreddits: data.children.map(child => child.data)
+                subreddits: data.children
             }))
             .catch(err => null);
     }
@@ -239,7 +239,7 @@ class Geddit {
             .then(json => json.data)
             .then(data => ({
                 after: data.after,
-                users: data.children.map(child => child.data)
+                users: data.children
             }))
             .catch(err => null);
     }
@@ -250,44 +250,50 @@ class Geddit {
             .then(json => json.data)
             .then(data => ({
                 after: data.after,
-                users: data.children.map(child => child.data)
+                users: data.children
             }))
             .catch(err => null);
     }
 
     async searchSubreddits(query, options = this.parameters) {
         options.q = query;
+        options.include_over_18 = true;
         return await fetch(this.host + "/subreddits/search.json?" + new URLSearchParams(options))
             .then(res => res.json())
             .then(json => json.data)
             .then(data => ({
                 after: data.after,
-                subreddits: data.children.map(child => child.data)
+                subreddits: data.children
             }))
             .catch(err => null);
     }
 
     async searchUsers(query, options = this.parameters) {
         options.q = query;
+        options.include_over_18 = true;
         return await fetch(this.host + "/users/search.json?" + new URLSearchParams(options))
             .then(res => res.json())
             .then(json => json.data)
             .then(data => ({
                 after: data.after,
-                users: data.children.map(child => child.data)
+                users: data.children
             }))
             .catch(err => null);
     }
 
     async searchAll(query, subreddit = null, options = this.parameters) {
         options.q = query;
+        options.include_over_18 = true;
+        options.type = "sr,link,user";
         subreddit = subreddit ? "/r/" + subreddit : "";
         return await fetch(this.host + subreddit + "/search.json?" + new URLSearchParams(options))
             .then(res => res.json())
-            .then(json => json.data)
-            .then(data => ({
-                after: data.after,
-                results: data.children.map(child => child.data)
+            .then(json => Array.isArray(json) ? ({
+                after: json[1].data.after,
+                results: json[0].data.children.concat(json[1].data.children)
+            }) : ({
+                after: json.data.after,
+                results: json.data.children
             }))
             .catch(err => null);
     }
@@ -304,7 +310,7 @@ class Geddit {
             .then(res => res.json())
             .then(json => ({
                 submission: json[0].data.children[0].data,
-                comments: json[1].data.children.map(child => child.data)
+                comments: json[1].data.children
             }))
             .catch(err => null);
     }
@@ -312,7 +318,7 @@ class Geddit {
     async getSubredditComments(subreddit, options = this.parameters) {
         return await fetch(this.host + "/r/" + subreddit + "/comments.json?" + new URLSearchParams(options))
             .then(res => res.json())
-            .then(json => json.data.children.map(child => child.data))
+            .then(json => json.data.children)
             .catch(err => null);
     }
 
@@ -323,17 +329,36 @@ class Geddit {
             .catch(err => null);
     }
 
+    async getUserOverview(username, options = this.parameters) {
+        return await fetch(this.host + "/user/" + username + "/overview.json?" + new URLSearchParams(options))
+            .then(res => res.json())
+            .then(json => json.data)
+            .then(data => ({
+                after: data.after,
+                items: data.children
+            }))
+            .catch(err => null);
+    }
+
     async getUserComments(username, options = this.parameters) {
         return await fetch(this.host + "/user/" + username + "/comments.json?" + new URLSearchParams(options))
             .then(res => res.json())
-            .then(json => json.data.children.map(child => child.data))
+            .then(json => json.data)
+            .then(data => ({
+                after: data.after,
+                items: data.children
+            }))
             .catch(err => null);
     }
 
     async getUserSubmissions(username, options = this.parameters) {
         return await fetch(this.host + "/user/" + username + "/submitted.json?" + new URLSearchParams(options))
             .then(res => res.json())
-            .then(json => json.data.children.map(child => child.data))
+            .then(json => json.data)
+            .then(data => ({
+                after: data.after,
+                items: data.children
+            }))
             .catch(err => null);
     }
 
@@ -347,7 +372,7 @@ class Geddit {
     async getLiveThreadUpdates(id, options = this.parameters) {
         return await fetch(this.host + "/live/" + id + ".json?" + new URLSearchParams(options))
             .then(res => res.json())
-            .then(json => json.data.children.map(child => child.data))
+            .then(json => json.data.children)
             .catch(err => null);
     }
 
@@ -362,14 +387,14 @@ class Geddit {
     async getLiveThreadDiscussions(id, options = this.parameters) {
         return await fetch(this.host + "/live/" + id + "/discussions.json?" + new URLSearchParams(options))
             .then(res => res.json())
-            .then(json => json.data.children.map(child => child.data))
+            .then(json => json.data.children)
             .catch(err => null);
     }
 
     async getLiveThreadsNow(options = this.parameters) {
         return await fetch(this.host + "/live/happening_now.json?" + new URLSearchParams(options))
             .then(res => res.json())
-            .then(json => json.data.children.map(child => child.data))
+            .then(json => json.data.children)
             .catch(err => null);
     }
 }
