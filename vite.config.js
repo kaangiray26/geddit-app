@@ -19,6 +19,7 @@ export default defineConfig({
             'bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
             'hammerjs': path.resolve(__dirname, 'node_modules/hammerjs'),
             'showdown': path.resolve(__dirname, 'node_modules/showdown'),
+            '@capacitor/core': path.resolve(__dirname, 'node_modules/@capacitor/core'),
         }
     }
 })

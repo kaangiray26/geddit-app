@@ -1,0 +1,56 @@
+<template>
+    <div v-if="!post" class="d-flex justify-content-center align-items-center cover-all position-absolute">
+        <div class="d-flex circle bg-6 p-2">
+            <div class="spinner-border text-0" role="status"></div>
+        </div>
+    </div>
+    <div v-else>
+        <FullPost :post="post" />
+        <div class="d-flex flex-column">
+            <div class="foreground p-2">
+                <h6 class="text-6 fw-bold m-0">Comments</h6>
+            </div>
+            <div v-for="comment in comments" class="foreground border-bottom border-secondary p-2">
+                <small class="text-10">{{ comment.data.author }}</small>
+                <div class="text-4 text-post" v-html="markdown(comment.data.body)"></div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script setup>
+import { ref, onBeforeMount } from 'vue';
+import { useRouter } from 'vue-router';
+import FullPost from './FullPost.vue';
+import { Geddit } from "/js/geddit.js";
+import showdown from 'showdown';
+
+const router = useRouter();
+const geddit = new Geddit();
+const converter = new showdown.Converter({
+    simplifiedAutoLink: true,
+});
+
+const post = ref(null);
+const comments = ref([]);
+
+async function setup() {
+    let response = await geddit.getSubmissionComments(router.currentRoute.value.params.id);
+    if (!response) return;
+
+    post.value = response.submission;
+    comments.value = response.comments.slice(0, -1)
+}
+
+function markdown(body) {
+    return converter.makeHtml(body);
+}
+
+onBeforeMount(() => {
+    if (!router.currentRoute.value.params.id) {
+        router.back();
+        return;
+    }
+    setup();
+})
+</script>

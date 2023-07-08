@@ -2,37 +2,26 @@ class Geddit {
     constructor() {
         this.host = "https://www.reddit.com";
         this.parameters = {
-            limit: 12,
+            limit: 25,
+            include_over_18: true,
+        }
+        this.search_params = {
+            limit: 25,
+            include_over_18: true,
+            type: "sr,link,user",
         }
     }
 
-    async getHot(subreddit = null, options = this.parameters) {
-        subreddit = subreddit ? "/r/" + subreddit : "";
-        return await fetch(this.host + subreddit + "/hot.json?" + new URLSearchParams(options))
-            .then(res => res.json())
-            .then(json => json.data)
-            .then(data => ({
-                after: data.after,
-                posts: data.children
-            }))
-            .catch(err => null);
-    }
+    async getSubmissions(sort = null, subreddit = null, options = {}) {
+        let params = {
+            limit: 25,
+            include_over_18: true,
+        }
 
-    async getBest(subreddit = null, options = this.parameters) {
+        sort = sort ? sort : "hot";
         subreddit = subreddit ? "/r/" + subreddit : "";
-        return await fetch(this.host + subreddit + "/best.json?" + new URLSearchParams(options))
-            .then(res => res.json())
-            .then(json => json.data)
-            .then(data => ({
-                after: data.after,
-                posts: data.children
-            }))
-            .catch(err => null);
-    }
 
-    async getTop(subreddit = null, options = this.parameters) {
-        subreddit = subreddit ? "/r/" + subreddit : "";
-        return await fetch(this.host + subreddit + "/top.json?" + new URLSearchParams(options))
+        return await fetch(this.host + subreddit + `/${sort}.json?` + new URLSearchParams(Object.assign(params, options)))
             .then(res => res.json())
             .then(json => json.data)
             .then(data => ({
@@ -40,42 +29,7 @@ class Geddit {
                 posts: data.children
             }))
             .catch(err => null);
-    }
 
-    async getNew(subreddit = null, options = this.parameters) {
-        subreddit = subreddit ? "/r/" + subreddit : "";
-        return await fetch(this.host + subreddit + "/new.json?" + new URLSearchParams(options))
-            .then(res => res.json())
-            .then(json => json.data)
-            .then(data => ({
-                after: data.after,
-                posts: data.children
-            }))
-            .catch(err => null);
-    }
-
-    async getRising(subreddit = null, options = this.parameters) {
-        subreddit = subreddit ? "/r/" + subreddit : "";
-        return await fetch(this.host + subreddit + "/rising.json?" + new URLSearchParams(options))
-            .then(res => res.json())
-            .then(json => json.data)
-            .then(data => ({
-                after: data.after,
-                posts: data.children
-            }))
-            .catch(err => null);
-    }
-
-    async getControversial(subreddit = null, options = this.parameters) {
-        subreddit = subreddit ? "/r/" + subreddit : "";
-        return await fetch(this.host + subreddit + "/controversial.json?" + new URLSearchParams(options))
-            .then(res => res.json())
-            .then(json => json.data)
-            .then(data => ({
-                after: data.after,
-                posts: data.children
-            }))
-            .catch(err => null);
     }
 
     async getDomainHot(domain, options = this.parameters) {
@@ -255,45 +209,79 @@ class Geddit {
             .catch(err => null);
     }
 
-    async searchSubreddits(query, options = this.parameters) {
+    async searchSubmissions(query, options = {}) {
         options.q = query;
-        options.include_over_18 = true;
-        return await fetch(this.host + "/subreddits/search.json?" + new URLSearchParams(options))
+        options.type = "link";
+
+        let params = {
+            limit: 25,
+            include_over_18: true
+        }
+
+        return await fetch(this.host + "/search.json?" + new URLSearchParams(Object.assign(params, options)))
             .then(res => res.json())
             .then(json => json.data)
             .then(data => ({
                 after: data.after,
-                subreddits: data.children
+                items: data.children
             }))
             .catch(err => null);
     }
 
-    async searchUsers(query, options = this.parameters) {
+    async searchSubreddits(query, options = {}) {
         options.q = query;
-        options.include_over_18 = true;
-        return await fetch(this.host + "/users/search.json?" + new URLSearchParams(options))
+
+        let params = {
+            limit: 25,
+            include_over_18: true
+        }
+
+        return await fetch(this.host + "/subreddits/search.json?" + new URLSearchParams(Object.assign(params, options)))
             .then(res => res.json())
             .then(json => json.data)
             .then(data => ({
                 after: data.after,
-                users: data.children
+                items: data.children
             }))
             .catch(err => null);
     }
 
-    async searchAll(query, subreddit = null, options = this.parameters) {
+    async searchUsers(query, options = {}) {
         options.q = query;
-        options.include_over_18 = true;
-        options.type = "sr,link,user";
+
+        let params = {
+            limit: 25,
+            include_over_18: true
+        }
+
+        return await fetch(this.host + "/users/search.json?" + new URLSearchParams(Object.assign(params, options)))
+            .then(res => res.json())
+            .then(json => json.data)
+            .then(data => ({
+                after: data.after,
+                items: data.children
+            }))
+            .catch(err => null);
+    }
+
+    async searchAll(query, subreddit = null, options = {}) {
+        options.q = query;
         subreddit = subreddit ? "/r/" + subreddit : "";
-        return await fetch(this.host + subreddit + "/search.json?" + new URLSearchParams(options))
+
+        let params = {
+            limit: 25,
+            include_over_18: true,
+            type: "sr,link,user",
+        }
+
+        return await fetch(this.host + subreddit + "/search.json?" + new URLSearchParams(Object.assign(params, options)))
             .then(res => res.json())
             .then(json => Array.isArray(json) ? ({
                 after: json[1].data.after,
-                results: json[0].data.children.concat(json[1].data.children)
+                items: json[0].data.children.concat(json[1].data.children)
             }) : ({
                 after: json.data.after,
-                results: json.data.children
+                items: json.data.children
             }))
             .catch(err => null);
     }
@@ -309,7 +297,7 @@ class Geddit {
         return await fetch(this.host + "/comments/" + id + ".json?" + new URLSearchParams(options))
             .then(res => res.json())
             .then(json => ({
-                submission: json[0].data.children[0].data,
+                submission: json[0].data.children[0],
                 comments: json[1].data.children
             }))
             .catch(err => null);

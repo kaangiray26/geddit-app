@@ -1,0 +1,25 @@
+.video-js {
+    display: flex !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 50vh !important;
+}
+
+.vjs-tech {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    position: relative !important;
+}
+
+.v-compact>video {
+    object-fit: cover !important;
+    max-height: 50vh !important;
+}
+
+.v-fullscreen>video {
+    object-fit: contain !important;
+}

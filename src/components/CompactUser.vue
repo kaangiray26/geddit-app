@@ -7,11 +7,11 @@
                 </div>
                 <div class="d-flex flex-column">
                     <div class="d-flex align-items-center">
-                        <h6 class="text-4 m-0 me-2">{{ data.name }}</h6>
-                        <img v-if="data.is_gold" src="/images/premium.svg" class="icon-small">
+                        <h6 class="text-break text-4 m-0 me-2">{{ post.name }}</h6>
+                        <img v-if="post.is_gold" src="/images/premium.svg" class="icon-small">
                     </div>
                     <small class="text-4">{{ format_karma() }}</small>
-                    <small v-if="data.is_suspended" class="text-4">suspended</small>
+                    <small v-if="post.is_suspended" class="text-4">suspended</small>
                 </div>
             </div>
             <div class="d-flex">
@@ -29,29 +29,29 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const props = defineProps({
-    data: {
+    post: {
         type: Object,
         required: true
     }
 })
 
 function get_icon_src() {
-    if (props.data.icon_img) {
-        return props.data.icon_img.split("?")[0];
+    if (props.post.icon_img) {
+        return props.post.icon_img.split("?")[0];
     }
     return "/images/user.svg";
 }
 
 function format_karma() {
-    if (!props.data.link_karma) {
+    if (!props.post.link_karma) {
         return null;
     }
 
-    let karma = props.data.link_karma + props.data.comment_karma;
+    let karma = props.post.link_karma + props.post.comment_karma;
     return karma.toLocaleString() + " karma";
 }
 
 async function open_user() {
-    router.push("/u/" + props.data.name)
+    router.push("/u/" + props.post.name)
 }
 </script>

@@ -1,8 +1,8 @@
 <template>
-    <li class="list-group-item foreground border-0 rounded m-3 mt-0 p-0">
+    <li class="list-group-item foreground border-0 rounded m-3 mt-0 p-0" type="link">
         <div class="d-flex flex-column mb-2">
             <div class="d-flex flex-column p-3 pb-0">
-                <h6 class="text-4 mb-2">{{ data.title }}</h6>
+                <h6 class="text-break text-4 mb-2">{{ data.title }}</h6>
                 <div class="d-flex flex-wrap">
                     <small class="text-11 me-2" @click="open_subreddit">{{ data.subreddit }}</small>
                     <small class="text-4 me-2">{{ data.domain }}</small>
@@ -96,6 +96,7 @@ async function get_sources() {
     // video
     if (props.data.domain == "v.redd.it") {
         video_options.value = {
+            hls: true,
             src: props.data.secure_media.reddit_video.dash_url,
             poster: props.data.preview.images[0].source.url.replaceAll("&amp;", "&"),
             duration: props.data.secure_media.reddit_video.duration,

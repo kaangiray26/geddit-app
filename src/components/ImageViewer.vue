@@ -11,7 +11,7 @@
                         <div class="w-100 position-absolute bottom-0 start-0 p-2"
                             :class="{ 'fade-in': controls_visible, 'fade-out': !controls_visible }">
                             <div class="d-flex position-relative">
-                                <div class="d-flex position-absolute background cover-all rounded"></div>
+                                <div class="d-flex position-absolute background opacity-75 cover-all rounded"></div>
                                 <div class="d-flex flex-column position-relative p-2">
                                     <h6 class="text-4">{{ data.title }}</h6>
                                     <div class="d-flex justify-content-start align-items-center">

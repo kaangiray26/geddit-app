@@ -1,5 +1,7 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
 @import url("./nord.css");
+@import url("./video-js.css");
+@import url("video-theme.css");
 
 :root {
     --background: black;
@@ -17,6 +19,15 @@ body {
     margin: 0;
     height: 100%;
     background-color: var(--background);
+}
+
+iframe {
+    max-height: 50vh;
+    object-fit: cover;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16/9 !important;
+    position: relative !important;
 }
 
 #app {
@@ -93,18 +104,18 @@ body {
 
 .btn-touch {
     border: 0 !important;
+    color: var(--nord4) !important;
+}
+
+.btn-touch:active {
+    color: var(--nord11) !important;
 }
 
 .btn-touch-border {
     border: 1px solid #dee2e6 !important;
+    color: var(--nord4) !important;
 }
 
-.btn-touch:hover,
-.btn-touch-border:hover {
-    color: var(--nord11) !important;
-}
-
-.btn-touch:active,
 .btn-touch-border:active {
     color: var(--nord11) !important;
 }
@@ -189,6 +200,12 @@ body {
     aspect-ratio: 1/1 !important;
 }
 
+.subreddit-icon {
+    width: 36px;
+    height: auto;
+    aspect-ratio: 1/1 !important;
+}
+
 .banner {
     min-height: 64px;
 }
@@ -237,4 +254,46 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     width: calc(100%);
+}
+
+.color-upvote {
+    color: #FF4500
+}
+
+.color-downvote {
+    color: #7193FF
+}
+
+.btn-10 {
+    border: 0 !important;
+    color: var(--nord4) !important;
+    background-color: var(--nord10) !important;
+}
+
+.btn-10:active {
+    border: 0 !important;
+    color: var(--nord4) !important;
+    background-color: var(--nord3) !important;
+}
+
+.btn-3 {
+    border: 0 !important;
+    color: var(--nord4) !important;
+    background-color: var(--nord3) !important;
+}
+
+.btn-3:active {
+    border: 0 !important;
+    color: var(--nord4) !important;
+    background-color: var(--nord10) !important;
+}
+
+.theme-list-item {
+    color: var(--nord6);
+    list-style-type: none;
+    background-color: transparent;
+}
+
+.theme-list-item:active {
+    background-color: var(--nord1);
 }

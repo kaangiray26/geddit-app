@@ -2,7 +2,7 @@
     <div class="vw-100 complete-view d-flex flex-column">
         <div class="content-view">
             <router-view v-slot="{ Component }">
-                <keep-alive>
+                <keep-alive :max="10">
                     <component :is="Component" :key="router.currentRoute.value.path"></component>
                 </keep-alive>
             </router-view>

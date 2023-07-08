@@ -4,7 +4,7 @@
             <li class="nav-item">
                 <button class="nav-link fw-bold" aria-current="page" @click="go_home">
                     <div class="d-flex flex-column align-items-center">
-                        <h5 class="text-4 py-1 m-0 bi"
+                        <h5 class="text-10 py-1 m-0 bi"
                             :class="{ 'bi-house-door-fill': path == '/', 'bi-house-door': path != '/' }">
                         </h5>
                     </div>
@@ -13,8 +13,8 @@
             <li class="nav-item">
                 <button class="nav-link fw-bold" aria-current="page" @click="go_search">
                     <div class="d-flex flex-column align-items-center">
-                        <h5 class="text-4 py-1 m-0 bi"
-                            :class="{ 'bi-search-heart-fill': path == '/search', 'bi-search-heart': path != '/search' }">
+                        <h5 class="text-10 py-1 m-0 bi"
+                            :class="{ 'bi-compass-fill': path == '/search', 'bi-compass': path != '/search' }">
                         </h5>
                     </div>
                 </button>
@@ -22,17 +22,17 @@
             <li class="nav-item">
                 <router-link to="/subreddits" class="nav-link fw-bold" aria-current="page">
                     <div class="d-flex flex-column align-items-center">
-                        <h5 class="text-4 py-1 m-0 bi"
+                        <h5 class="text-10 py-1 m-0 bi"
                             :class="{ 'bi-collection-fill': path == '/subreddits', 'bi-collection': path != '/subreddits' }">
                         </h5>
                     </div>
                 </router-link>
             </li>
             <li class="nav-item">
-                <router-link to="/profile" class="nav-link fw-bold" aria-current="page">
+                <router-link to="/settings" class="nav-link fw-bold" aria-current="page">
                     <div class="d-flex flex-column align-items-center">
-                        <h5 class="text-4 py-1 m-0 bi"
-                            :class="{ 'bi bi-person-fill': path == '/profile', 'bi-person': path != '/profile' }">
+                        <h5 class="text-10 py-1 m-0 bi"
+                            :class="{ 'bi bi-gear-fill': path == '/settings', 'bi-gear': path != '/settings' }">
                         </h5>
                     </div>
                 </router-link>

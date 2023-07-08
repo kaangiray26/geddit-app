@@ -1,40 +1,29 @@
 <template>
     <li class="list-group-item foreground border-0 rounded m-3 mt-0 p-0">
         <div class="d-flex flex-column mb-2">
-            <div class="d-flex flex-column p-3 pb-0">
-                <div v-if="data.name.startsWith('t1')">
-                    <h6 class="text-4 mb-2">{{ data.link_title }}</h6>
-                </div>
-                <div v-if="data.name.startsWith('t3')">
-                    <h6 class="text-4 mb-2">{{ data.title }}</h6>
-                </div>
-                <div class="d-flex flex-wrap">
-                    <small class="text-11 me-2" @click="open_subreddit">{{ data.subreddit }}</small>
-                    <small class="text-4 me-2">{{ data.domain }}</small>
-                    <small class="text-4">{{ format_date() }}</small>
-                </div>
+            <div class="d-flex flex-column p-3 pb-0 mb-2">
+                <h6 class="text-break text-4 mb-0">{{ post.link_title }}</h6>
             </div>
-            <div class="d-flex flex-column background rounded p-3 m-2">
-                <div class="text-4 text-post" v-html="markdown(data.body)"></div>
+            <div class="d-flex flex-column bg-1 p-3">
+                <div class="text-4 text-post" v-html="markdown(post.body)"></div>
             </div>
         </div>
         <div class="d-flex flex-column p-3 pt-0">
-            <div class="d-flex mb-2">
-                <small class="text-4 me-2">by</small>
-                <small class="text-10" @click="open_user">{{ data.author }}</small>
+            <div class="d-flex flex-wrap mb-2">
+                <small class="text-4 me-2">commented by</small>
+                <small class="text-10" @click="open_user">{{ post.author }}</small>
             </div>
             <div class="d-flex justify-content-between align-items-center">
-                <div class="d-flex">
+                <div class="d-flex align-items-center">
                     <div class="d-flex">
-                        <small class="bi bi-arrow-up text-4 me-1"></small>
-                        <small class="text-4">{{ format_num(data.score) }}</small>
+                        <h6 class="color-upvote fw-bold m-0">{{ format_num(post.score) }}</h6>
                     </div>
                     <div class="d-flex mx-2">
                         <small class="text-4">·</small>
                     </div>
                     <div class="d-flex">
                         <small class="bi bi-chat-fill text-4 me-1"></small>
-                        <small class="text-4">{{ format_num(data.num_comments) }}</small>
+                        <small class="text-4">{{ format_num(post.num_comments) }}</small>
                     </div>
                 </div>
                 <div class="d-flex">
@@ -48,14 +37,13 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
 import showdown from 'showdown';
 
 const router = useRouter();
 
 const props = defineProps({
-    data: {
+    post: {
         type: Object,
         required: true
     }
@@ -72,21 +60,21 @@ function format_num(points) {
 }
 
 async function open_post() {
-    router.push(`/post/${props.data.id}`);
+    router.push(`/post/${props.post.id}`);
 }
 
 async function open_user() {
-    router.push(`/u/${props.data.author}`);
+    router.push(`/u/${props.post.author}`);
 }
 
 async function open_subreddit() {
-    router.push(`/r/${props.data.subreddit}`);
+    router.push(`/r/${props.post.subreddit}`);
 }
 
 // Return when the post was created
 // Format: 1h ago, 1d ago, 1w ago, 1m ago, 1y ago
 function format_date() {
-    let dt = new Date(props.data.created * 1000);
+    let dt = new Date(props.post.created * 1000);
     let now = new Date();
 
     let diff = now - dt;

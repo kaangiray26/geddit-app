@@ -1,7 +1,8 @@
 <template>
-    <div v-if="!data" class="progress " role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0"
-        aria-valuemax="100">
-        <div class="progress-bar"></div>
+    <div v-if="!data" class="d-flex justify-content-center align-items-center cover-all position-absolute">
+        <div class="d-flex circle bg-6 p-2">
+            <div class="spinner-border text-0" role="status"></div>
+        </div>
     </div>
     <div v-else>
         <div class="d-flex flex-column foreground p-3">
@@ -29,8 +30,12 @@
                 </button>
             </div>
         </div>
+        <div v-if="!scroll_loaded" class="progress " role="progressbar" aria-label="Basic example" aria-valuenow="0"
+            aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar"></div>
+        </div>
         <ul class="list-group border-0 pt-0 mt-3">
-            <Item v-for="post in posts" :data="post" />
+            <component v-for="post in posts" :post="post.data" :is="types[post.kind]" />
         </ul>
     </div>
 </template>
@@ -39,7 +44,13 @@
 import { ref, onBeforeMount, onActivated } from 'vue';
 import { useRouter } from 'vue-router';
 import { Geddit } from "/js/geddit.js";
-import Item from '../types/Item.vue';
+import CompactPost from './CompactPost.vue';
+import CompactComment from './CompactComment.vue';
+
+const types = {
+    t1: CompactComment,
+    t3: CompactPost
+}
 
 const router = useRouter();
 const geddit = new Geddit();
@@ -76,47 +87,68 @@ function format_date() {
 }
 
 async function get_overview() {
+    if (!scroll_loaded.value) return;
+    scroll_loaded.value = false;
+
     section.value = 'overview';
     posts.value = [];
     after.value = null;
 
     let response = await geddit.getUserOverview(router.currentRoute.value.params.id);
-    if (!response) return;
+    if (!response) {
+        scroll_loaded.value = true;
+    }
 
     console.log(response);
 
     posts.value = response.items;
     after.value = response.after;
+
+    scroll_loaded.value = true;
 }
 
 async function get_posts() {
+    if (!scroll_loaded.value) return;
+    scroll_loaded.value = false;
+
     section.value = 'posts';
     posts.value = [];
     after.value = null;
 
     let response = await geddit.getUserSubmissions(router.currentRoute.value.params.id);
-    if (!response) return;
+    if (!response) {
+        scroll_loaded.value = true;
+    }
 
     posts.value = response.items;
     after.value = response.after;
+
+    scroll_loaded.value = true;
 }
 
 async function get_comments() {
+    if (!scroll_loaded.value) return;
+    scroll_loaded.value = false;
+
     section.value = 'comments';
     posts.value = [];
     after.value = null;
 
     let response = await geddit.getUserComments(router.currentRoute.value.params.id);
-    if (!response) return;
-
+    if (!response) {
+        scroll_loaded.value = true;
+    }
 
     posts.value = response.items;
     after.value = response.after;
+
+    scroll_loaded.value = true;
 }
 
 async function scroll() {
     scroll_loaded.value = false;
 
+    console.log("User getting scroll posts", router.currentRoute.value);
     // Get content based on the section
     let response = null;
     if (section.value == 'overview') {
@@ -161,7 +193,7 @@ onBeforeMount(() => {
     // Add the scroll event listener
     let view = document.querySelector('.content-view');
     view.addEventListener('scroll', () => {
-        if (view.scrollTop + view.clientHeight >= view.scrollHeight - window.innerWidth && scroll_loaded.value && after.value) {
+        if (view.scrollTop + view.clientHeight >= view.scrollHeight - window.innerWidth && scroll_loaded.value && after.value && router.currentRoute.value.name == 'user') {
             scroll();
         }
     })
