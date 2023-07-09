@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="d-flex flex-column p-3 pt-0">
-            <div class="d-flex flex-wrap mb-2">
+            <div class="d-flex flex-wrap">
                 <small class="text-4 me-2">posted by</small>
                 <small class="text-10" @click="open_user">{{ post.author }}</small>
             </div>
@@ -33,11 +33,11 @@
                         <small class="bi bi-chat-fill me-1"></small>
                         <small>{{ format_num(post.num_comments) }}</small>
                     </div>
-                    <div class="d-flex ms-2">
-                        <small class="text-4">{{ post.name }}</small>
-                    </div>
                 </div>
                 <div class="d-flex">
+                    <button class="btn btn-touch text-4 py-0" @click="share">
+                        <span class="bi bi-share-fill"></span>
+                    </button>
                     <button class="btn btn-touch text-4 py-0" @click="open_post">
                         <span class="bi bi-arrow-right"></span>
                     </button>
@@ -50,6 +50,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { Share } from '@capacitor/share';
 import Placeholder from '/contents/Placeholder.vue';
 import CompactText from '/contents/CompactText.vue';
 import CompactImage from '/contents/CompactImage.vue';
@@ -72,6 +73,12 @@ const props = defineProps({
         required: true
     }
 })
+
+async function share() {
+    await Share.share({
+        url: "https://www.reddit.com" + props.post.permalink,
+    });
+}
 
 async function open_post() {
     router.push(`/post/${props.post.id}`);

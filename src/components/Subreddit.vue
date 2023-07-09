@@ -8,8 +8,8 @@
     <div v-else>
         <div class="d-flex flex-column foreground p-3">
             <div class="banner d-flex justify-content-center align-items-center position-relative mb-2">
-                <img :src="data.banner_img" class="cover vh-25 rounded">
-                <img :src="data.icon_img" class="snoovatar position-absolute">
+                <img v-show="data.banner_img" :src="data.banner_img" class="cover vh-25 rounded">
+                <img v-show="icon" :src="icon" class="snoovatar position-absolute">
             </div>
             <div class="d-flex flex-column align-items-center mb-2">
                 <h6 class="text-6 fw-bold">{{ data.title }}</h6>
@@ -52,6 +52,7 @@ const posts = ref([]);
 const after = ref(null);
 
 const data = ref(null);
+const icon = ref(null);
 const followed = ref(false);
 
 const scroll_loaded = ref(true);
@@ -75,7 +76,7 @@ async function follow() {
     let subs = JSON.parse(localStorage.getItem("subreddits"));
     subs.push({
         display_name: data.value.display_name,
-        icon_img: data.value.icon_img,
+        icon_img: icon.value,
     });
     localStorage.setItem("subreddits", JSON.stringify(subs));
     followed.value = true;
@@ -94,6 +95,21 @@ async function get_subreddit() {
 
     data.value = response;
     check_followed();
+    get_sub_icon();
+}
+
+async function get_sub_icon() {
+    if (data.value.icon_img) {
+        icon.value = data.value.icon_img;
+        return
+    }
+
+    if (data.value.community_icon) {
+        icon.value = data.value.community_icon.split("?")[0];
+        return
+    }
+
+    icon.value = "/images/subreddit.svg";
 }
 
 function format_subscribers() {
