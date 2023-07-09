@@ -13,17 +13,15 @@
                             <div class="d-flex position-relative">
                                 <div class="d-flex position-absolute background opacity-75 cover-all rounded"></div>
                                 <div class="d-flex flex-column position-relative p-2">
-                                    <h6 class="text-4">{{ data.title }}</h6>
                                     <div class="d-flex justify-content-start align-items-center">
                                         <button class="btn btn-touch-border text-4 me-2" @click="hide">
                                             <span class="bi bi-arrow-return-left"></span>
                                         </button>
                                         <button class="btn btn-touch-border text-4 me-2" @click="comments">
-                                            <span class="bi bi-chat-fill me-1"></span>
-                                            <span>{{ format_num(data.num_comments) }}</span>
+                                            <span class="bi bi-chat-fill"></span>
                                         </button>
-                                        <button class="btn btn-touch-border text-white" @click="download">
-                                            <span class="bi bi-download"></span>
+                                        <button class="btn btn-touch-border text-4 me-2" @click="share">
+                                            <span class="bi bi-share-fill"></span>
                                         </button>
                                     </div>
                                 </div>
@@ -38,9 +36,7 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Share } from '@capacitor/share';
-import { CapacitorHttp } from '@capacitor/core';
 import { useRouter } from 'vue-router';
 import { Modal } from "bootstrap"
 import Hammer from 'hammerjs';
@@ -62,10 +58,9 @@ const image = ref(null);
 const controls_visible = ref(false);
 
 const data = ref({
+    id: null,
     src: null,
-    title: null,
-    num_comments: null,
-    id: null
+    uri: null,
 });
 
 async function reset() {
@@ -105,43 +100,14 @@ async function controls() {
     controls_visible.value = !controls_visible.value;
 }
 
-function format_num(points) {
-    if (points > 1000000) return (points / 1000000).toFixed(1) + "M";
-    if (points > 1000) return (points / 1000).toFixed(1) + "K";
-    return points;
-}
-
 async function comments() {
     router.push("/post/" + data.value.id);
     hide();
 }
 
-async function download() {
-    // Check permissions
-    let permission = await Filesystem.checkPermissions();
-
-    if (!permission || permission.publicStorage != 'granted') {
-        await Filesystem.requestPermissions();
-    }
-
-    // Get file name
-    let fname = `${Date.now()}_${data.value.id}.jpg`;
-
-    // Get image data
-    let response = await CapacitorHttp.get({
-        url: data.value.src,
-        responseType: 'blob'
-    });
-
-    let image_data = "data:image/jpeg;base64," + response.data;
-
-    Filesystem.writeFile({
-        path: `Geddit/${fname}`,
-        data: image_data,
-        directory: Directory.External,
-        recursive: true
-    }).then((res) => {
-        console.log(res);
+async function share() {
+    await Share.share({
+        url: data.value.uri,
     });
 }
 

@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex justify-content-between align-items-center foreground">
         <div class="d-flex ms-3">
-            <h6 v-show="props.subreddit" class="fw-bold text-6 text-capitalize me-2 mb-0">{{ props.subreddit }}</h6>
+            <h6 v-show="props.subreddit" class="text-6 text-capitalize me-2 mb-0">{{ props.subreddit }}</h6>
             <span class="badge bg-10">{{ sort }}</span>
         </div>
         <div class="d-flex">

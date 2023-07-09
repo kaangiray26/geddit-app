@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex cover-50 position-relative bg-dark"
         :style="{ 'aspect-ratio': dimensions.width + '/' + dimensions.height + '!important' }">
-        <video ref="video" class="video-js v-compact position-relative theme-shadow" @touchstart="fullscreen">
+        <video ref="video" class="video-js v-compact position-relative theme-shadow" @touchend="fullscreen">
         </video>
         <div v-if="play_promise" class="d-flex justify-content-center align-items-center cover-all position-absolute">
             <div class="d-flex circle background p-2">
