@@ -8,6 +8,7 @@ import Search from '/components/Search.vue';
 import Subreddit from '/components/Subreddit.vue';
 import Subreddits from '/components/Subreddits.vue';
 import Settings from '/components/Settings.vue';
+import Gallery from '/components/Gallery.vue';
 
 const routes = [
     {
@@ -29,6 +30,11 @@ const routes = [
         path: "/settings",
         component: Settings,
         name: "settings"
+    },
+    {
+        path: "/gallery",
+        component: Gallery,
+        name: "gallery"
     },
     {
         path: "/u/:id",

@@ -4,20 +4,7 @@
             <div class="spinner-border text-0" role="status"></div>
         </div>
     </div>
-    <div class="d-flex justify-content-between align-items-center foreground">
-        <div class="d-flex ms-3">
-            <h6 class="fw-bold text-6 text-capitalize me-2 mb-0">Popular</h6>
-            <span class="badge bg-10">{{ sort }}</span>
-        </div>
-        <div class="d-flex">
-            <div>
-                <button type="button" class="btn btn-lg btn-touch bi bi-filter-left" @click="open_sort_options"></button>
-            </div>
-            <div>
-                <button type="button" class="btn btn-lg btn-touch bi bi-three-dots-vertical"></button>
-            </div>
-        </div>
-    </div>
+    <TopBar ref="topbar" subreddit="Popular" @params_changed="params_changed" />
     <ul class="list-group border-0 pt-0 mt-3">
         <Post v-for="post in posts" :post="post.data" />
     </ul>
@@ -25,34 +12,39 @@
         aria-valuemin="0" aria-valuemax="100">
         <div class="progress-bar"></div>
     </div>
-    <Sort ref="sort_modal" @sort_changed="sort_changed" @time_changed="time_changed"></Sort>
 </template>
 
 <script setup>
 import { ref, onBeforeMount, onActivated } from 'vue';
 import { useRouter } from 'vue-router';
 import { Geddit } from "/js/geddit.js";
-
 import Post from './CompactPost.vue';
-import Sort from './Sort.vue'
+import TopBar from './TopBar.vue';
 
 const router = useRouter();
 const geddit = new Geddit();
+const topbar = ref(null);
 
 const posts = ref([]);
 const after = ref(null);
 
-const sort = ref("hot");
-const time = ref("day");
-const sort_modal = ref(null);
-
 const scroll_loaded = ref(true);
 
 async function setup() {
-    let response = await geddit.getSubmissions(sort.value, "popular", {
-        t: time.value
+    let response = await geddit.getSubmissions("hot", "popular", {
+        t: "day"
     });
-    if (!response || !response.posts.length) return;
+    if (!response) return;
+
+    posts.value = response.posts;
+    after.value = response.after;
+}
+
+async function get_posts() {
+    let response = await geddit.getSubmissions(topbar.value.sort, "popular", {
+        t: topbar.value.time
+    });
+    if (!response) return;
 
     posts.value = response.posts;
     after.value = response.after;
@@ -61,8 +53,9 @@ async function setup() {
 async function scroll() {
     scroll_loaded.value = false;
 
-    let response = await geddit.getSubmissions(sort.value, "popular", {
-        after: after.value
+    let response = await geddit.getSubmissions(topbar.value.sort, "popular", {
+        after: after.value,
+        t: topbar.value.time
     });
     if (!response || !response.posts.length) {
         after.value = null;
@@ -76,30 +69,11 @@ async function scroll() {
     scroll_loaded.value = true;
 }
 
-async function open_sort_options() {
-    sort_modal.value.show();
-}
-
-async function sort_changed(sort_value) {
-    sort.value = sort_value;
-
-    if (sort_value == 'top' || sort_value == 'controversial') {
-        return
-    }
-
+async function params_changed() {
     posts.value = [];
     after.value = null;
     scroll_loaded.value = true;
-    setup();
-}
-
-async function time_changed(time_value) {
-    time.value = time_value;
-
-    posts.value = [];
-    after.value = null;
-    scroll_loaded.value = true;
-    setup();
+    get_posts();
 }
 
 onBeforeMount(() => {

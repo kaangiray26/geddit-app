@@ -33,13 +33,13 @@
             </button>
         </div>
     </div>
+    <ul v-show="results.length" class="list-group border-0 pt-0 mt-3">
+        <component v-for="result in results" :post="result.data" :is="types[result.kind]" />
+    </ul>
     <div v-if="!scroll_loaded" class="progress " role="progressbar" aria-label="Basic example" aria-valuenow="0"
         aria-valuemin="0" aria-valuemax="100">
         <div class="progress-bar"></div>
     </div>
-    <ul class="list-group border-0 pt-0 mt-3">
-        <component v-for="result in results" :post="result.data" :is="types[result.kind]" />
-    </ul>
 </template>
 
 <script setup>

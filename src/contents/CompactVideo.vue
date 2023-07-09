@@ -66,7 +66,7 @@ async function play() {
 
 async function reset() {
     // Ignore if video has
-    if (!player.value.hasStarted() || player.value.paused()) {
+    if (!player.value || !player.value.hasStarted() || player.value.paused() || play_promise.value) {
         return
     }
 
@@ -96,6 +96,7 @@ function getRemainingTime() {
 async function setup() {
     // Set video data
     if (!props.data.secure_media) {
+        console.log("No video data", props.data);
         return
     }
 
@@ -116,7 +117,7 @@ async function setup() {
         sources: [
             {
                 src: props.data.secure_media.reddit_video.hls_url,
-                type: 'application/x-mpegURL'
+                type: 'application/vnd.apple.mpegURL'
             }
         ]
     });

@@ -1,6 +1,11 @@
 <template>
     <div class="d-flex flex-column foreground cover-all p-3">
         <h6 class="text-6 mb-3">Settings</h6>
+        <button class="btn btn-touch text-start" @click="open_gallery">
+            <span class="bi bi-images me-3"></span>
+            <span>Gallery</span>
+        </button>
+        <hr class="text-6">
         <div class="d-flex justify-content-center mb-1">
             <div class="banner d-flex justify-content-center align-items-center position-relative theme-shadow">
                 <img src="/images/logo_background.jpg" class="cover-all rounded"
@@ -26,8 +31,15 @@
 </template>
 
 <script setup>
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 async function open_github() {
     window.open("https://github.com/kaangiray26/geddit-app", "_blank");
+}
+
+async function open_gallery() {
+    router.push("/gallery");
 }
 </script>

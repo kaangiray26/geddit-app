@@ -32,7 +32,7 @@ async function back_handler() {
     }
 
     // Check if video player is open
-    if (document.fullscreenElement?.nodeName === "VIDEO") {
+    if (document.fullscreenElement) {
         document.exitFullscreen();
         return;
     }

@@ -22,9 +22,9 @@
                                             <span class="bi bi-chat-fill me-1"></span>
                                             <span>{{ format_num(data.num_comments) }}</span>
                                         </button>
-                                        <!-- <button class="btn btn-touch-border text-white" @click="download">
+                                        <button class="btn btn-touch-border text-white" @click="download">
                                             <span class="bi bi-download"></span>
-                                        </button> -->
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -38,6 +38,9 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
+import { Share } from '@capacitor/share';
+import { CapacitorHttp } from '@capacitor/core';
 import { useRouter } from 'vue-router';
 import { Modal } from "bootstrap"
 import Hammer from 'hammerjs';
@@ -113,8 +116,44 @@ async function comments() {
     hide();
 }
 
+function convertBlobToBase64(blob) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onerror = reject;
+        reader.onload = () => {
+            resolve(reader.result);
+        };
+        reader.readAsDataURL(blob);
+    });
+}
+
 async function download() {
-    //
+    // Check permissions
+    let permission = await Filesystem.checkPermissions();
+
+    if (!permission || permission.publicStorage != 'granted') {
+        await Filesystem.requestPermissions();
+    }
+
+    // Get file name
+    let fname = `${Date.now()}_${data.value.id}.jpg`;
+
+    // Get image data
+    let response = await CapacitorHttp.get({
+        url: data.value.src,
+        responseType: 'blob'
+    });
+
+    let image_data = "data:image/jpeg;base64," + response.data;
+
+    Filesystem.writeFile({
+        path: `Geddit/${fname}`,
+        data: image_data,
+        directory: Directory.Data,
+        recursive: true
+    }).then((res) => {
+        console.log(res);
+    });
 }
 
 function is_open() {

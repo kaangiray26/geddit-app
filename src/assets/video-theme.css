@@ -15,6 +15,12 @@
     position: relative !important;
 }
 
+.vjs-poster img {
+    object-fit: cover !important;
+    width: 100% !important;
+    height: auto !important;
+}
+
 .v-compact>video {
     object-fit: cover !important;
     max-height: 50vh !important;

@@ -67,8 +67,8 @@ async function go_search() {
         let view = document.querySelector('.content-view');
         view.scroll({
             top: 0,
-            behavior: 'smooth'
-        })
+        });
+        document.querySelector('input').focus();
         return
     }
     router.push('/search');

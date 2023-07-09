@@ -1,4 +1,5 @@
 <template>
+    <TopBar ref="topbar" @params_changed="params_changed" />
     <div v-if="!data" class="d-flex justify-content-center align-items-center cover-all position-absolute">
         <div class="d-flex circle bg-6 p-2">
             <div class="spinner-border text-0" role="status"></div>
@@ -29,6 +30,10 @@
         <ul class="list-group border-0 pt-0 mt-3">
             <Post v-for="post in posts" :post="post.data" />
         </ul>
+        <div v-if="!scroll_loaded" class="progress " role="progressbar" aria-label="Basic example" aria-valuenow="0"
+            aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar"></div>
+        </div>
     </div>
 </template>
 
@@ -37,15 +42,26 @@ import { ref, onBeforeMount, onActivated } from 'vue';
 import { useRouter } from 'vue-router';
 import { Geddit } from "/js/geddit.js";
 import Post from './CompactPost.vue';
+import TopBar from './TopBar.vue';
 
 const router = useRouter();
 const geddit = new Geddit();
+const topbar = ref(null);
 
-const data = ref(null);
 const posts = ref([]);
 const after = ref(null);
-const scroll_loaded = ref(true);
+
+const data = ref(null);
 const followed = ref(false);
+
+const scroll_loaded = ref(true);
+
+async function params_changed() {
+    posts.value = [];
+    after.value = null;
+    scroll_loaded.value = true;
+    get_posts();
+}
 
 async function check_followed() {
     if (!data.value) return;
@@ -72,7 +88,7 @@ async function unfollow() {
     followed.value = false;
 }
 
-async function setup() {
+async function get_subreddit() {
     let response = await geddit.getSubreddit(router.currentRoute.value.params.id);
     if (!response) return;
 
@@ -101,8 +117,20 @@ function get_description() {
     return txt.value;
 }
 
-async function get_hot() {
-    let response = await geddit.getHot(router.currentRoute.value.params.id);
+async function setup() {
+    let response = await geddit.getSubmissions("hot", router.currentRoute.value.params.id, {
+        t: "day"
+    });
+    if (!response) return;
+
+    posts.value = response.posts;
+    after.value = response.after;
+}
+
+async function get_posts() {
+    let response = await geddit.getSubmissions(topbar.value.sort, router.currentRoute.value.params.id, {
+        t: topbar.value.time
+    });
     if (!response) return;
 
     posts.value = response.posts;
@@ -114,13 +142,14 @@ async function scroll() {
 
     let response = null;
 
-    response = await geddit.getHot(router.currentRoute.value.params.id, {
-        after: after.value
+    response = await geddit.getSubmissions(topbar.value.sort, router.currentRoute.value.params.id, {
+        after: after.value,
+        t: topbar.value.time
     });
 
-    if (!response) return;
-    if (!response.posts.length) {
+    if (!response || !response.posts.length) {
         after.value = null;
+        scroll_loaded.value = true;
         return;
     }
 
@@ -136,8 +165,8 @@ onBeforeMount(() => {
         return;
     }
 
+    get_subreddit();
     setup();
-    get_hot();
 
     // Add the scroll event listener
     let view = document.querySelector('.content-view');

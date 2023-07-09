@@ -297,3 +297,19 @@ iframe {
 .theme-list-item:active {
     background-color: var(--nord1);
 }
+
+.dropdown-toggle::after {
+    content: unset !important;
+}
+
+.col-gallery {
+    width: 25% !important;
+    height: auto !important;
+    aspect-ratio: 1/1 !important;
+}
+
+.img-gallery {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
