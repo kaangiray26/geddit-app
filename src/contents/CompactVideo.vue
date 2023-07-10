@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex cover-50 position-relative bg-dark"
+    <div class="d-flex cover-50 position-relative background"
         :style="{ 'aspect-ratio': dimensions.width + '/' + dimensions.height + '!important' }">
         <video ref="video" class="video-js v-compact position-relative theme-shadow" @touchend="fullscreen">
         </video>
@@ -10,7 +10,7 @@
         </div>
         <div v-show="has_audio" class="position-absolute bottom-0 start-0 m-2" @click.passive="mute">
             <div class="position-relative">
-                <div class="position-absolute bg-dark cover-all opacity-75 circle"></div>
+                <div class="position-absolute background cover-all opacity-75 circle"></div>
                 <button class="position-relative btn btn-touch circle bi px-2 py-1"
                     :class="{ 'bi-volume-mute-fill': muted, 'bi-volume-up-fill': !muted }">
                 </button>
@@ -18,7 +18,7 @@
         </div>
         <div class="position-absolute bottom-0 end-0 m-2">
             <div class="d-flex position-relative">
-                <div class="position-absolute bg-dark cover-all opacity-75 rounded"></div>
+                <div class="position-absolute background cover-all opacity-75 rounded"></div>
                 <small class="position-relative text-4 px-1">{{ remaining }}</small>
             </div>
         </div>

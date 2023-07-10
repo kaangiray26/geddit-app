@@ -56,6 +56,8 @@ import CompactText from '/contents/CompactText.vue';
 import CompactImage from '/contents/CompactImage.vue';
 import CompactVideo from '/contents/CompactVideo.vue';
 import CompactEmbed from '/contents/CompactEmbed.vue';
+import CompactLink from '/contents/CompactLink.vue';
+import CompactGallery from '/contents/CompactGallery.vue';
 
 const router = useRouter();
 const type = ref(null);
@@ -65,6 +67,8 @@ const types = {
     CompactImage,
     CompactVideo,
     CompactEmbed,
+    CompactLink,
+    CompactGallery,
 }
 
 const props = defineProps({
@@ -115,21 +119,6 @@ function format_num(points) {
 }
 
 async function get_type() {
-    // if (props.post.kind == "t1") {
-    //     type = CompactComment;
-    //     return
-    // }
-
-    // if (props.post.kind == "t2") {
-    //     type = CompactUser;
-    //     return
-    // }
-
-    // if (props.post.kind == "t5") {
-    //     type = CompactSubreddit;
-    //     return
-    // }
-
     // video
     if (props.post.domain == "v.redd.it") {
         type.value = "CompactVideo";
@@ -154,7 +143,23 @@ async function get_type() {
         return
     }
 
-    console.log("Unsupported:", props.post);
+    // Consider post hint
+    if (props.post.post_hint == 'image') {
+        type.value = "CompactImage";
+        return
+    }
+
+    if (props.post.post_hint == 'link') {
+        type.value = "CompactLink";
+        return
+    }
+
+    if (props.post.url.startsWith('https://www.reddit.com/gallery/')) {
+        type.value = "CompactGallery";
+        return
+    }
+
+    console.log("Unsupported:", props.post.post_hint, props.post);
 }
 
 get_type();

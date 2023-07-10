@@ -57,6 +57,8 @@ import FullText from '/contents/FullText.vue';
 import CompactImage from '/contents/CompactImage.vue';
 import CompactVideo from '/contents/CompactVideo.vue';
 import CompactEmbed from '/contents/CompactEmbed.vue';
+import CompactLink from '/contents/CompactLink.vue';
+import CompactGallery from '/contents/CompactGallery.vue';
 
 const router = useRouter();
 const type = ref(null);
@@ -66,6 +68,8 @@ const types = {
     CompactImage,
     CompactVideo,
     CompactEmbed,
+    CompactLink,
+    CompactGallery
 }
 
 const props = defineProps({
@@ -112,12 +116,6 @@ function format_num(points) {
 }
 
 async function get_type() {
-    // text
-    if (props.post.data.is_self) {
-        type.value = "FullText";
-        return
-    }
-
     // video
     if (props.post.data.domain == "v.redd.it") {
         type.value = "CompactVideo";
@@ -133,6 +131,28 @@ async function get_type() {
     // embed
     if (props.post.data.media) {
         type.value = "CompactEmbed";
+        return
+    }
+
+    // text
+    if (props.post.data.is_self) {
+        type.value = "FullText";
+        return
+    }
+
+    // Consider post hint
+    if (props.post.data.post_hint == 'image') {
+        type.value = "CompactImage";
+        return
+    }
+
+    if (props.post.data.post_hint == 'link') {
+        type.value = "CompactLink";
+        return
+    }
+
+    if (props.post.data.url.startsWith('https://www.reddit.com/gallery/')) {
+        type.value = "CompactGallery";
         return
     }
 }
