@@ -15,14 +15,14 @@
                                 <div class="d-flex flex-column position-relative p-2">
                                     <h6 class="text-4">{{ data.title }}</h6>
                                     <div class="d-flex justify-content-start align-items-center">
-                                        <button class="btn btn-touch-border text-4 me-2" @click="hide">
+                                        <button class="btn btn-touch-border text-4 me-2" @click.passive="hide">
                                             <span class="bi bi-arrow-return-left"></span>
                                         </button>
-                                        <button class="btn btn-touch-border text-4 me-2" @click="comments">
+                                        <button class="btn btn-touch-border text-4 me-2" @click.passive="comments">
                                             <span class="bi bi-chat-fill me-1"></span>
                                             <span>{{ format_num(data.num_comments) }}</span>
                                         </button>
-                                        <button class="btn btn-touch-border text-white" @click="download">
+                                        <button class="btn btn-touch-border text-white" @click.passive="download">
                                             <span class="bi bi-download"></span>
                                         </button>
                                     </div>
@@ -44,6 +44,7 @@ import { CapacitorHttp } from '@capacitor/core';
 import { useRouter } from 'vue-router';
 import { Modal } from "bootstrap"
 import Hammer from 'hammerjs';
+import { notify } from "/js/event.js"
 
 const router = useRouter();
 
@@ -117,32 +118,36 @@ async function comments() {
 }
 
 async function download() {
-    // Check permissions
-    let permission = await Filesystem.checkPermissions();
-
-    if (!permission || permission.publicStorage != 'granted') {
-        await Filesystem.requestPermissions();
-    }
-
     // Get file name
     let fname = `${Date.now()}_${data.value.id}.jpg`;
 
-    // Get image data
+    //Get image data
+    notify("Geddit", "Downloading " + data.value.id);
     let response = await CapacitorHttp.get({
         url: data.value.src,
-        responseType: 'blob'
-    });
+        responseType: 'blob',
+        headers: {
+            'Accept': 'image/jpeg'
+        },
+        connectTimeout: 1000
+    })
+        .catch(err => null);
+
+    if (!response) {
+        notify("Geddit", "Download failed!");
+        return
+    };
 
     let image_data = "data:image/jpeg;base64," + response.data;
-
     Filesystem.writeFile({
         path: `Geddit/${fname}`,
         data: image_data,
         directory: Directory.External,
         recursive: true
-    }).then((res) => {
-        console.log(res);
-    });
+    })
+        .then((res) => {
+            notify("Geddit", "Image saved to app gallery.");
+        });
 }
 
 function is_open() {

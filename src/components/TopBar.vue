@@ -6,7 +6,8 @@
         </div>
         <div class="d-flex">
             <div>
-                <button type="button" class="btn btn-lg btn-touch bi bi-filter-left" @click="open_sort_options"></button>
+                <button type="button" class="btn btn-lg btn-touch bi bi-filter-left"
+                    @click.passive="open_sort_options"></button>
             </div>
             <div class="dropdown">
                 <button type="button" class="btn btn-lg btn-touch bi bi-three-dots-vertical dropdown-toggle"
@@ -16,7 +17,7 @@
                         <h6 class="dropdown-header">Options</h6>
                     </li>
                     <li>
-                        <button class="btn btn-touch dropdown-item text-4" @click="refresh">Refresh</button>
+                        <button class="btn btn-touch dropdown-item text-4" @click.passive="refresh">Refresh</button>
                     </li>
                 </ul>
             </div>
@@ -28,7 +29,7 @@
                 <div class="modal-body foreground rounded">
                     <ul class="list-group">
                         <li v-show="tab == 'sort'" v-for="sort_type in sort_types" class="theme-list-item rounded"
-                            @click="change_sort(sort_type)">
+                            @click.passive="change_sort(sort_type)">
                             <div class="d-flex justify-content-between align-items-center p-3">
                                 <div class="d-flex align-items-center">
                                     <h6 :class="sort_type.icon" class="mb-0 me-3"></h6>
@@ -40,7 +41,7 @@
                             </div>
                         </li>
                         <li v-show="tab == 'time'" v-for="time_type in time_types" class="theme-list-item rounded"
-                            @click="change_time(time_type)">
+                            @click.passive="change_time(time_type)">
                             <div class="d-flex align-items-center p-3">
                                 <h6 :class="time_type.icon" class="mb-0 me-3"></h6>
                                 <h6 class="mb-0">{{ time_type.name }}</h6>

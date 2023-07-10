@@ -15,13 +15,11 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount, onActivated } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, onBeforeMount, onActivated, onDeactivated } from 'vue';
 import { Geddit } from "/js/geddit.js";
 import Post from './CompactPost.vue';
 import TopBar from './TopBar.vue';
 
-const router = useRouter();
 const geddit = new Geddit();
 const topbar = ref(null);
 
@@ -76,23 +74,32 @@ async function params_changed() {
     get_posts();
 }
 
+function scroll_handle(el) {
+    if (el.target.scrollTop + el.target.clientHeight >= el.target.scrollHeight - window.innerWidth && scroll_loaded.value && after.value) {
+        scroll();
+    }
+}
+
 onBeforeMount(() => {
     setup();
-
-    // Add the scroll event listener
-    let view = document.querySelector('.content-view');
-    view.addEventListener('scroll', () => {
-        if (view.scrollTop + view.clientHeight >= view.scrollHeight - window.innerWidth && scroll_loaded.value && after.value && router.currentRoute.value.name == 'home') {
-            scroll();
-        }
-    })
 })
 
 onActivated(() => {
+    // Add the scroll event listener
+    let view = document.querySelector('.content-view');
+    view.addEventListener('scroll', scroll_handle)
+
+    // Scroll to the last position
     let pages = JSON.parse(localStorage.getItem("pages"));
     let this_page = pages.find(page => page.path == window.location.pathname);
     if (this_page) {
         document.querySelector('.content-view').scrollTop = parseInt(this_page.scroll);
     }
+})
+
+onDeactivated(() => {
+    // Disable scroll event listener
+    let view = document.querySelector('.content-view');
+    view.removeEventListener('scroll', scroll_handle);
 })
 </script>

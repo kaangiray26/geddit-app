@@ -4,8 +4,8 @@
 @import url("video-theme.css");
 
 :root {
-    --background: black;
-    --foreground: var(--nord0);
+    --background: var(--nord0);
+    --foreground: var(--nord1);
 }
 
 html {
@@ -156,7 +156,7 @@ iframe {
 
 .progress {
     height: 0.25rem;
-    background-color: black;
+    background-color: var(--background);
 }
 
 .progress-bar {
@@ -212,7 +212,7 @@ iframe {
 
 .search-bar {
     color: var(--nord4) !important;
-    background-color: var(--nord1) !important;
+    background-color: var(--background) !important;
     border: none;
     box-shadow: unset !important;
 }
@@ -222,7 +222,7 @@ iframe {
 }
 
 .btn-outline-4 {
-    border: 0.25rem solid var(--nord1) !important;
+    border: 0.25rem solid var(--nord0) !important;
 }
 
 .icon {
@@ -306,10 +306,28 @@ iframe {
     width: 25% !important;
     height: auto !important;
     aspect-ratio: 1/1 !important;
+    position: relative;
 }
 
 .img-gallery {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
+    position: relative;
+}
+
+.unchecked {
+    width: 16px !important;
+    height: 16px !important;
+    aspect-ratio: 1/1 !important;
+    border-radius: 50% !important;
+    border: 0.15rem solid var(--nord4);
+}
+
+.checked {
+    width: 16px !important;
+    height: 16px !important;
+    aspect-ratio: 1/1 !important;
+    border-radius: 50% !important;
+    background-color: var(--nord10);
 }

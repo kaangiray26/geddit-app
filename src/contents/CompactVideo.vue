@@ -8,7 +8,7 @@
                 <div class="spinner-border background text-4" role="status"></div>
             </div>
         </div>
-        <div v-show="has_audio" class="position-absolute bottom-0 start-0 m-2" @click="mute">
+        <div v-show="has_audio" class="position-absolute bottom-0 start-0 m-2" @click.passive="mute">
             <div class="position-relative">
                 <div class="position-absolute bg-dark cover-all opacity-75 circle"></div>
                 <button class="position-relative btn btn-touch circle bi px-2 py-1"

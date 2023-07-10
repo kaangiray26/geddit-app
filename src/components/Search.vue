@@ -2,7 +2,7 @@
     <div class="d-flex flex-column foreground p-3">
         <div class="d-flex align-items-center mb-3">
             <div class="input-group flex-fill">
-                <button id="button-addon1" type="button" class="btn btn-outline-4 text-4" @click="go_back">
+                <button id="button-addon1" type="button" class="btn btn-outline-4 text-4" @click.passive="go_back">
                     <span class="bi bi-arrow-left"></span>
                 </button>
                 <input ref="search_field" type="text" class="search-bar form-control" placeholder="Search Reddit"
@@ -11,21 +11,21 @@
         </div>
         <div class="d-flex flex-column">
             <button class="d-flex align-items-center btn btn-touch flex-fill text-start text-4 p-0 mb-2"
-                @click="search_posts">
+                @click.passive="search_posts">
                 <div class="d-flex icon bg-1 justify-content-center align-items-center me-2">
                     <span class="bi bi-postcard-fill"></span>
                 </div>
                 <span>Search for posts</span>
             </button>
             <button class="d-flex align-items-center btn btn-touch flex-fill text-start text-4 p-0 mb-2"
-                @click="search_users">
+                @click.passive="search_users">
                 <div class="d-flex icon bg-1 justify-content-center align-items-center me-2">
                     <span class="bi bi-person-fill"></span>
                 </div>
                 <span>Search for users</span>
             </button>
             <button class="d-flex align-items-center btn btn-touch flex-fill text-start text-4 p-0"
-                @click="search_communities">
+                @click.passive="search_communities">
                 <div class="d-flex icon bg-1 justify-content-center align-items-center me-2">
                     <span class="bi bi-houses-fill"></span>
                 </div>
@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount, onMounted, onActivated } from 'vue'
+import { ref, onActivated, onDeactivated } from 'vue'
 import { useRouter } from 'vue-router';
 import { Geddit } from "/js/geddit.js";
 import CompactComment from './CompactComment.vue'
@@ -94,14 +94,11 @@ async function get_results() {
     results.value = [];
     after.value = null;
 
-    console.log("Getting results:", search_field.value.value);
     let response = await geddit.searchAll(search_field.value.value);
     if (!response) {
         scroll_loaded.value = true;
         return;
     }
-
-    console.log(response);
 
     results.value = response.items;
     after.value = response.after;
@@ -212,30 +209,34 @@ async function search_communities() {
     scroll_loaded.value = true;
 }
 
-onBeforeMount(() => {
-    // Add the scroll event listener
-    let view = document.querySelector('.content-view');
-    view.addEventListener('scroll', () => {
-        if (view.scrollTop + view.clientHeight >= view.scrollHeight - window.innerWidth && scroll_loaded.value && after.value && router.currentRoute.value.name == 'search') {
-            scroll();
-        }
-    })
-})
-
-onMounted(() => {
-    search_field.value.focus();
-})
+function scroll_handle(el) {
+    if (el.target.scrollTop + el.target.clientHeight >= el.target.scrollHeight - window.innerWidth && scroll_loaded.value && after.value) {
+        scroll();
+    }
+}
 
 onActivated(() => {
+    // Add the scroll event listener
+    let view = document.querySelector('.content-view');
+    view.addEventListener('scroll', scroll_handle)
+
+    // If the search field is empty, focus it
+    if (!search_field.value.value) {
+        search_field.value.focus()
+        return
+    }
+
+    // Scroll to the last position
     let pages = JSON.parse(localStorage.getItem("pages"));
     let this_page = pages.find(page => page.path == window.location.pathname);
     if (this_page) {
         document.querySelector('.content-view').scrollTop = parseInt(this_page.scroll);
     }
+})
 
-    // If the search field is empty, focus it
-    if (!search_field.value.value) {
-        search_field.value.focus()
-    }
+onDeactivated(() => {
+    // Disable scroll event listener
+    let view = document.querySelector('.content-view');
+    view.removeEventListener('scroll', scroll_handle);
 })
 </script>

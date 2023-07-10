@@ -11,7 +11,7 @@
         <div class="d-flex flex-column p-3 pt-0">
             <div class="d-flex flex-wrap mb-2">
                 <small class="text-4 me-2">commented by</small>
-                <small class="text-10" @click="open_user">{{ post.author }}</small>
+                <small class="text-10" @click.passive="open_user">{{ post.author }}</small>
             </div>
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center">
@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="d-flex">
-                    <button class="btn btn-touch text-4 py-0" @click="open_post">
+                    <button class="btn btn-touch text-4 py-0" @click.passive="open_post">
                         <span class="bi bi-arrow-right"></span>
                     </button>
                 </div>

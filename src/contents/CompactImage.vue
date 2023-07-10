@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex cover-50 position-relative bg-dark" :style="image_options.style">
-        <img :src="image_options.preview" class="position-relative theme-shadow cover-50" @click="fullscreen"
+        <img :src="image_options.preview" class="position-relative theme-shadow cover-50" @click.passive="fullscreen"
             loading="lazy">
     </div>
 </template>

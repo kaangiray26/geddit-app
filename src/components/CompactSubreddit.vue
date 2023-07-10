@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div class="d-flex">
-                <button class="btn btn-touch text-4" @click="open_subreddit">
+                <button class="btn btn-touch text-4" @click.passive="open_subreddit">
                     <span class="bi bi-arrow-right"></span>
                 </button>
             </div>

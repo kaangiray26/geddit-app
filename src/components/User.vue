@@ -19,13 +19,13 @@
                 </div>
             </div>
             <div class="d-flex align-items-center">
-                <button class="btn btn-touch px-0 me-3" @click="get_overview">
+                <button class="btn btn-touch px-0 me-3" @click.passive="get_overview">
                     <span class="text-4" :class="{ 'border-bottom': section == 'overview' }">Overview</span>
                 </button>
-                <button class="btn btn-touch px-0 me-3" @click="get_posts">
+                <button class="btn btn-touch px-0 me-3" @click.passive="get_posts">
                     <span class="text-4" :class="{ 'border-bottom': section == 'posts' }">Posts</span>
                 </button>
-                <button class="btn btn-touch px-0" @click="get_comments">
+                <button class="btn btn-touch px-0" @click.passive="get_comments">
                     <span class="text-4" :class="{ 'border-bottom': section == 'comments' }">Comments</span>
                 </button>
             </div>
@@ -41,7 +41,7 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount, onActivated } from 'vue';
+import { ref, onBeforeMount, onActivated, onDeactivated } from 'vue';
 import { useRouter } from 'vue-router';
 import { Geddit } from "/js/geddit.js";
 import CompactPost from './CompactPost.vue';
@@ -98,8 +98,6 @@ async function get_overview() {
     if (!response) {
         scroll_loaded.value = true;
     }
-
-    console.log(response);
 
     posts.value = response.items;
     after.value = response.after;
@@ -181,6 +179,12 @@ async function scroll() {
     scroll_loaded.value = true;
 }
 
+function scroll_handle(el) {
+    if (el.target.scrollTop + el.target.clientHeight >= el.target.scrollHeight - window.innerWidth && scroll_loaded.value && after.value) {
+        scroll();
+    }
+}
+
 onBeforeMount(() => {
     if (!router.currentRoute.value.params.id) {
         router.back();
@@ -189,21 +193,24 @@ onBeforeMount(() => {
 
     setup();
     get_overview();
-
-    // Add the scroll event listener
-    let view = document.querySelector('.content-view');
-    view.addEventListener('scroll', () => {
-        if (view.scrollTop + view.clientHeight >= view.scrollHeight - window.innerWidth && scroll_loaded.value && after.value && router.currentRoute.value.name == 'user') {
-            scroll();
-        }
-    })
 })
 
 onActivated(() => {
+    // Add the scroll event listener
+    let view = document.querySelector('.content-view');
+    view.addEventListener('scroll', scroll_handle)
+
+    // Scroll to the last position
     let pages = JSON.parse(localStorage.getItem("pages"));
     let this_page = pages.find(page => page.path == window.location.pathname);
     if (this_page) {
         document.querySelector('.content-view').scrollTop = parseInt(this_page.scroll);
     }
+})
+
+onDeactivated(() => {
+    // Disable scroll event listener
+    let view = document.querySelector('.content-view');
+    view.removeEventListener('scroll', scroll_handle);
 })
 </script>

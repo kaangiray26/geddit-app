@@ -2,7 +2,7 @@
     <div class="d-flex flex-column foreground p-3">
         <div class="d-flex align-items-center mb-2">
             <div class="input-group flex-fill">
-                <button id="button-addon1" type="button" class="btn btn-outline-4 text-4" @click="go_back">
+                <button id="button-addon1" type="button" class="btn btn-outline-4 text-4" @click.passive="go_back">
                     <span class="bi bi-arrow-left"></span>
                 </button>
                 <input v-model="text" type="text" class="search-bar form-control" placeholder="Search Subreddits"
@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="d-flex">
-                    <button class="btn btn-touch text-4" @click="open_subreddit(sub)">
+                    <button class="btn btn-touch text-4" @click.passive="open_subreddit(sub)">
                         <span class="bi bi-arrow-right"></span>
                     </button>
                 </div>

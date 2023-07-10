@@ -4,7 +4,7 @@
             <div class="d-flex flex-column p-3 pb-0">
                 <h6 class="text-break text-4 mb-2">{{ post.data.title }}</h6>
                 <div class="d-flex flex-wrap">
-                    <small class="text-11 me-2" @click="open_subreddit">{{ post.data.subreddit }}</small>
+                    <small class="text-11 me-2" @click.passive="open_subreddit">{{ post.data.subreddit }}</small>
                     <small class="text-4 me-2">{{ post.data.domain }}</small>
                     <small class="text-4">{{ format_date() }}</small>
                 </div>
@@ -19,7 +19,7 @@
         <div class="d-flex flex-column p-3 pt-0">
             <div class="d-flex flex-wrap mb-2">
                 <small class="text-4 me-2">posted by</small>
-                <small class="text-10" @click="open_user">{{ post.data.author }}</small>
+                <small class="text-10" @click.passive="open_user">{{ post.data.author }}</small>
             </div>
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center">
@@ -35,7 +35,10 @@
                     </div>
                 </div>
                 <div class="d-flex">
-                    <button class="btn btn-touch text-4 py-0" @click="go_back">
+                    <button class="btn btn-touch text-4 py-0" @click.passive="share">
+                        <span class="bi bi-share-fill"></span>
+                    </button>
+                    <button class="btn btn-touch text-4 py-0" @click.passive="go_back">
                         <span class="bi bi-arrow-left"></span>
                     </button>
                 </div>
@@ -48,6 +51,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { Share } from '@capacitor/share';
 import Placeholder from '/contents/Placeholder.vue';
 import FullText from '/contents/FullText.vue';
 import CompactImage from '/contents/CompactImage.vue';
@@ -71,8 +75,10 @@ const props = defineProps({
     }
 })
 
-async function open_post() {
-    router.push(`/post/${props.post.data.id}`);
+async function share() {
+    await Share.share({
+        url: "https://www.reddit.com" + props.post.data.permalink,
+    });
 }
 
 async function open_user() {

@@ -1,7 +1,7 @@
 <template>
-    <div class="d-flex flex-column foreground cover-all p-3">
+    <div class="d-flex flex-column background cover-all p-3">
         <h6 class="text-6 mb-3">Settings</h6>
-        <button class="btn btn-touch text-start" @click="open_gallery">
+        <button class="btn btn-touch text-start" @click.passive="open_gallery">
             <span class="bi bi-images me-3"></span>
             <span>Gallery</span>
         </button>
@@ -22,7 +22,7 @@
         <div class="d-flex flex-column text-4">
             <div></div>
             <span class="mb-2">Visit our GitHub Repo to learn how to build more apps with Geddit Library.</span>
-            <button type="button" class="btn btn-3 fs-6" @click="open_github">
+            <button type="button" class="btn btn-3 fs-6" @click.passive="open_github">
                 <span class="bi bi-github me-1"></span>
                 <span>GitHub</span>
             </button>

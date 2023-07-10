@@ -13,6 +13,7 @@
     "@capacitor/core": "^5.1.0",
     "@capacitor/filesystem": "^5.0.5",
     "@capacitor/haptics": "^5.0.5",
+    "@capacitor/local-notifications": "^5.0.5",
     "@capacitor/share": "^5.0.5",
     "@popperjs/core": "^2.11.8",
     "@vueuse/core": "^10.2.1",

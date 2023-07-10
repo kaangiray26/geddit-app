@@ -5,6 +5,7 @@
     width: 100% !important;
     height: auto !important;
     max-height: 50vh !important;
+    background-color: var(--background);
 }
 
 .vjs-tech {

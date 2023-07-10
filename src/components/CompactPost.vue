@@ -4,7 +4,7 @@
             <div class="d-flex flex-column p-3 pb-0">
                 <h6 class="text-break text-4 mb-2">{{ post.title }}</h6>
                 <div class="d-flex flex-wrap">
-                    <small class="text-11 me-2" @click="open_subreddit">{{ post.subreddit }}</small>
+                    <small class="text-11 me-2" @click.passive="open_subreddit">{{ post.subreddit }}</small>
                     <small class="text-4 me-2">{{ post.domain }}</small>
                     <small class="text-4">{{ format_date() }}</small>
                 </div>
@@ -19,7 +19,7 @@
         <div class="d-flex flex-column p-3 pt-0">
             <div class="d-flex flex-wrap">
                 <small class="text-4 me-2">posted by</small>
-                <small class="text-10" @click="open_user">{{ post.author }}</small>
+                <small class="text-10" @click.passive="open_user">{{ post.author }}</small>
             </div>
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center">
@@ -35,10 +35,10 @@
                     </div>
                 </div>
                 <div class="d-flex">
-                    <button class="btn btn-touch text-4 py-0" @click="share">
+                    <button class="btn btn-touch text-4 py-0" @click.passive="share">
                         <span class="bi bi-share-fill"></span>
                     </button>
-                    <button class="btn btn-touch text-4 py-0" @click="open_post">
+                    <button class="btn btn-touch text-4 py-0" @click.passive="open_post">
                         <span class="bi bi-arrow-right"></span>
                     </button>
                 </div>

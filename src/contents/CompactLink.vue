@@ -4,7 +4,7 @@
             <div class="d-flex flex-column p-3 pb-0">
                 <h6 class="text-break text-4 mb-2">{{ data.title }}</h6>
                 <div class="d-flex flex-wrap">
-                    <small class="text-11 me-2" @click="open_subreddit">{{ data.subreddit }}</small>
+                    <small class="text-11 me-2" @click.passive="open_subreddit">{{ data.subreddit }}</small>
                     <small class="text-4 me-2">{{ data.domain }}</small>
                     <small class="text-4">{{ format_date() }}</small>
                 </div>
@@ -22,7 +22,7 @@
                 </div>
                 <div v-if="type == 'image'" class="mt-2">
                     <div class="d-flex cover-50 position-relative bg-dark" :style="image_options.style">
-                        <img :src="image_options.preview" class="position-relative cover-50" @click="fullscreen"
+                        <img :src="image_options.preview" class="position-relative cover-50" @click.passive="fullscreen"
                             loading="lazy">
                     </div>
                 </div>
@@ -34,7 +34,7 @@
         <div class="d-flex flex-column p-3 pt-0">
             <div class="d-flex mb-2">
                 <small class="text-4 me-2">by</small>
-                <small class="text-10" @click="open_user">{{ data.author }}</small>
+                <small class="text-10" @click.passive="open_user">{{ data.author }}</small>
             </div>
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex">
@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <div class="d-flex">
-                    <button class="btn btn-touch text-4 py-0" @click="open_post">
+                    <button class="btn btn-touch text-4 py-0" @click.passive="open_post">
                         <span class="bi bi-arrow-right"></span>
                     </button>
                 </div>

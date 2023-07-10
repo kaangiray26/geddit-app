@@ -14,13 +14,13 @@
                                 <div class="d-flex position-absolute background opacity-75 cover-all rounded"></div>
                                 <div class="d-flex flex-column position-relative p-2">
                                     <div class="d-flex justify-content-start align-items-center">
-                                        <button class="btn btn-touch-border text-4 me-2" @click="hide">
+                                        <button class="btn btn-touch-border text-4 me-2" @click.passive="hide">
                                             <span class="bi bi-arrow-return-left"></span>
                                         </button>
-                                        <button class="btn btn-touch-border text-4 me-2" @click="comments">
+                                        <button class="btn btn-touch-border text-4 me-2" @click.passive="comments">
                                             <span class="bi bi-chat-fill"></span>
                                         </button>
-                                        <button class="btn btn-touch-border text-4 me-2" @click="share">
+                                        <button class="btn btn-touch-border text-4 me-2" @click.passive="share">
                                             <span class="bi bi-share-fill"></span>
                                         </button>
                                     </div>

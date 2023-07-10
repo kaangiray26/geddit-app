@@ -23,8 +23,9 @@
                     <small class="text-4 mx-2">·</small>
                     <small class="text-4">{{ format_active() }}</small>
                 </div>
-                <button v-show="!followed" type="button" class="btn btn-10 text-4" @click="follow">Follow</button>
-                <button v-show="followed" type="button" class="btn btn-3 text-4" @click="unfollow">Following</button>
+                <button v-show="!followed" type="button" class="btn btn-10 text-4" @click.passive="follow">Follow</button>
+                <button v-show="followed" type="button" class="btn btn-3 text-4"
+                    @click.passive="unfollow">Following</button>
             </div>
         </div>
         <ul class="list-group border-0 pt-0 mt-3">
@@ -38,7 +39,7 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount, onActivated } from 'vue';
+import { ref, onBeforeMount, onActivated, onDeactivated } from 'vue';
 import { useRouter } from 'vue-router';
 import { Geddit } from "/js/geddit.js";
 import Post from './CompactPost.vue';
@@ -175,6 +176,12 @@ async function scroll() {
     scroll_loaded.value = true;
 }
 
+function scroll_handle(el) {
+    if (el.target.scrollTop + el.target.clientHeight >= el.target.scrollHeight - window.innerWidth && scroll_loaded.value && after.value) {
+        scroll();
+    }
+}
+
 onBeforeMount(() => {
     if (!router.currentRoute.value.params.id) {
         router.back();
@@ -183,22 +190,26 @@ onBeforeMount(() => {
 
     get_subreddit();
     setup();
-
-    // Add the scroll event listener
-    let view = document.querySelector('.content-view');
-    view.addEventListener('scroll', () => {
-        if (view.scrollTop + view.clientHeight >= view.scrollHeight - window.innerWidth && scroll_loaded.value && after.value && router.currentRoute.value.name == 'subreddit') {
-            scroll();
-        }
-    })
 })
 
 onActivated(() => {
     check_followed();
+
+    // Add the scroll event listener
+    let view = document.querySelector('.content-view');
+    view.addEventListener('scroll', scroll_handle)
+
+    // Scroll to the last position
     let pages = JSON.parse(localStorage.getItem("pages"));
     let this_page = pages.find(page => page.path == window.location.pathname);
     if (this_page) {
         document.querySelector('.content-view').scrollTop = parseInt(this_page.scroll);
     }
+})
+
+onDeactivated(() => {
+    // Disable scroll event listener
+    let view = document.querySelector('.content-view');
+    view.removeEventListener('scroll', scroll_handle);
 })
 </script>

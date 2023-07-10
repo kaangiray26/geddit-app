@@ -7,7 +7,7 @@
                 <h6 class="dropdown-header">Options</h6>
             </li>
             <li>
-                <button class="btn btn-touch dropdown-item text-4" @click="refresh">Refresh</button>
+                <button class="btn btn-touch dropdown-item text-4" @click.passive="refresh">Refresh</button>
             </li>
         </ul>
     </div>
