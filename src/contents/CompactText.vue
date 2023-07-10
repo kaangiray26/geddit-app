@@ -1,5 +1,5 @@
 <template>
-    <div class="text-wrap text-break background text-truncate overflow-hidden vh-25 p-3">
+    <div v-show="text" class="text-wrap text-break background text-truncate overflow-hidden vh-25 p-3">
         <div class="text-4 text-post" v-html="text" />
     </div>
 </template>

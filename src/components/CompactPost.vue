@@ -130,12 +130,6 @@ async function get_type() {
     //     return
     // }
 
-    // text
-    if (props.post.is_self && props.post.selftext_html) {
-        type.value = "CompactText";
-        return
-    }
-
     // video
     if (props.post.domain == "v.redd.it") {
         type.value = "CompactVideo";
@@ -153,6 +147,14 @@ async function get_type() {
         type.value = "CompactEmbed";
         return
     }
+
+    // text
+    if (props.post.is_self) {
+        type.value = "CompactText";
+        return
+    }
+
+    console.log("Unsupported:", props.post);
 }
 
 get_type();

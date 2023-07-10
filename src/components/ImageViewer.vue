@@ -39,12 +39,11 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { Filesystem, Directory } from '@capacitor/filesystem';
-import { Share } from '@capacitor/share';
 import { CapacitorHttp } from '@capacitor/core';
 import { useRouter } from 'vue-router';
 import { Modal } from "bootstrap"
+import { Toast } from '@capacitor/toast';
 import Hammer from 'hammerjs';
-import { notify } from "/js/event.js"
 
 const router = useRouter();
 
@@ -122,7 +121,10 @@ async function download() {
     let fname = `${Date.now()}_${data.value.id}.jpg`;
 
     //Get image data
-    notify("Geddit", "Downloading " + data.value.id);
+    Toast.show({
+        text: "Downloading..."
+    })
+
     let response = await CapacitorHttp.get({
         url: data.value.src,
         responseType: 'blob',
@@ -134,7 +136,9 @@ async function download() {
         .catch(err => null);
 
     if (!response) {
-        notify("Geddit", "Download failed!");
+        await Toast.show({
+            text: "Download failed!"
+        })
         return
     };
 
@@ -146,7 +150,9 @@ async function download() {
         recursive: true
     })
         .then((res) => {
-            notify("Geddit", "Image saved to app gallery.");
+            Toast.show({
+                text: "Download complete: " + fname
+            })
         });
 }
 
