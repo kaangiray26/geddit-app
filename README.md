@@ -20,3 +20,11 @@
 
 ## Installation
 Download the APK from [GitHub Releases](https://github.com/kaangiray26/geddit-app/releases) and install it.
+
+## Screenshots
+<div align="center">
+    <img src="https://raw.githubusercontent.com/kaangiray26/geddit-app/main/images/screenshot_1.png" width=160>
+    <img src="https://raw.githubusercontent.com/kaangiray26/geddit-app/main/images/screenshot_2.png" width=160>
+    <img src="https://raw.githubusercontent.com/kaangiray26/geddit-app/main/images/screenshot_3.png" width=160>
+    <img src="https://raw.githubusercontent.com/kaangiray26/geddit-app/main/images/screenshot_4.png" width=160>
+</div>
