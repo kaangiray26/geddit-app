@@ -370,3 +370,7 @@ hr {
     counter-increment: number;
     content: counter(number)"/" attr(length);
 }
+
+.text-justify {
+    text-align: justify;
+}

@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex cover-50 position-relative bg-dark" :style="image_options.style">
+    <div class="d-flex cover-50 position-relative background" :style="image_options.style">
         <img :src="image_options.preview" class="position-relative theme-shadow cover-50" loading="lazy"
             @click.passive="open_link">
     </div>
