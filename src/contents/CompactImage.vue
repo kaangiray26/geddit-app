@@ -1,7 +1,8 @@
 <template>
     <div class="d-flex cover-50 position-relative background" :style="image_options.style">
-        <img :src="image_options.preview" class="position-relative theme-shadow cover-50" @click.passive="fullscreen"
-            loading="lazy">
+        <img :src="image_options.preview" class="position-relative theme-shadow cover-50" loading="lazy"
+            @touchstart.passive="full = true" @touchcancel.passive="full = false" @touchmove="full = false"
+            @touchend.passive="fullscreen">
     </div>
 </template>
 
@@ -17,6 +18,7 @@ const props = defineProps({
 })
 
 const image_options = ref({});
+const full = ref(false);
 
 async function get_sources() {
     if (!props.data.preview) {
@@ -40,6 +42,7 @@ async function get_sources() {
 }
 
 async function fullscreen() {
+    if (!full.value) return;
     open_image_viewer({
         src: image_options.value.src,
         title: props.data.title,

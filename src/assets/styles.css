@@ -35,6 +35,10 @@ iframe {
     position: relative !important;
 }
 
+hr {
+    color: var(--background);
+}
+
 #app {
     height: 100%;
 }
@@ -338,19 +342,20 @@ iframe {
 }
 
 .wrapper {
-    display: -webkit-box;
     overflow-x: auto;
     overflow-y: hidden;
-    scroll-snap-type: x mandatory;
+    display: -webkit-box;
     counter-reset: number;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
 }
 
 .wrapper>div {
     width: 100%;
     height: 100%;
+    position: relative;
     scroll-snap-align: start;
     scroll-snap-stop: always;
-    position: relative;
 }
 
 .wrapper>div>img {

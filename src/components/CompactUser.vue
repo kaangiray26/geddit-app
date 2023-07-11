@@ -1,5 +1,5 @@
 <template>
-    <li class="list-group-item foreground border-0 rounded m-3 mt-0 p-0">
+    <li class="list-group-item foreground border-0 rounded m-3 mt-0 p-0" @click.passive="open_user">
         <div class="d-flex justify-content-between align-items-center p-3">
             <div class="d-flex align-items-center">
                 <div>
@@ -13,11 +13,6 @@
                     <small class="text-4">{{ format_karma() }}</small>
                     <small v-if="post.is_suspended" class="text-4">suspended</small>
                 </div>
-            </div>
-            <div class="d-flex">
-                <button class="btn btn-touch text-4" @click.passive="open_user">
-                    <span class="bi bi-arrow-right"></span>
-                </button>
             </div>
         </div>
     </li>

@@ -17,7 +17,6 @@
 import { ref, computed, onBeforeMount, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { App } from '@capacitor/app';
-import { LocalNotifications } from '@capacitor/local-notifications'
 import Toolbar from './Toolbar.vue';
 import ImageViewer from './ImageViewer.vue';
 import GalleryViewer from './GalleryViewer.vue';

@@ -1,7 +1,8 @@
 <template>
     <div class="d-flex cover-50 position-relative background"
         :style="{ 'aspect-ratio': dimensions.width + '/' + dimensions.height + '!important' }">
-        <video ref="video" class="video-js v-compact position-relative theme-shadow" @touchend="fullscreen">
+        <video ref="video" class="video-js v-compact position-relative theme-shadow" @touchstart.passive="full = true"
+            @touchcancel.passive="full = false" @touchmove="full = false" @touchend.passive="fullscreen">
         </video>
         <div v-if="play_promise" class="d-flex justify-content-center align-items-center cover-all position-absolute">
             <div class="d-flex circle background p-2">
@@ -29,9 +30,11 @@
 import { ref, onBeforeUnmount, onBeforeMount, onMounted } from 'vue';
 import videojs from 'video.js';
 import { useIntersectionObserver } from '@vueuse/core'
+import Hammer from 'hammerjs';
 
 const video = ref(null);
 const player = ref(null);
+const hammer = ref(null);
 const dimensions = ref({
     width: 0,
     height: 0
@@ -50,6 +53,8 @@ const props = defineProps({
         required: true
     }
 })
+
+const full = ref(false);
 
 async function mute() {
     video.value.muted = !video.value.muted;
@@ -76,9 +81,8 @@ async function reset() {
 }
 
 async function fullscreen() {
-    if (player.value.isFullscreen()) {
-        return
-    }
+    if (!full.value) return;
+    if (player.value.isFullscreen()) return;
 
     // Go fullscreen and add controls
     player.value.requestFullscreen();
@@ -129,6 +133,7 @@ async function setup() {
             player.value.addClass('v-fullscreen');
             player.value.controls(true);
             is_fullscreen.value = true;
+            hammer.value.get('swipe').set({ enable: true });
             return
         }
 
@@ -137,6 +142,7 @@ async function setup() {
         player.value.addClass('v-compact');
         player.value.controls(false);
         is_fullscreen.value = false;
+        hammer.value.get('swipe').set({ enable: false });
     })
 
 
@@ -161,6 +167,11 @@ async function setup() {
 // setup
 onMounted(() => {
     setup();
+    hammer.value = new Hammer(video.value);
+    hammer.value.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL, enable: false });
+    hammer.value.on('swipeup swipedown', () => {
+        player.value.exitFullscreen();
+    })
 })
 
 onBeforeMount(() => {

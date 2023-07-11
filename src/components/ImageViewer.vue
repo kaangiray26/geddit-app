@@ -182,11 +182,19 @@ onMounted(() => {
     let tap = new Hammer.Tap({ event: 'tap' });
     let pinch = new Hammer.Pinch({ event: 'pinch' });
     let pan = new Hammer.Pan({ event: 'pan' });
+    let swipe = new Hammer.Swipe({ direction: Hammer.DIRECTION_VERTICAL });
 
-    hammer.value.add([doubletap, tap, pinch, pan]);
+    hammer.value.add([swipe, doubletap, tap, pinch, pan]);
+    hammer.value.get('swipe').recognizeWith(pan);
     hammer.value.get('tap').requireFailure('doubletap');
     hammer.value.get('pan').dropRecognizeWith('pinch');
     hammer.value.get('pinch').dropRecognizeWith('pan');
+
+    // Swipe
+    hammer.value.on('swipeup swipedown', () => {
+        if (get_scale() != 1) return;
+        hide();
+    })
 
     // Pan
     hammer.value.on('pan', (e) => {
