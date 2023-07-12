@@ -8,12 +8,12 @@
                     <small v-if="post.stickied" class="text-4 me-2">📌</small>
                     <small class="text-4">{{ format_date() }}</small>
                 </div>
-                <h6 class="fw-bold text-break text-6 mb-2">{{ post.title }}</h6>
+                <h6 class="fw-bold text-break text-6 mb-2" :class="{ 'text-truncate': props.hidden }">{{ post.title }}</h6>
             </div>
             <div class="d-flex px-3 mb-2" v-if="post.over_18">
                 <span class="badge bg-11">NSFW</span>
             </div>
-            <div>
+            <div :class="{ 'd-none': props.hidden }">
                 <component :is="types[type]" :data="post" />
             </div>
         </div>
@@ -36,8 +36,11 @@
                 </div>
             </div>
             <div class="d-flex">
-                <button class="btn btn-touch text-4 me-2" @click.passive="share">
+                <button class="btn btn-touch-border text-4 me-2" @click.passive="share">
                     <span class="bi bi-share-fill"></span>
+                </button>
+                <button class="btn btn-touch-border text-4 me-2" @click="$emit('hide_post', props.post.permalink)">
+                    <span class="bi bi-eye-slash"></span>
                 </button>
                 <button class="btn btn-touch-border text-4" @click.passive="open_post">
                     <span class="bi bi-arrow-right"></span>
@@ -75,7 +78,11 @@ const props = defineProps({
     post: {
         type: Object,
         required: true
-    }
+    },
+    hidden: {
+        type: Boolean,
+        required: true
+    },
 })
 
 async function share() {
