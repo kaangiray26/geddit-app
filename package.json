@@ -34,6 +34,7 @@
     "@capacitor/cli": "^5.1.0",
     "@vitejs/plugin-vue": "^4.2.3",
     "sass": "^1.63.6",
+    "terser": "^5.19.0",
     "vite": "^4.3.9"
   }
 }
