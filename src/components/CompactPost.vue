@@ -1,5 +1,5 @@
 <template>
-    <li class="list-group-item foreground border-0 rounded m-3 mt-0 p-0">
+    <li class="list-group-item foreground border-0 rounded m-3 mt-0 p-0" @scroll="onScroll">
         <div class="d-flex flex-column mb-2">
             <div class="d-flex flex-column p-3 pb-0">
                 <div class="d-flex flex-wrap">
@@ -101,6 +101,13 @@ async function open_user() {
 
 async function open_subreddit() {
     router.push(`/r/${props.post.subreddit}`);
+}
+
+async function onScroll({ target: { scrollTop, clientHeight, scrollHeight } }) {
+    console.log('scrolling')
+    if (scrollTop + clientHeight >= scrollHeight) {
+        console.log(props.post.permalink)
+    }
 }
 
 // Return when the post was created

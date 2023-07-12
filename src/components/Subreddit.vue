@@ -29,7 +29,8 @@
             </div>
         </div>
         <ul class="list-group border-0 pt-0 mt-3">
-            <Post v-for="post in posts" :post="post.data" />
+            <Post v-for="post in posts" :post="post.data" :hidden="globalHiddenPosts.includes(post.data.permalink)"
+                @hide_post="hide_post" />
         </ul>
         <div v-if="!scroll_loaded" class="progress " role="progressbar" aria-label="Basic example" aria-valuenow="0"
             aria-valuemin="0" aria-valuemax="100">
@@ -51,6 +52,8 @@ const topbar = ref(null);
 
 const posts = ref([]);
 const after = ref(null);
+
+const globalHiddenPosts = ref(JSON.parse(localStorage.getItem("hidden_posts")) ?? []);
 
 const data = ref(null);
 const icon = ref(null);
@@ -174,6 +177,28 @@ async function scroll() {
     after.value = response.after;
 
     scroll_loaded.value = true;
+}
+
+
+async function hide_post(postPermalink) {
+    // this may cause performance issues, need to test on a daily basis and then move this to a parent container
+    let hiddenPosts = JSON.parse(localStorage.getItem("hidden_posts"));
+    // init hiddenPosts as an empty array if it doesn't exist
+    if (!hiddenPosts) {
+        hiddenPosts = [];
+    }
+    // add post to hiddenPosts array if it doesn't exist
+    if (!hiddenPosts.includes(postPermalink)) {
+        hiddenPosts.push(postPermalink);
+        localStorage.setItem("hidden_posts", JSON.stringify(hiddenPosts));
+        // hide post
+    } else {
+        // remove post from hiddenPosts array
+        hiddenPosts = hiddenPosts.filter((post) => post !== postPermalink);
+        localStorage.setItem("hidden_posts", JSON.stringify(hiddenPosts));
+        // unhide post
+    }
+    globalHiddenPosts.value = hiddenPosts;
 }
 
 function scroll_handle(el) {

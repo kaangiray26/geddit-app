@@ -6,7 +6,8 @@
     </div>
     <TopBar ref="topbar" subreddit="Popular" @params_changed="params_changed" />
     <ul class="list-group border-0 pt-0 mt-3">
-        <Post v-for="post in posts" :post="post.data" :hidden="globalHiddenPosts.includes(post.data.permalink)" @hide_post="hide_post"/>
+        <Post v-for="post in posts" :post="post.data" :hidden="globalHiddenPosts.includes(post.data.permalink)"
+            @hide_post="hide_post" />
     </ul>
     <div v-if="!scroll_loaded" class="progress " role="progressbar" aria-label="Basic example" aria-valuenow="0"
         aria-valuemin="0" aria-valuemax="100">
@@ -89,9 +90,8 @@ async function hide_post(postPermalink) {
     if (!hiddenPosts) {
         hiddenPosts = [];
     }
-    console.log(hiddenPosts.includes(postPermalink))
     // add post to hiddenPosts array if it doesn't exist
-    if (!hiddenPosts.includes(postPermalink)){
+    if (!hiddenPosts.includes(postPermalink)) {
         hiddenPosts.push(postPermalink);
         localStorage.setItem("hidden_posts", JSON.stringify(hiddenPosts));
         // hide post

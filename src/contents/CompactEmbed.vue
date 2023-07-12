@@ -1,6 +1,7 @@
 <template>
     <div class="embed-source ms-3 text-white">{{ props.data.media?.type ?? '' }}</div>
-    <div :class="{ 'py-2 px-3' : (props.data.media?.type == 'twitter.com')}" class="d-flex position-relative border border-white p-1 mx-3 border-2 text-white" v-html="embed_options.html" />
+    <div :class="{ 'py-2 px-3': (props.data.media?.type == 'twitter.com') }"
+        class="d-flex position-relative border border-white p-1 mx-3 border-2 text-white" v-html="embed_options.html" />
 </template>
 
 <script setup>
