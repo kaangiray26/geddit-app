@@ -5,6 +5,7 @@
                 <div class="d-flex flex-wrap">
                     <small class="text-11 me-2" @click.passive="open_subreddit">{{ post.subreddit }}</small>
                     <small class="text-4 me-2">{{ post.domain }}</small>
+                    <small v-if="post.stickied" class="text-4 me-2">📌</small>
                     <small class="text-4">{{ format_date() }}</small>
                 </div>
                 <h6 class="fw-bold text-break text-6 mb-2">{{ post.title }}</h6>
