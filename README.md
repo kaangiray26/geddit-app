@@ -28,3 +28,6 @@ Download the APK from [GitHub Releases](https://github.com/kaangiray26/geddit-ap
     <img src="https://raw.githubusercontent.com/kaangiray26/geddit-app/main/images/screenshot_3.png" width=160>
     <img src="https://raw.githubusercontent.com/kaangiray26/geddit-app/main/images/screenshot_4.png" width=160>
 </div>
+
+## Are you a developer?
+You can use the heart of this project, the [Geddit Library](https://github.com/kaangiray26/geddit-app/blob/main/src/js/geddit.js), to build your own read-only Reddit applications. Well, at least until Reddit decides to terminate their RSS/JSON feeds.
