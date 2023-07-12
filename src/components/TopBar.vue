@@ -19,6 +19,10 @@
                     <li>
                         <button class="btn btn-touch dropdown-item text-4" @click.passive="refresh">Refresh</button>
                     </li>
+                    <li>
+                        <button class="btn btn-touch dropdown-item text-4" @click.passive="clearHidden">Clear Hidden
+                            Posts</button>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -198,4 +202,9 @@ onMounted(() => {
 onBeforeUnmount(() => {
     modal.value.dispose();
 })
+
+
+async function clearHidden() {
+    localStorage.removeItem("hidden_posts");
+}
 </script>
