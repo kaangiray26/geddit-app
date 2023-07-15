@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex justify-content-between align-items-center foreground">
+    <div class="d-flex justify-content-between align-items-center foreground snap">
         <div class="d-flex ms-3">
             <h6 v-show="props.subreddit" class="text-6 text-capitalize me-2 mb-0">{{ props.subreddit }}</h6>
             <span class="badge bg-10">{{ sort }}</span>
@@ -20,7 +20,7 @@
                         <button class="btn btn-touch dropdown-item text-4" @click.passive="refresh">Refresh</button>
                     </li>
                     <li>
-                        <button class="btn btn-touch dropdown-item text-4" @click.passive="clearHidden">Clear Hidden
+                        <button class="btn btn-touch dropdown-item text-4" @click.passive="clear_hidden">Clear Hidden
                             Posts</button>
                     </li>
                 </ul>
@@ -60,6 +60,7 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { clear_hidden } from '/js/store.js';
 import { useRouter } from 'vue-router';
 import { Modal } from "bootstrap"
 
@@ -202,9 +203,4 @@ onMounted(() => {
 onBeforeUnmount(() => {
     modal.value.dispose();
 })
-
-
-async function clearHidden() {
-    localStorage.removeItem("hidden_posts");
-}
 </script>

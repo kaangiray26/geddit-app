@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex flex-column foreground p-3">
+    <div class="d-flex flex-column foreground p-3 snap">
         <div class="d-flex align-items-center mb-2">
             <div class="input-group flex-fill">
                 <button id="button-addon1" type="button" class="btn btn-outline-4 text-4" @click.passive="go_back">
@@ -16,7 +16,8 @@
                 <h6 class="fw-bold text-break text-6 m-0">Explore and follow some subreddits!</h6>
             </div>
         </li>
-        <li v-for="sub in subreddits" class="list-group-item foreground border-0 rounded m-3 mt-0 p-0">
+        <li v-for="sub in subreddits" class="list-group-item foreground border-0 rounded m-3 mt-0 p-0"
+            @click.passive="open_subreddit(sub)">
             <div class="d-flex justify-content-between align-items-center p-3">
                 <div class="d-flex align-items-center">
                     <div class="me-2">
@@ -27,11 +28,6 @@
                             <h6 class="text-break text-11 m-0 me-2">{{ sub.display_name }}</h6>
                         </div>
                     </div>
-                </div>
-                <div class="d-flex">
-                    <button class="btn btn-touch text-4" @click.passive="open_subreddit(sub)">
-                        <span class="bi bi-arrow-right"></span>
-                    </button>
                 </div>
             </div>
         </li>
@@ -50,7 +46,6 @@ const _subreddits = ref([]);
 
 const text = ref("")
 const fuse = ref(null);
-const mounted = ref(false);
 
 async function search() {
     let query = text.value;
@@ -62,20 +57,15 @@ async function search() {
     subreddits.value = fuse.value.search(query).map(item => item.item);
 }
 
-
 async function go_back() {
     // clear text
     text.value = "";
     router.back();
 }
 
-async function get_subreddits(_mounted = false) {
+async function get_subreddits() {
     subreddits.value = JSON.parse(localStorage.getItem("subreddits"));
     _subreddits.value = subreddits.value;
-
-    if (_mounted) {
-        mounted.value = true;
-    }
 }
 
 async function open_subreddit(sub) {
@@ -83,7 +73,6 @@ async function open_subreddit(sub) {
 }
 
 onBeforeMount(() => {
-    get_subreddits(true);
     fuse.value = new Fuse(subreddits.value, {
         threshold: 0.3,
         keys: ['display_name'],
@@ -91,8 +80,6 @@ onBeforeMount(() => {
 })
 
 onActivated(() => {
-    if (mounted.value) {
-        get_subreddits();
-    }
+    get_subreddits();
 })
 </script>

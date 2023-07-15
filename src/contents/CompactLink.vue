@@ -1,5 +1,4 @@
 <template>
-    <div class="embed-source ms-3 text-white">{{ props.data.media?.type ?? '' }}</div>
     <div class="d-flex cover-50 position-relative background" :style="image_options.style">
         <img :src="image_options.preview" class="position-relative theme-shadow cover-50" loading="lazy"
             @click.passive="open_link">

@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex flex-column foreground p-3">
+    <div class="d-flex flex-column foreground p-3 snap">
         <div class="d-flex align-items-center mb-3">
             <div class="input-group flex-fill">
                 <button id="button-addon1" type="button" class="btn btn-outline-4 text-4" @click.passive="go_back">

@@ -65,8 +65,13 @@ hr {
 
 .content-view {
     flex: 1 1 auto;
-    overflow-y: scroll;
     overflow-x: hidden;
+    overflow-y: scroll;
+    scroll-snap-type: y proximity;
+}
+
+.snap {
+    scroll-snap-align: center;
 }
 
 .player-view {
@@ -371,6 +376,6 @@ hr {
     content: counter(number)"/" attr(length);
 }
 
-.text-justify {
-    text-align: justify;
+.sticky::before {
+    content: "📌";
 }

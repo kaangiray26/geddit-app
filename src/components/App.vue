@@ -16,6 +16,7 @@
 <script setup>
 import { ref, computed, onBeforeMount, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { save_hidden } from '/js/store.js';
 import { App } from '@capacitor/app';
 import Toolbar from './Toolbar.vue';
 import ImageViewer from './ImageViewer.vue';
@@ -70,6 +71,9 @@ onBeforeMount(() => {
     window.addEventListener("gallery_viewer", (event) => {
         gallery_viewer.value.handle(event.detail);
     })
+
+    // Add event listeners for saving the store
+    window.onbeforeunload = save_hidden;
 })
 
 onMounted(() => {

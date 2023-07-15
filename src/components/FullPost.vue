@@ -1,11 +1,11 @@
 <template>
     <li class="list-group-item foreground border-0 m-0 p-0">
         <div class="d-flex flex-column mb-2">
-            <div class="d-flex flex-column p-3 pb-0">
-                <div class="d-flex flex-wrap">
+            <div class="d-flex flex-column p-3 pb-0" :class="{ 'sticky': post.stickied }">
+                <div class="d-flex flex-wrap align-items-center">
                     <small class="text-11 me-2" @click.passive="open_subreddit">{{ post.data.subreddit }}</small>
                     <small class="text-4 me-2">{{ post.data.domain }}</small>
-                    <small class="text-4">{{ format_date() }}</small>
+                    <small class="text-4 me-2">{{ format_date() }}</small>
                 </div>
                 <h6 class="fw-bold text-break text-6 mb-2">{{ post.data.title }}</h6>
             </div>
@@ -35,10 +35,14 @@
                 </div>
             </div>
             <div class="d-flex">
-                <button class="btn btn-touch text-4 me-2" @click.passive="share">
+                <button class="btn btn-touch bg-3 text-4 me-2" @click.passive="share">
                     <span class="bi bi-share-fill"></span>
                 </button>
-                <button class="btn btn-touch-border text-4" @click.passive="go_back">
+                <button class="btn btn-touch bg-3 text-4 me-2" @click.passive="hide_post">
+                    <span class="bi"
+                        :class="{ 'bi-eye-fill': store.hidden.includes(post.data.id), 'bi-eye-slash-fill': !store.hidden.includes(post.data.id) }"></span>
+                </button>
+                <button class="btn btn-touch bg-3 text-4" @click.passive="go_back">
                     <span class="bi bi-arrow-left"></span>
                 </button>
             </div>
@@ -51,6 +55,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { Share } from '@capacitor/share';
+import { store, hide, unhide } from '/js/store.js'
 import Placeholder from '/contents/Placeholder.vue';
 import FullText from '/contents/FullText.vue';
 import CompactImage from '/contents/CompactImage.vue';
@@ -156,9 +161,18 @@ async function get_type() {
     }
 }
 
+async function hide_post() {
+    if (!store.hidden.includes(props.post.data.id)) {
+        hide(props.post.data.id)
+        return
+    }
+    unhide(props.post.data.id)
+}
+
 async function go_back() {
     router.back();
 }
 
+// onBeforeMount replacement
 get_type();
 </script>

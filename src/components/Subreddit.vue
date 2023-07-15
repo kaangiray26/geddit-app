@@ -29,8 +29,7 @@
             </div>
         </div>
         <ul class="list-group border-0 pt-0 mt-3">
-            <Post v-for="post in posts" :post="post.data" :hidden="globalHiddenPosts.includes(post.data.permalink)"
-                @hide_post="hide_post" class="post-element" :data-permalink="post.data.permalink" />
+            <Post v-for="post in posts" :post="post.data" />
         </ul>
         <div v-if="!scroll_loaded" class="progress " role="progressbar" aria-label="Basic example" aria-valuenow="0"
             aria-valuemin="0" aria-valuemax="100">
@@ -52,8 +51,6 @@ const topbar = ref(null);
 
 const posts = ref([]);
 const after = ref(null);
-
-const globalHiddenPosts = ref(JSON.parse(localStorage.getItem("hidden_posts")) ?? []);
 
 const data = ref(null);
 const icon = ref(null);
@@ -180,44 +177,7 @@ async function scroll() {
 }
 
 
-async function hide_post(postPermalink, force, silent) {
-    // this may cause performance issues, need to test on a daily basis and then move this to a parent container
-    let hiddenPosts = JSON.parse(localStorage.getItem("hidden_posts"));
-    // init hiddenPosts as an empty array if it doesn't exist
-    if (!hiddenPosts) {
-        hiddenPosts = [];
-    }
-    // add post to hiddenPosts array if it doesn't exist
-    if (!hiddenPosts.includes(postPermalink)) {
-        hiddenPosts.push(postPermalink);
-        localStorage.setItem("hidden_posts", JSON.stringify(hiddenPosts));
-        // hide post
-        if (silent != true) globalHiddenPosts.value = hiddenPosts;
-
-    } else if (force != true) {
-        // remove post from hiddenPosts array
-        hiddenPosts = hiddenPosts.filter((post) => post !== postPermalink);
-        localStorage.setItem("hidden_posts", JSON.stringify(hiddenPosts));
-        // unhide post
-        globalHiddenPosts.value = hiddenPosts
-    }
-}
-
-async function handlePostsInViewport() {
-    const postElements = document.querySelectorAll('.post-element.post-not-hidden');
-
-    postElements.forEach((postElement, index) => {
-        const rect = postElement.getBoundingClientRect();
-        if (rect.bottom < 0) {
-            // The post element is above the viewport
-            // Add your logic here
-            hide_post(postElement.dataset.permalink, true, true);
-        }
-    });
-}
-
 function scroll_handle(el) {
-    handlePostsInViewport();
     if (el.target.scrollTop + el.target.clientHeight >= el.target.scrollHeight - window.innerWidth && scroll_loaded.value && after.value) {
         scroll();
     }
