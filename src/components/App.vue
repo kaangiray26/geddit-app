@@ -55,7 +55,7 @@ async function back_handler() {
         if (!should_exit.value) {
             should_exit.value = true;
             await Toast.show({
-                text: "Press again to exit.",
+                text: "Press back again to exit",
                 duration: "short"
             })
             setTimeout(async () => {
