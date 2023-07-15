@@ -15,7 +15,7 @@
                 <span class="badge bg-11">NSFW</span>
             </div>
             <div :hidden="store.hidden.includes(post.id)">
-                <component :is="types[type]" :data="post" />
+                <component :is="types[type]" :data="post" :settings="store.settings" />
             </div>
         </div>
         <div class="d-flex justify-content-between align-items-center pb-3 px-3">

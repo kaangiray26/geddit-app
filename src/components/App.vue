@@ -76,7 +76,7 @@ onBeforeMount(() => {
     window.onbeforeunload = save_hidden;
 
     // Set default title size
-    document.body.title_size = localStorage.getItem("title_size") || "small";
+    document.body.title_size = JSON.parse(localStorage.getItem("title_size")) || "small";
 
 })
 

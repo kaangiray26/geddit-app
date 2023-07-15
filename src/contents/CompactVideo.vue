@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref, onBeforeUnmount, onBeforeMount, onMounted } from 'vue';
+import { ref, onBeforeUnmount, onBeforeMount, onMounted, onDeactivated } from 'vue';
 import videojs from 'video.js';
 import { useIntersectionObserver } from '@vueuse/core'
 import Hammer from 'hammerjs';
@@ -51,10 +51,15 @@ const props = defineProps({
     data: {
         type: Object,
         required: true
+    },
+    settings: {
+        type: Object,
+        required: false
     }
 })
 
 const full = ref(false);
+const should_play = ref(false);
 
 async function mute() {
     video.value.muted = !video.value.muted;
@@ -85,6 +90,7 @@ async function fullscreen() {
     if (player.value.isFullscreen()) return;
 
     // Go fullscreen and add controls
+    full.value = false;
     player.value.requestFullscreen();
 }
 
@@ -130,6 +136,26 @@ async function setup() {
                 type: 'application/vnd.apple.mpegURL'
             }
         ]
+    }, () => {
+        let child = player.value.posterImage.el_.lastChild.lastChild;
+        child.ontouchstart = () => {
+            should_play.value = true;
+        }
+
+        child.ontouchcancel = () => {
+            should_play.value = false;
+        }
+
+        child.ontouchmove = () => {
+            should_play.value = false;
+        }
+
+        child.ontouchend = () => {
+            if (should_play.value) {
+                should_play.value = false;
+                play();
+            }
+        }
     });
 
     player.value.on('fullscreenchange', () => {
@@ -182,7 +208,7 @@ onMounted(() => {
 
 onBeforeMount(() => {
     useIntersectionObserver(video, ([{ isIntersecting }]) => {
-        if (isIntersecting) {
+        if (isIntersecting && props.settings.autoplay) {
             play();
             return
         }
@@ -194,5 +220,9 @@ onBeforeMount(() => {
 
 onBeforeUnmount(() => {
     player.value.dispose();
+})
+
+onDeactivated(() => {
+    reset();
 })
 </script>

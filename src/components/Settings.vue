@@ -1,19 +1,34 @@
 <template>
     <div class="d-flex flex-column background cover-all p-3">
-        <h5 class="text-6 mb-3">Settings</h5>
-        <div class="mb-2">
-            <button class="btn btn-3 fs-6" @click.passive="open_gallery">
-                <span class="bi bi-images me-1"></span>
-                <span>Gallery</span>
+        <h5 class="text-6">Settings</h5>
+        <button class="btn btn-10 fs-6 mb-3" @click.passive="open_gallery">
+            <span class="bi bi-images me-1"></span>
+            <span>Gallery</span>
+        </button>
+        <h6 class="text-4">Autoplay</h6>
+        <div class="dropdown d-flex flex-column mb-3">
+            <button class="btn btn-3 fs-6 d-flex justify-content-between align-items-center dropdown-toggle" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="me-1">Default:</span>
+                <span class="badge bg-6 text-capitalize text-black">{{ store.settings.autoplay }}</span>
             </button>
+            <ul class="dropdown-menu dropdown-menu-end bg-3">
+                <li @click="change_autoplay(true)">
+                    <span class="dropdown-item text-4">True</span>
+                </li>
+                <li @click="change_autoplay(false)">
+                    <span class="dropdown-item text-4">False</span>
+                </li>
+            </ul>
         </div>
         <h6 class="text-4">Title Font Size</h6>
-        <div class="dropdown">
-            <button class="btn btn-3 fs-6 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <div class="dropdown d-flex flex-column">
+            <button class="btn btn-3 fs-6 d-flex justify-content-between align-items-center dropdown-toggle" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="me-1">Default:</span>
-                <span class="badge bg-10 text-capitalize">{{ title_size }}</span>
+                <span class="badge bg-6 text-capitalize text-black">{{ store.settings.title_size }}</span>
             </button>
-            <ul class="dropdown-menu bg-3">
+            <ul class="dropdown-menu dropdown-menu-end bg-3">
                 <li @click="change_title_size('small')">
                     <span class="dropdown-item text-4">Small</span>
                 </li>
@@ -52,10 +67,12 @@
 
 <script setup>
 import { ref } from "vue";
+import { store } from '/js/store.js';
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 const title_size = ref("small");
+const autoplay = ref(true);
 
 async function open_github() {
     window.open("https://github.com/kaangiray26/geddit-app", "_blank");
@@ -65,12 +82,15 @@ async function open_gallery() {
     router.push("/gallery");
 }
 
-async function change_title_size(size) {
-    title_size.value = size;
-    localStorage.setItem("title_size", size);
+async function change_title_size(value) {
+    title_size.value = value;
+    localStorage.setItem("title_size", JSON.stringify(value));
     router.go();
 }
 
-// onBeforeMount replacement
-title_size.value = localStorage.getItem("title_size") || "small";
+async function change_autoplay(value) {
+    autoplay.value = value;
+    localStorage.setItem("autoplay", JSON.stringify(value));
+    router.go();
+}
 </script>
