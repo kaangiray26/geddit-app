@@ -1,18 +1,19 @@
 <template>
-    <li class="list-group-item foreground border-0 rounded m-3 mt-0 p-0">
+    <li class="list-group-item foreground border-0 rounded m-3 mt-0 p-0 snap">
         <div class="d-flex flex-column mb-2">
-            <div class="d-flex flex-column p-3 pb-0">
-                <div class="d-flex flex-wrap">
+            <div class="d-flex flex-column p-3 pb-0" :class="{ 'sticky': post.stickied }">
+                <div class="d-flex flex-wrap align-items-center">
                     <small class="text-11 me-2" @click.passive="open_subreddit">{{ post.subreddit }}</small>
                     <small class="text-4 me-2">{{ post.domain }}</small>
-                    <small class="text-4">{{ format_date() }}</small>
+                    <small class="text-4 me-2">{{ format_date() }}</small>
                 </div>
-                <h6 class="fw-bold text-break text-6 mb-2">{{ post.title }}</h6>
+                <h6 class="fw-bold text-break text-6 mb-2" :class="{ 'text-truncate': store.hidden.includes(post.id) }">{{
+                    post.title }}</h6>
             </div>
             <div class="d-flex px-3 mb-2" v-if="post.over_18">
                 <span class="badge bg-11">NSFW</span>
             </div>
-            <div>
+            <div :hidden="store.hidden.includes(post.id)">
                 <component :is="types[type]" :data="post" />
             </div>
         </div>
@@ -35,10 +36,14 @@
                 </div>
             </div>
             <div class="d-flex">
-                <button class="btn btn-touch text-4 me-2" @click.passive="share">
+                <button class="btn btn-touch bg-3 text-4 me-2" @click.passive="share">
                     <span class="bi bi-share-fill"></span>
                 </button>
-                <button class="btn btn-touch-border text-4" @click.passive="open_post">
+                <button class="btn btn-touch bg-3 text-4 me-2" @click.passive="hide_post">
+                    <span class="bi"
+                        :class="{ 'bi-eye-fill': store.hidden.includes(post.id), 'bi-eye-slash-fill': !store.hidden.includes(post.id) }"></span>
+                </button>
+                <button class="btn btn-touch bg-3 text-4" @click.passive="open_post">
                     <span class="bi bi-arrow-right"></span>
                 </button>
             </div>
@@ -48,6 +53,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import { store, hide, unhide } from '/js/store.js'
 import { useRouter } from 'vue-router';
 import { Share } from '@capacitor/share';
 import Placeholder from '/contents/Placeholder.vue';
@@ -59,6 +65,7 @@ import CompactLink from '/contents/CompactLink.vue';
 import CompactGallery from '/contents/CompactGallery.vue';
 
 const router = useRouter();
+
 const type = ref(null);
 const types = {
     Placeholder,
@@ -81,6 +88,13 @@ async function share() {
     await Share.share({
         url: "https://www.reddit.com" + props.post.permalink,
     });
+}
+async function hide_post() {
+    if (!store.hidden.includes(props.post.id)) {
+        hide(props.post.id)
+        return
+    }
+    unhide(props.post.id)
 }
 
 async function open_post() {
@@ -161,5 +175,6 @@ async function get_type() {
     console.log("Unsupported:", props.post.post_hint, props.post);
 }
 
+// onBeforeMount replacement
 get_type();
 </script>

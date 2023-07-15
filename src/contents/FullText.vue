@@ -1,7 +1,7 @@
 <template>
     <div v-show="text">
         <div class="text-wrap text-break background p-3">
-            <div class="text-4 text-post text-justify" v-html="text" />
+            <div class="text-4 text-post" v-html="text" />
         </div>
     </div>
 </template>
