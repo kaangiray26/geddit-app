@@ -13,7 +13,7 @@
             <div v-for="comment in comments" class="foreground border-bottom border-secondary p-2">
                 <small :class="get_author_class(comment.data.author)" @click.passive="open_user(comment.data.author)">{{
                     comment.data.author }}</small>
-                <div class="text-4 text-post" v-html="markdown(comment.data.body)"></div>
+                <div class="text-4 text-post" v-html="markdown(comment.data.body_html)"></div>
             </div>
         </div>
     </div>
@@ -24,13 +24,9 @@ import { ref, onBeforeMount, onActivated } from 'vue';
 import { useRouter } from 'vue-router';
 import FullPost from './FullPost.vue';
 import { Geddit } from "/js/geddit.js";
-import showdown from 'showdown';
 
 const router = useRouter();
 const geddit = new Geddit();
-const converter = new showdown.Converter({
-    simplifiedAutoLink: true,
-});
 
 const post = ref(null);
 const comments = ref([]);
@@ -43,8 +39,14 @@ async function setup() {
     comments.value = response.comments.slice(0, -1)
 }
 
+function decodeHtml(html) {
+    let txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+}
+
 function markdown(body) {
-    return converter.makeHtml(body);
+    return decodeHtml(body);
 }
 
 async function open_user(author) {

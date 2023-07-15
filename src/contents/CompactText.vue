@@ -6,7 +6,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import showdown from 'showdown';
 
 const text = ref(null);
 
@@ -17,12 +16,14 @@ const props = defineProps({
     }
 })
 
-const converter = new showdown.Converter({
-    simplifiedAutoLink: true,
-});
+function decodeHtml(html) {
+    let txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+}
 
 async function get_sources() {
-    text.value = converter.makeHtml(props.data.selftext);
+    text.value = decodeHtml(props.data.selftext_html);
 }
 
 // setup

@@ -180,6 +180,10 @@ body[title_size='large'] .title {
     margin: 0;
 }
 
+.md>p {
+    margin: 0;
+}
+
 .progress {
     height: 0.25rem;
     background-color: var(--background);

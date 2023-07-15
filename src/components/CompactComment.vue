@@ -9,7 +9,7 @@
                 <h6 class="title text-break text-4 mb-2">{{ post.link_title }}</h6>
             </div>
             <div class="d-flex flex-column background p-3">
-                <div class="text-4 text-post" v-html="markdown(post.body)"></div>
+                <div class="text-4 text-post" v-html="markdown(post.body_html)"></div>
             </div>
         </div>
         <div class="d-flex justify-content-between align-items-center pb-3 px-3">
@@ -44,7 +44,6 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
-import showdown from 'showdown';
 
 const router = useRouter();
 
@@ -54,10 +53,6 @@ const props = defineProps({
         required: true
     }
 })
-
-const converter = new showdown.Converter({
-    simplifiedAutoLink: true,
-});
 
 function format_num(points) {
     if (points > 1000000) return (points / 1000000).toFixed(1) + "M";
@@ -93,7 +88,13 @@ function format_date() {
     return `${Math.floor(diff / (1000 * 60 * 60 * 24 * 365))}y ago`;
 }
 
+function decodeHtml(html) {
+    let txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+}
+
 function markdown(body) {
-    return converter.makeHtml(body);
+    return decodeHtml(body);
 }
 </script>
