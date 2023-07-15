@@ -79,7 +79,6 @@ body[title-size='large'] .title {
     flex: 1 1 auto;
     overflow-x: hidden;
     overflow-y: scroll;
-    scroll-snap-type: y proximity;
 }
 
 .snap {
