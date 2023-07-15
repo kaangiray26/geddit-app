@@ -18,6 +18,7 @@ import { ref, computed, onBeforeMount, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { save_hidden } from '/js/store.js';
 import { App } from '@capacitor/app';
+import { Toast } from '@capacitor/toast';
 import Toolbar from './Toolbar.vue';
 import ImageViewer from './ImageViewer.vue';
 import GalleryViewer from './GalleryViewer.vue';
@@ -27,6 +28,8 @@ const router = useRouter();
 const image_viewer = ref(null);
 const gallery_viewer = ref(null);
 const path = computed(() => router.currentRoute.value.path);
+
+const should_exit = ref(false);
 
 async function back_handler() {
     // Check if the image viewer is open
@@ -49,6 +52,18 @@ async function back_handler() {
 
     // Exit if we are on the home page
     if (path.value == '/') {
+        if (!should_exit.value) {
+            should_exit.value = true;
+            await Toast.show({
+                text: "Press again to exit.",
+                duration: "short"
+            })
+            setTimeout(async () => {
+                should_exit.value = false;
+            }, 2000)
+            return;
+        }
+        should_exit.value = false;
         App.exitApp();
         return
     }
