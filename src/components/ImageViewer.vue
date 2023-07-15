@@ -13,7 +13,7 @@
                             <div class="d-flex position-relative">
                                 <div class="d-flex position-absolute background opacity-75 cover-all rounded"></div>
                                 <div class="d-flex flex-column position-relative p-2">
-                                    <h6 class="text-4">{{ data.title }}</h6>
+                                    <h6 class="title text-4">{{ data.title }}</h6>
                                     <div class="d-flex justify-content-start align-items-center">
                                         <button class="btn btn-touch-border text-4 me-2" @click.passive="hide">
                                             <span class="bi bi-arrow-return-left"></span>

@@ -7,7 +7,7 @@
                     <small class="text-4 me-2">{{ post.data.domain }}</small>
                     <small class="text-4 me-2">{{ format_date() }}</small>
                 </div>
-                <h6 class="fw-bold text-break text-6 mb-2">{{ post.data.title }}</h6>
+                <h6 class="title fw-bold text-break text-6 mb-2">{{ post.data.title }}</h6>
             </div>
             <div class="d-flex px-3 mb-2" v-if="post.data.over_18">
                 <span class="badge bg-11">NSFW</span>

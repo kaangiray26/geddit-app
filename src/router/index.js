@@ -1,8 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import Home from '/components/Home.vue';
 
 import User from '/components/User.vue';
+import UserOverview from '/components/UserOverview.vue';
+import UserPosts from '/components/UserPosts.vue';
+import UserComments from '/components/UserComments.vue';
+
+import Home from '/components/Home.vue';
 import Post from '/components/Post.vue';
 import Search from '/components/Search.vue';
 import Subreddit from '/components/Subreddit.vue';
@@ -14,42 +18,66 @@ const routes = [
     {
         path: "/",
         component: Home,
-        name: "home"
+        name: "home",
+        meta: {
+            component: "home"
+        }
     },
     {
         path: "/subreddits",
         component: Subreddits,
-        name: "subreddits"
+        name: "subreddits",
+        meta: {
+            component: "subreddits"
+        }
     },
     {
         path: "/search",
         component: Search,
-        name: "search"
+        name: "search",
+        meta: {
+            component: "search"
+        },
     },
     {
         path: "/settings",
         component: Settings,
-        name: "settings"
+        name: "settings",
+        meta: {
+            component: "settings"
+        },
     },
     {
         path: "/gallery",
         component: Gallery,
-        name: "gallery"
-    },
-    {
-        path: "/u/:id",
-        component: User,
-        name: "user"
+        name: "gallery",
+        meta: {
+            component: "gallery"
+        },
     },
     {
         path: "/post/:id",
         component: Post,
-        name: "post"
+        name: "post",
+        meta: {
+            component: "post"
+        },
     },
     {
         path: "/r/:id",
         component: Subreddit,
-        name: "subreddit"
+        name: "subreddit",
+        meta: {
+            component: "subreddit"
+        },
+    },
+    {
+        path: "/u/:id",
+        component: User,
+        name: "user",
+        meta: {
+            component: "user"
+        }
     },
 ];
 

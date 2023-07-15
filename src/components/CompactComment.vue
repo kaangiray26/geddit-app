@@ -6,7 +6,7 @@
                     <small class="text-11 me-2" @click.passive="open_subreddit">{{ post.subreddit }}</small>
                     <small class="text-4">{{ format_date() }}</small>
                 </div>
-                <h6 class="text-break text-4 mb-2">{{ post.link_title }}</h6>
+                <h6 class="title text-break text-4 mb-2">{{ post.link_title }}</h6>
             </div>
             <div class="d-flex flex-column background p-3">
                 <div class="text-4 text-post" v-html="markdown(post.body)"></div>

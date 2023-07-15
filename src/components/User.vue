@@ -11,7 +11,7 @@
                 <img :src="icon_img" class="snoovatar position-absolute">
             </div>
             <div class="d-flex flex-column mb-2">
-                <h6 class="text-6 fw-bold m-0">{{ data.name }}</h6>
+                <h6 class="title text-6 fw-bold m-0">{{ data.name }}</h6>
                 <div class="d-flex align-items-center">
                     <small class="text-4">{{ format_karma() }} karma</small>
                     <small class="text-4 mx-2">·</small>
@@ -19,24 +19,20 @@
                 </div>
             </div>
             <div class="d-flex align-items-center">
-                <button class="btn btn-touch px-0 me-3" @click.passive="get_overview">
-                    <span class="text-4" :class="{ 'border-bottom': section == 'overview' }">Overview</span>
+                <button class="btn btn-touch px-0 me-3" @click.passive="switch_to_overview">
+                    <span class="text-4" :class="{ 'border-bottom': type == 'UserOverview' }">Overview</span>
                 </button>
-                <button class="btn btn-touch px-0 me-3" @click.passive="get_posts">
-                    <span class="text-4" :class="{ 'border-bottom': section == 'posts' }">Posts</span>
+                <button class="btn btn-touch px-0 me-3" @click.passive="switch_to_posts">
+                    <span class="text-4" :class="{ 'border-bottom': type == 'UserPosts' }">Posts</span>
                 </button>
-                <button class="btn btn-touch px-0" @click.passive="get_comments">
-                    <span class="text-4" :class="{ 'border-bottom': section == 'comments' }">Comments</span>
+                <button class="btn btn-touch px-0" @click.passive="switch_to_comments">
+                    <span class="text-4" :class="{ 'border-bottom': type == 'UserComments' }">Comments</span>
                 </button>
             </div>
         </div>
-        <div v-if="!scroll_loaded" class="progress " role="progressbar" aria-label="Basic example" aria-valuenow="0"
-            aria-valuemin="0" aria-valuemax="100">
-            <div class="progress-bar"></div>
-        </div>
-        <ul class="list-group border-0 pt-0 mt-3">
-            <component v-for="post in posts" :post="post.data" :is="types[post.kind]" />
-        </ul>
+        <keep-alive>
+            <component ref="component" :is="types[type]"></component>
+        </keep-alive>
     </div>
 </template>
 
@@ -44,26 +40,37 @@
 import { ref, onBeforeMount, onActivated, onDeactivated } from 'vue';
 import { useRouter } from 'vue-router';
 import { Geddit } from "/js/geddit.js";
-import CompactPost from './CompactPost.vue';
-import CompactComment from './CompactComment.vue';
+import UserOverview from './UserOverview.vue';
+import UserPosts from './UserPosts.vue';
+import UserComments from './UserComments.vue';
 
+const component = ref(null);
+const type = ref("UserOverview");
 const types = {
-    t1: CompactComment,
-    t3: CompactPost
+    UserOverview,
+    UserPosts,
+    UserComments
 }
 
 const router = useRouter();
 const geddit = new Geddit();
 
 const data = ref(null);
-const posts = ref([]);
-const after = ref(null);
-
-const section = ref('overview');
-const scroll_loaded = ref(true);
 
 const icon_img = ref(null);
 const banner_img = ref(null);
+
+async function switch_to_overview() {
+    type.value = 'UserOverview';
+}
+
+async function switch_to_posts() {
+    type.value = 'UserPosts';
+}
+
+async function switch_to_comments() {
+    type.value = 'UserComments';
+}
 
 async function setup() {
     let response = await geddit.getUser(router.currentRoute.value.params.id);
@@ -86,102 +93,9 @@ function format_date() {
     });
 }
 
-async function get_overview() {
-    if (!scroll_loaded.value) return;
-    scroll_loaded.value = false;
-
-    section.value = 'overview';
-    posts.value = [];
-    after.value = null;
-
-    let response = await geddit.getUserOverview(router.currentRoute.value.params.id);
-    if (!response) {
-        scroll_loaded.value = true;
-    }
-
-    posts.value = response.items;
-    after.value = response.after;
-
-    scroll_loaded.value = true;
-}
-
-async function get_posts() {
-    if (!scroll_loaded.value) return;
-    scroll_loaded.value = false;
-
-    section.value = 'posts';
-    posts.value = [];
-    after.value = null;
-
-    let response = await geddit.getUserSubmissions(router.currentRoute.value.params.id);
-    if (!response) {
-        scroll_loaded.value = true;
-    }
-
-    posts.value = response.items;
-    after.value = response.after;
-
-    scroll_loaded.value = true;
-}
-
-async function get_comments() {
-    if (!scroll_loaded.value) return;
-    scroll_loaded.value = false;
-
-    section.value = 'comments';
-    posts.value = [];
-    after.value = null;
-
-    let response = await geddit.getUserComments(router.currentRoute.value.params.id);
-    if (!response) {
-        scroll_loaded.value = true;
-    }
-
-    posts.value = response.items;
-    after.value = response.after;
-
-    scroll_loaded.value = true;
-}
-
-async function scroll() {
-    scroll_loaded.value = false;
-
-    console.log("User getting scroll posts", router.currentRoute.value);
-    // Get content based on the section
-    let response = null;
-    if (section.value == 'overview') {
-        response = await geddit.getUserOverview(router.currentRoute.value.params.id, {
-            after: after.value
-        });
-    }
-
-    else if (section.value == 'posts') {
-        response = await geddit.getUserSubmissions(router.currentRoute.value.params.id, {
-            after: after.value
-        });
-    }
-
-    else if (section.value == 'comments') {
-        response = await geddit.getUserComments(router.currentRoute.value.params.id, {
-            after: after.value
-        });
-    }
-
-    if (!response) return;
-    if (!response.items.length) {
-        after.value = null;
-        return;
-    }
-
-    posts.value.push(...response.items);
-    after.value = response.after;
-
-    scroll_loaded.value = true;
-}
-
 function scroll_handle(el) {
-    if (el.target.scrollTop + el.target.clientHeight >= el.target.scrollHeight - window.innerWidth && scroll_loaded.value && after.value) {
-        scroll();
+    if (el.target.scrollTop + el.target.clientHeight >= el.target.scrollHeight - window.innerWidth && component.value.scroll_loaded && component.value.after) {
+        component.value.scroll();
     }
 }
 
@@ -192,7 +106,6 @@ onBeforeMount(() => {
     }
 
     setup();
-    get_overview();
 })
 
 onActivated(() => {

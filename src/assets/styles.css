@@ -43,6 +43,18 @@ hr {
     height: 100%;
 }
 
+body[title_size='small'] .title {
+    font-size: 1rem !important;
+}
+
+body[title_size='medium'] .title {
+    font-size: 1.25rem !important;
+}
+
+body[title_size='large'] .title {
+    font-size: 1.5rem !important;
+}
+
 .background {
     background-color: var(--background);
 }
@@ -378,4 +390,12 @@ hr {
 
 .sticky::before {
     content: "📌";
+}
+
+option[selected] {
+    background-color: var(--nord10) !important;
+}
+
+.clickable {
+    cursor: pointer;
 }

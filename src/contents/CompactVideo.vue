@@ -109,6 +109,12 @@ async function setup() {
         height: props.data.secure_media.reddit_video.height
     }
 
+    // Set poster
+    let poster = null;
+    if (props.data.preview) {
+        poster = props.data.preview.images[0].source.url.replaceAll("&amp;", "&")
+    }
+
     // Load video
     player.value = videojs(video.value, {
         loop: true,
@@ -116,7 +122,7 @@ async function setup() {
         controls: false,
         autoplay: false,
         preload: 'none',
-        poster: props.data.preview.images[0].source.url.replaceAll("&amp;", "&"),
+        poster: poster,
         aspectRatio: `${dimensions.value.width}:${dimensions.value.height}`,
         sources: [
             {

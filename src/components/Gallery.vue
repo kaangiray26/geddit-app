@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex flex-column background cover-all">
         <div class="m-3">
-            <h6 class="text-6 mb-0">Gallery</h6>
+            <h5 class="text-6 mb-0">Gallery</h5>
         </div>
         <div v-show="edit_mode">
             <div class="d-flex mb-1">

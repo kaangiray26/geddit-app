@@ -12,7 +12,7 @@
                 <img v-show="icon" :src="icon" class="snoovatar position-absolute">
             </div>
             <div class="d-flex flex-column align-items-center mb-2">
-                <h6 class="text-6 fw-bold">{{ data.title }}</h6>
+                <h6 class="title text-6 fw-bold">{{ data.title }}</h6>
                 <span class="text-5 mb-2">{{ data.display_name_prefixed }}</span>
                 <hr class="text-4 w-100 m-0 mb-2">
                 <small class="text-4">{{ get_description() }}</small>
