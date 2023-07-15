@@ -26,4 +26,8 @@ if (!localStorage.getItem("title_size")) {
     localStorage.setItem("title_size", JSON.stringify('small'));
 }
 
+// Set options
+document.body.setAttribute("title-size", JSON.parse(localStorage.getItem("title_size")));
+document.body.setAttribute("autoplay", JSON.parse(localStorage.getItem("autoplay")));
+
 createApp(App).use(router).mount('#app');

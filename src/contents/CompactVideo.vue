@@ -51,10 +51,6 @@ const props = defineProps({
     data: {
         type: Object,
         required: true
-    },
-    settings: {
-        type: Object,
-        required: false
     }
 })
 
@@ -208,7 +204,7 @@ onMounted(() => {
 
 onBeforeMount(() => {
     useIntersectionObserver(video, ([{ isIntersecting }]) => {
-        if (isIntersecting && props.settings.autoplay) {
+        if (isIntersecting && document.body.getAttribute('autoplay') == 'true') {
             play();
             return
         }

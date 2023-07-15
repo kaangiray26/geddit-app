@@ -43,15 +43,15 @@ hr {
     height: 100%;
 }
 
-body[title_size='small'] .title {
+body[title-size='small'] .title {
     font-size: 1rem !important;
 }
 
-body[title_size='medium'] .title {
+body[title-size='medium'] .title {
     font-size: 1.25rem !important;
 }
 
-body[title_size='large'] .title {
+body[title-size='large'] .title {
     font-size: 1.5rem !important;
 }
 

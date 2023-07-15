@@ -13,7 +13,7 @@
                 <span class="badge bg-11">NSFW</span>
             </div>
             <div class="mx-3">
-                <component :is="types[type]" :data="post.data" :settings="store.settings" />
+                <component :is="types[type]" :data="post.data" />
             </div>
         </div>
         <div class="d-flex justify-content-between align-items-center pb-3 px-3">

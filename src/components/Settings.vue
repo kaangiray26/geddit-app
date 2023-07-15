@@ -10,7 +10,7 @@
             <button class="btn btn-3 fs-6 d-flex justify-content-between align-items-center dropdown-toggle" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="me-1">Default:</span>
-                <span class="badge bg-6 text-capitalize text-black">{{ store.settings.autoplay }}</span>
+                <span class="badge bg-6 text-capitalize text-black">{{ autoplay }}</span>
             </button>
             <ul class="dropdown-menu dropdown-menu-end bg-3">
                 <li @click="change_autoplay(true)">
@@ -26,7 +26,7 @@
             <button class="btn btn-3 fs-6 d-flex justify-content-between align-items-center dropdown-toggle" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="me-1">Default:</span>
-                <span class="badge bg-6 text-capitalize text-black">{{ store.settings.title_size }}</span>
+                <span class="badge bg-6 text-capitalize text-black">{{ title_size }}</span>
             </button>
             <ul class="dropdown-menu dropdown-menu-end bg-3">
                 <li @click="change_title_size('small')">
@@ -66,13 +66,14 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onBeforeMount, ref } from "vue";
 import { store } from '/js/store.js';
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const title_size = ref("small");
-const autoplay = ref(true);
+
+const autoplay = ref(null);
+const title_size = ref(null);
 
 async function open_github() {
     window.open("https://github.com/kaangiray26/geddit-app", "_blank");
@@ -84,13 +85,18 @@ async function open_gallery() {
 
 async function change_title_size(value) {
     title_size.value = value;
+    document.body.setAttribute("title-size", value);
     localStorage.setItem("title_size", JSON.stringify(value));
-    router.go();
 }
 
 async function change_autoplay(value) {
     autoplay.value = value;
+    document.body.setAttribute("autoplay", value);
     localStorage.setItem("autoplay", JSON.stringify(value));
-    router.go();
 }
+
+onBeforeMount(() => {
+    autoplay.value = JSON.parse(localStorage.getItem("autoplay"));
+    title_size.value = JSON.parse(localStorage.getItem("title_size"));
+})
 </script>

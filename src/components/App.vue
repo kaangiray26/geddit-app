@@ -89,10 +89,6 @@ onBeforeMount(() => {
 
     // Add event listeners for saving the store
     window.onbeforeunload = save_hidden;
-
-    // Set default title size
-    document.body.title_size = JSON.parse(localStorage.getItem("title_size")) || "small";
-
 })
 
 onMounted(() => {
