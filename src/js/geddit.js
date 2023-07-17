@@ -1,5 +1,3 @@
-import { CapacitorHttp } from '@capacitor/core';
-
 class Geddit {
     constructor() {
         this.host = "https://www.reddit.com";
@@ -22,19 +20,6 @@ class Geddit {
 
         sort = sort ? sort : "hot";
         subreddit = subreddit ? "/r/" + subreddit : "";
-
-        // return await CapacitorHttp.get({
-        //     url: this.host + subreddit + `/${sort}.json?` + new URLSearchParams(Object.assign(params, options)),
-        //     headers: {
-        //         'User-Agent': 'Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Mobile Safari/537.36'
-        //     }
-        // })
-        //     .then(res => res.data.data)
-        //     .then(data => ({
-        //         after: data.after,
-        //         posts: data.children
-        //     }))
-        //     .catch(err => null);
 
         return await fetch(this.host + subreddit + `/${sort}.json?` + new URLSearchParams(Object.assign(params, options)))
             .then(res => res.json())
