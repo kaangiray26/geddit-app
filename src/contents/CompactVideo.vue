@@ -123,7 +123,7 @@ async function setup() {
         muted: true,
         controls: false,
         autoplay: false,
-        preload: 'none',
+        preload: 'auto',
         poster: poster,
         aspectRatio: `${dimensions.value.width}:${dimensions.value.height}`,
         sources: [
@@ -172,7 +172,6 @@ async function setup() {
         is_fullscreen.value = false;
         hammer.value.get('swipe').set({ enable: false });
     })
-
 
     // Event for loaded
     video.value.addEventListener('loadeddata', () => {
