@@ -123,7 +123,7 @@ async function setup() {
         muted: true,
         controls: false,
         autoplay: false,
-        preload: 'auto',
+        preload: 'none',
         poster: poster,
         aspectRatio: `${dimensions.value.width}:${dimensions.value.height}`,
         sources: [
