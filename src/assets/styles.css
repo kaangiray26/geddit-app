@@ -463,3 +463,7 @@ option[selected] {
 .ratio-16-9 {
     aspect-ratio: 16/9 !important;
 }
+
+.word-break {
+    word-break: break-word;
+}

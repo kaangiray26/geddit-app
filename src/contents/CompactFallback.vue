@@ -1,7 +1,8 @@
 <template>
     <div class="d-flex cover-50 position-relative">
-        <div class="d-flex flex-fill ratio-16-9 bg-black p-3 justify-content-center align-items-center" @click="open_link">
-            <p class="fw-bold text-10 rounded p-3 m-0">{{ data.url }}</p>
+        <div class="w-100 d-flex flex-fill ratio-16-9 bg-black p-3 justify-content-center align-items-center"
+            @click="open_link">
+            <p class="w-100 word-break fw-bold text-10 rounded p-3 m-0">{{ data.url }}</p>
         </div>
     </div>
 </template>

@@ -77,7 +77,7 @@ async function back_handler() {
 
 async function url_handler(event) {
     let url = new URL(event.url);
-    router.push(url.pathname);
+    router.push(url.pathname + url.search);
     return
 }
 
