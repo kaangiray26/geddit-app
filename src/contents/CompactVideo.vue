@@ -12,25 +12,25 @@
                 </div>
             </div>
             <div v-show="is_fullscreen">
-                <div class="video-controls d-flex flex-column flex-fill pb-3 px-3"
-                    :class="{ 'visually-hidden': !controls_visible }">
+                <div class="video-controls d-flex flex-column flex-fill" :class="{ 'visually-hidden': !controls_visible }">
                     <div class="d-flex justify-content-between">
-                        <button class="btn btn-touch ps-0 pb-0" @click.passive="playback">
-                            <span class="text-4 bi" :class="{ 'bi-play-fill': paused, 'bi-pause-fill': !paused }"></span>
-                        </button>
-                        <button class="btn btn-touch pe-0 pb-0" @click.passive="mute">
+                        <button class="btn btn-touch px-3" @click.passive="mute">
                             <span class="text-4 bi"
                                 :class="{ 'bi-volume-mute-fill': muted, 'bi-volume-up-fill': !muted }"></span>
                         </button>
+                        <button class="btn btn-touch px-3" @click.passive="playback">
+                            <span class="text-4 bi" :class="{ 'bi-play-fill': paused, 'bi-pause-fill': !paused }"></span>
+                        </button>
                     </div>
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <small class="text-6">{{ currentTime }}</small>
-                        <small class="text-6">{{ duration }}</small>
-                    </div>
-                    <div ref="progress" class="video-progress position-relative" @touchmove="progress_move"
-                        @touchend="progress_seek">
-                        <div class="video-progress-now position-relative" :style="{ 'left': progress_left }"
-                            @touchstart="progress_start" @touchmove="progress_move" @touchend="progress_end"></div>
+                    <div class="d-flex flex-column p-3" @touchstart="progress_start" @touchmove="progress_move"
+                        @touchend="progress_end">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <small class="text-6 fw-bold">{{ currentTime }}</small>
+                            <small class="text-6 fw-bold">{{ duration }}</small>
+                        </div>
+                        <div ref="progress" class="video-progress position-relative">
+                            <div class="video-progress-now position-relative" :style="{ 'left': progress_left }"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -136,8 +136,13 @@ async function progress_start(event) {
     video.value.pause();
 }
 
-async function progress_end() {
+async function progress_end(event) {
     event.preventDefault();
+
+    let rect = progress.value.getBoundingClientRect();
+    let x = event.changedTouches[0].clientX - rect.left;
+    video.value.currentTime = x / rect.width * video.value.duration;
+
     await video.value.play();
 }
 

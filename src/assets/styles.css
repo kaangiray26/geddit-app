@@ -412,14 +412,16 @@ option[selected] {
 .video-wrapper {
     display: flex;
     position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 .video-controls {
     left: 0;
     bottom: 0;
+    width: 100%;
     display: flex;
     position: absolute;
-    width: 100%;
 }
 
 .video-wrapper:fullscreen>video {
