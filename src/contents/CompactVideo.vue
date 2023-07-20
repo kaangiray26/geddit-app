@@ -5,7 +5,7 @@
             <video ref="video" class="position-relative theme-shadow" :poster="get_poster()" muted loop>
             </video>
             <div v-if="paused" class="video-paused">
-                <div class="d-flex circle bg-10 p-1">
+                <div class="d-flex circle bg-10 p-1 theme-shadow">
                     <button type="button" class="btn btn-touch" @click.passive="play">
                         <span class="bi bi-play-fill text-6"></span>
                     </button>
@@ -264,11 +264,12 @@ onMounted(() => {
 
 onBeforeMount(() => {
     useIntersectionObserver(video, ([{ isIntersecting }]) => {
-        if (!isIntersecting) reset();
-        if (document.body.getAttribute('autoplay') == 'true') {
+        if (isIntersecting && document.body.getAttribute('autoplay') == 'true') {
             play();
             return
         }
+
+        reset();
     }, {
         threshold: 0.5
     })
