@@ -1,11 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-
 import User from '/components/User.vue';
-import UserOverview from '/components/UserOverview.vue';
-import UserPosts from '/components/UserPosts.vue';
-import UserComments from '/components/UserComments.vue';
-
 import Home from '/components/Home.vue';
 import Post from '/components/Post.vue';
 import Search from '/components/Search.vue';
@@ -57,6 +52,7 @@ const routes = [
     },
     {
         path: "/post/:id",
+        alias: ["/r/:subreddit?/comments/:id/:title?", "/comments/:id/:title?"],
         component: Post,
         name: "post",
         meta: {
@@ -64,7 +60,7 @@ const routes = [
         },
     },
     {
-        path: "/r/:id",
+        path: "/r/:id/:sort?",
         component: Subreddit,
         name: "subreddit",
         meta: {
@@ -72,7 +68,8 @@ const routes = [
         },
     },
     {
-        path: "/u/:id",
+        path: "/u/:id/:page?",
+        alias: "/user/:id/:page?",
         component: User,
         name: "user",
         meta: {

@@ -10,6 +10,7 @@
         <Toolbar />
         <ImageViewer ref="image_viewer" />
         <GalleryViewer ref="gallery_viewer" />
+        <UpdateManager ref="update_manager" />
     </div>
 </template>
 
@@ -22,13 +23,15 @@ import { Toast } from '@capacitor/toast';
 import Toolbar from './Toolbar.vue';
 import ImageViewer from './ImageViewer.vue';
 import GalleryViewer from './GalleryViewer.vue';
+import UpdateManager from './UpdateManager.vue';
 
 const router = useRouter();
 
 const image_viewer = ref(null);
 const gallery_viewer = ref(null);
-const path = computed(() => router.currentRoute.value.path);
+const update_manager = ref(null);
 
+const path = computed(() => router.currentRoute.value.path);
 const should_exit = ref(false);
 
 async function back_handler() {
@@ -72,10 +75,19 @@ async function back_handler() {
     router.back();
 }
 
+async function url_handler(event) {
+    let url = new URL(event.url);
+    router.push(url.pathname);
+    return
+}
+
 onBeforeMount(() => {
     App.removeAllListeners().then(
         App.addListener('backButton', back_handler)
     )
+
+    // Add events for deep links
+    App.addListener('appUrlOpen', url_handler)
 
     // Add event listeners for image viewer
     window.addEventListener("image_viewer", (event) => {

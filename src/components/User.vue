@@ -99,6 +99,14 @@ function scroll_handle(el) {
     }
 }
 
+async function handle_page_route(page) {
+    if (page == 'submitted') {
+        type.value = 'UserPosts'
+    } else if (page == 'comments') {
+        type.value = 'UserComments'
+    }
+}
+
 onBeforeMount(() => {
     if (!router.currentRoute.value.params.id) {
         router.back();
@@ -118,6 +126,10 @@ onActivated(() => {
     let this_page = pages.find(page => page.path == window.location.pathname);
     if (this_page) {
         document.querySelector('.content-view').scrollTop = parseInt(this_page.scroll);
+    }
+
+    if (router.currentRoute.value.params.page) {
+        handle_page_route(router.currentRoute.value.params.page);
     }
 })
 

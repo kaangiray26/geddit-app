@@ -31,9 +31,9 @@
         <ul class="list-group border-0 pt-0 mt-3">
             <Post v-for="post in posts" :post="post.data" />
         </ul>
-        <div v-if="!scroll_loaded" class="progress " role="progressbar" aria-label="Basic example" aria-valuenow="0"
-            aria-valuemin="0" aria-valuemax="100">
-            <div class="progress-bar"></div>
+        <div v-if="!scroll_loaded" class="progress progress-alt" role="progressbar" aria-label="Basic example"
+            aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar progress-bar-alt"></div>
         </div>
     </div>
 </template>
@@ -183,6 +183,26 @@ function scroll_handle(el) {
     }
 }
 
+async function handle_sort_route() {
+    let changed = false;
+    let time = router.currentRoute.value.query.t;
+    let sort = router.currentRoute.value.params.sort;
+
+    if (sort && sort != topbar.value.sort) {
+        topbar.value.sort = sort;
+        changed = true;
+    }
+
+    if (time && time != topbar.value.time) {
+        topbar.value.time = time;
+        changed = true;
+    }
+
+    if (!changed) return
+
+    get_posts();
+}
+
 onBeforeMount(() => {
     if (!router.currentRoute.value.params.id) {
         router.back();
@@ -206,6 +226,8 @@ onActivated(() => {
     if (this_page) {
         document.querySelector('.content-view').scrollTop = parseInt(this_page.scroll);
     }
+
+    handle_sort_route();
 })
 
 onDeactivated(() => {

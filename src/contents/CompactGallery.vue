@@ -28,6 +28,8 @@ const props = defineProps({
 const images = ref([]);
 
 async function get_sources() {
+    if (!props.data.gallery_data) return;
+
     let order = props.data.gallery_data.items.map(item => item.media_id);
     let items = order.map(id => props.data.media_metadata[id]);
 

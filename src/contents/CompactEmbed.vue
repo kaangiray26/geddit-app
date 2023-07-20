@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex position-relative p-1 mx-3 text-white" v-html="embed_options.html" />
+    <div class="d-flex position-relative text-white" v-html="embed_options.html" />
 </template>
 
 <script setup>

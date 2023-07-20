@@ -64,6 +64,7 @@ import CompactVideo from '/contents/CompactVideo.vue';
 import CompactEmbed from '/contents/CompactEmbed.vue';
 import CompactLink from '/contents/CompactLink.vue';
 import CompactGallery from '/contents/CompactGallery.vue';
+import CompactFallback from '../contents/CompactFallback.vue';
 
 const router = useRouter();
 
@@ -76,6 +77,7 @@ const types = {
     CompactEmbed,
     CompactLink,
     CompactGallery,
+    CompactFallback
 }
 
 const props = defineProps({
@@ -172,8 +174,7 @@ async function get_type() {
         type.value = "CompactGallery";
         return
     }
-
-    console.log("Unsupported:", props.post.post_hint, props.post);
+    type.value = "CompactFallback";
 }
 
 // onBeforeMount replacement

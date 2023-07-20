@@ -55,6 +55,12 @@ body[title-size='large'] .title {
     font-size: 1.5rem !important;
 }
 
+video {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
 .background {
     background-color: var(--background);
 }
@@ -183,12 +189,12 @@ body[title-size='large'] .title {
     margin: 0;
 }
 
-.progress {
+.progress-alt {
     height: 0.25rem;
     background-color: var(--background);
 }
 
-.progress-bar {
+.progress-bar-alt {
     animation: loading 1s linear reverse infinite;
     background-color: firebrick;
 }
@@ -401,4 +407,59 @@ option[selected] {
 
 .clickable {
     cursor: pointer;
+}
+
+.video-wrapper {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.video-controls {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    position: absolute;
+}
+
+.video-wrapper:fullscreen>video {
+    object-fit: contain !important;
+}
+
+.video-paused {
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+
+.video-progress {
+    width: 100%;
+    height: 4px;
+    background-color: var(--nord3);
+    cursor: pointer;
+}
+
+.video-progress-now {
+    bottom: 5px;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: var(--nord4);
+}
+
+.text-shadow {
+    text-shadow: #000 0 0 10px;
+}
+
+.release-body {
+    height: 25vh;
+    overflow-y: scroll;
+}
+
+.ratio-16-9 {
+    aspect-ratio: 16/9 !important;
 }
