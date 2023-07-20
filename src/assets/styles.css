@@ -454,3 +454,8 @@ option[selected] {
 .text-shadow {
     text-shadow: #000 0 0 10px;
 }
+
+.release-body {
+    height: 25vh;
+    overflow-y: scroll;
+}
