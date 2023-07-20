@@ -264,12 +264,11 @@ onMounted(() => {
 
 onBeforeMount(() => {
     useIntersectionObserver(video, ([{ isIntersecting }]) => {
-        if (!isIntersecting) return
+        if (!isIntersecting) reset();
         if (document.body.getAttribute('autoplay') == 'true') {
             play();
             return
         }
-        reset();
     }, {
         threshold: 0.5
     })
