@@ -2,9 +2,9 @@
     <ul v-show="posts.length" class="list-group border-0 pt-0 mt-3">
         <component v-for="post in posts" :post="post.data" :is="types[post.kind]" />
     </ul>
-    <div v-show="!scroll_loaded" class="progress " role="progressbar" aria-label="Basic example" aria-valuenow="0"
-        aria-valuemin="0" aria-valuemax="100">
-        <div class="progress-bar"></div>
+    <div v-show="!scroll_loaded" class="progress progress-alt" role="progressbar" aria-label="Basic example"
+        aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar progress-bar-alt"></div>
     </div>
 </template>
 
