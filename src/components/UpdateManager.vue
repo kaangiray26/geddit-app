@@ -29,8 +29,9 @@ const modalElement = ref(null);
 const latest_release = ref(null);
 
 async function update() {
+    let tag = latest_release.value.tag_name
     await AppLauncher.openUrl({
-        url: latest_release.value.assets[1].browser_download_url
+        url: `https://github.com/kaangiray26/geddit-app/releases/download/${tag}/Geddit_${tag}.apk`
     })
 }
 
@@ -51,7 +52,7 @@ async function check_for_updates() {
     let response = await fetch("https://api.github.com/repos/kaangiray26/geddit-app/releases/latest")
         .then(res => res.json())
         .catch(err => null);
-    if (!response) return;
+    if (!response || version >= response.tag_name) return;
 
     render(response.body);
     latest_release.value = response;
