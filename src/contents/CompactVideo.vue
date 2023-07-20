@@ -13,7 +13,8 @@
             </div>
             <div v-show="is_fullscreen">
                 <div class="video-controls d-flex flex-column flex-fill" :class="{ 'visually-hidden': !controls_visible }">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex cover-all bg-black position-absolute opacity-25"></div>
+                    <div class="d-flex justify-content-between position-relative">
                         <button class="btn btn-touch px-3" @click.passive="mute">
                             <span class="text-4 bi"
                                 :class="{ 'bi-volume-mute-fill': muted, 'bi-volume-up-fill': !muted }"></span>
@@ -22,8 +23,8 @@
                             <span class="text-4 bi" :class="{ 'bi-play-fill': paused, 'bi-pause-fill': !paused }"></span>
                         </button>
                     </div>
-                    <div class="d-flex flex-column p-3" @touchstart="progress_start" @touchmove="progress_move"
-                        @touchend="progress_end">
+                    <div class="d-flex flex-column px-3 pb-5 position-relative" @touchstart="progress_start"
+                        @touchmove="progress_move" @touchend="progress_end">
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <small class="text-6 fw-bold">{{ currentTime }}</small>
                             <small class="text-6 fw-bold">{{ duration }}</small>
@@ -138,11 +139,9 @@ async function progress_start(event) {
 
 async function progress_end(event) {
     event.preventDefault();
-
     let rect = progress.value.getBoundingClientRect();
     let x = event.changedTouches[0].clientX - rect.left;
     video.value.currentTime = x / rect.width * video.value.duration;
-
     await video.value.play();
 }
 
@@ -150,13 +149,6 @@ async function progress_move(event) {
     event.preventDefault();
     let rect = progress.value.getBoundingClientRect();
     let x = event.touches[0].clientX - rect.left;
-    video.value.currentTime = x / rect.width * video.value.duration;
-}
-
-async function progress_seek(event) {
-    event.preventDefault();
-    let rect = progress.value.getBoundingClientRect();
-    let x = event.changedTouches[0].clientX - rect.left;
     video.value.currentTime = x / rect.width * video.value.duration;
 }
 
@@ -212,6 +204,7 @@ async function setup() {
             return
         }
 
+        video.value.muted = true;
         is_fullscreen.value = false;
         hammer.value.get('swipe').set({ enable: false });
     }
