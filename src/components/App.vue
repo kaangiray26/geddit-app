@@ -25,10 +25,10 @@ import GalleryViewer from './GalleryViewer.vue';
 
 const router = useRouter();
 
+const version = "v1.3";
 const image_viewer = ref(null);
 const gallery_viewer = ref(null);
 const path = computed(() => router.currentRoute.value.path);
-
 const should_exit = ref(false);
 
 async function back_handler() {
@@ -91,6 +91,22 @@ onBeforeMount(() => {
     window.onbeforeunload = save_hidden;
 })
 
+async function check_for_updates() {
+    if (window.location.hostname == "localhost") {
+        return;
+    }
+
+    let response = await fetch("https://api.github.com/repos/kaangiray26/geddit-app/releases/latest")
+        .then(res => res.json())
+        .catch(err => null);
+    if (!response || response.tag_name == version) return;
+
+    await Toast.show({
+        text: "New update available!",
+        duration: "long"
+    })
+}
+
 onMounted(() => {
     // Scroll to top
     let view = document.querySelector('.content-view');
@@ -98,5 +114,7 @@ onMounted(() => {
         top: 0,
         behavior: 'smooth'
     })
+
+    check_for_updates()
 })
 </script>

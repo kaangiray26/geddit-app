@@ -22,7 +22,7 @@
             </ul>
         </div>
         <h6 class="text-4">Title Font Size</h6>
-        <div class="dropdown d-flex flex-column">
+        <div class="dropdown d-flex flex-column mb-3">
             <button class="btn btn-3 fs-6 d-flex justify-content-between align-items-center dropdown-toggle" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="me-1">Default:</span>
