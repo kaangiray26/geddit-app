@@ -75,10 +75,19 @@ async function back_handler() {
     router.back();
 }
 
+async function url_handler(event) {
+    let url = new URL(event.url);
+    router.push(url.pathname);
+    return
+}
+
 onBeforeMount(() => {
     App.removeAllListeners().then(
         App.addListener('backButton', back_handler)
     )
+
+    // Add events for deep links
+    App.addListener('appUrlOpen', url_handler)
 
     // Add event listeners for image viewer
     window.addEventListener("image_viewer", (event) => {

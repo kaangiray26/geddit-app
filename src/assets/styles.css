@@ -459,3 +459,7 @@ option[selected] {
     height: 25vh;
     overflow-y: scroll;
 }
+
+.ratio-16-9 {
+    aspect-ratio: 16/9 !important;
+}

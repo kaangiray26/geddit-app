@@ -183,6 +183,26 @@ function scroll_handle(el) {
     }
 }
 
+async function handle_sort_route() {
+    let changed = false;
+    let time = router.currentRoute.value.query.t;
+    let sort = router.currentRoute.value.params.sort;
+
+    if (sort && sort != topbar.value.sort) {
+        topbar.value.sort = sort;
+        changed = true;
+    }
+
+    if (time && time != topbar.value.time) {
+        topbar.value.time = time;
+        changed = true;
+    }
+
+    if (!changed) return
+
+    get_posts();
+}
+
 onBeforeMount(() => {
     if (!router.currentRoute.value.params.id) {
         router.back();
@@ -206,6 +226,8 @@ onActivated(() => {
     if (this_page) {
         document.querySelector('.content-view').scrollTop = parseInt(this_page.scroll);
     }
+
+    handle_sort_route();
 })
 
 onDeactivated(() => {
