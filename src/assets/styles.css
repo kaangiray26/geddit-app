@@ -443,10 +443,14 @@ option[selected] {
 }
 
 .video-progress-now {
-    bottom: 6px;
+    bottom: 5px;
     width: 14px;
     height: 14px;
     cursor: pointer;
     border-radius: 50%;
     background-color: var(--nord4);
+}
+
+.text-shadow {
+    text-shadow: #000 0 0 10px;
 }

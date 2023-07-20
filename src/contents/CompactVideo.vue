@@ -2,35 +2,41 @@
     <div class="d-flex cover-50 position-relative background"
         :style="{ 'aspect-ratio': dimensions.width + '/' + dimensions.height + '!important' }">
         <div ref="wrapper" class="video-wrapper">
-            <video ref="video" class="position-relative theme-shadow" :poster="get_poster()" preload="metadata" muted loop>
+            <video ref="video" class="position-relative theme-shadow" :poster="get_poster()" muted loop>
             </video>
             <div v-if="paused" class="video-paused">
                 <div class="d-flex circle bg-10 p-1">
-                    <button type="button" class="btn btn-touch" @click="play">
+                    <button type="button" class="btn btn-touch" @click.passive="play">
                         <span class="bi bi-play-fill text-6"></span>
                     </button>
                 </div>
             </div>
             <div v-show="is_fullscreen">
                 <div class="video-controls d-flex flex-column flex-fill" :class="{ 'visually-hidden': !controls_visible }">
-                    <div class="d-flex cover-all bg-black position-absolute opacity-25"></div>
                     <div class="d-flex justify-content-between position-relative">
-                        <button class="btn btn-touch px-3" @click.passive="mute">
-                            <span class="text-4 bi"
-                                :class="{ 'bi-volume-mute-fill': muted, 'bi-volume-up-fill': !muted }"></span>
-                        </button>
-                        <button class="btn btn-touch px-3" @click.passive="playback">
-                            <span class="text-4 bi" :class="{ 'bi-play-fill': paused, 'bi-pause-fill': !paused }"></span>
-                        </button>
+                        <div>
+                            <button v-show="has_audio" class="btn btn-touch px-3" @click.passive="mute">
+                                <span class="text-shadow fs-5 text-4 bi"
+                                    :class="{ 'bi-volume-mute-fill': muted, 'bi-volume-up-fill': !muted }"></span>
+                            </button>
+                        </div>
+                        <div>
+                            <button class="btn btn-touch px-3" @click.passive="playback">
+                                <span class="text-shadow fs-5 text-4 bi"
+                                    :class="{ 'bi-play-fill': paused, 'bi-pause-fill': !paused }"></span>
+                            </button>
+                        </div>
                     </div>
-                    <div class="d-flex flex-column px-3 pb-5 position-relative" @touchstart="progress_start"
-                        @touchmove="progress_move" @touchend="progress_end">
+                    <div class="d-flex flex-column px-3 pb-5 position-relative" @touchstart.passive="progress_start"
+                        @touchmove.passive="progress_move" @touchend.passive="progress_end">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <small class="text-6 fw-bold">{{ currentTime }}</small>
-                            <small class="text-6 fw-bold">{{ duration }}</small>
+                            <small class="text-shadow text-6 fw-bold">{{ currentTime }}</small>
+                            <small class="text-shadow text-6 fw-bold">{{ duration }}</small>
                         </div>
                         <div ref="progress" class="video-progress position-relative">
-                            <div class="video-progress-now position-relative" :style="{ 'left': progress_left }"></div>
+                            <div class="video-progress-now position-relative"
+                                :style="{ 'transform': `translateX(${progress_left}px)`, 'transition': transition }">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -73,9 +79,11 @@ const play_promise = ref(null);
 const duration = ref(null);
 const currentTime = ref(null);
 const progress = ref(null);
+const transition = ref(null);
 const progress_left = ref(0);
+const progress_width = ref(0);
 
-const paused = ref(false);
+const paused = ref(true);
 const muted = ref(true);
 const has_audio = ref(false);
 const is_fullscreen = ref(false);
@@ -132,24 +140,27 @@ function get_poster() {
     return null;
 }
 
-async function progress_start(event) {
-    event.preventDefault();
+async function progress_start() {
     video.value.pause();
 }
 
-async function progress_end(event) {
-    event.preventDefault();
-    let rect = progress.value.getBoundingClientRect();
-    let x = event.changedTouches[0].clientX - rect.left;
-    video.value.currentTime = x / rect.width * video.value.duration;
-    await video.value.play();
+async function progress_move(event) {
+    let x = event.touches[0].clientX - 23;
+    if (x < 0) x = 0;
+    if (x > progress_width.value) x = progress_width.value;
+    progress_left.value = x;
+    update_current_time(x)
 }
 
-async function progress_move(event) {
-    event.preventDefault();
-    let rect = progress.value.getBoundingClientRect();
-    let x = event.touches[0].clientX - rect.left;
-    video.value.currentTime = x / rect.width * video.value.duration;
+async function progress_end(event) {
+    let x = event.changedTouches[0].clientX - 23;
+    update_current_time(x).then(async () => {
+        await video.value.play();
+    })
+}
+
+async function update_current_time(x) {
+    video.value.currentTime = x / progress_width.value * video.value.duration;
 }
 
 async function setup() {
@@ -186,15 +197,21 @@ async function setup() {
     video.value.ontimeupdate = () => {
         remaining.value = format_time(video.value.duration - video.value.currentTime);
         currentTime.value = format_time(video.value.currentTime);
-        progress_left.value = `${(video.value.currentTime / video.value.duration) * 100}%`;
+        progress_left.value = video.value.currentTime / video.value.duration * progress_width.value;
     }
 
     video.value.onpause = () => {
         paused.value = true;
+        transition.value = null;
     }
 
     video.value.onplay = () => {
         paused.value = false;
+        transition.value = 'transform 250ms linear';
+    }
+
+    window.onresize = () => {
+        progress_width.value = window.innerWidth - 32;
     }
 
     wrapper.value.onfullscreenchange = () => {
@@ -208,6 +225,8 @@ async function setup() {
         is_fullscreen.value = false;
         hammer.value.get('swipe').set({ enable: false });
     }
+
+    progress_width.value = window.innerWidth - 32;
 }
 
 function format_time(time) {
@@ -222,13 +241,16 @@ onMounted(() => {
     hammer.value = new Hammer(video.value);
     hammer.value.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL, enable: false });
 
-    hammer.value.on('swipeup swipedown', async () => {
-        console.log("Swipe");
+    hammer.value.on('swipeup swipedown', (event) => {
+        // prevent default
+        event.preventDefault();
         if (!document.fullscreenElement) return;
         document.exitFullscreen();
     })
 
-    hammer.value.on('tap', async () => {
+    hammer.value.on('tap', (event) => {
+        // prevent default
+        event.preventDefault();
         if (!document.fullscreenElement) {
             wrapper.value.requestFullscreen();
             return
@@ -240,7 +262,8 @@ onMounted(() => {
 
 onBeforeMount(() => {
     useIntersectionObserver(video, ([{ isIntersecting }]) => {
-        if (isIntersecting && document.body.getAttribute('autoplay') == 'true') {
+        if (!isIntersecting) return
+        if (document.body.getAttribute('autoplay') == 'true') {
             play();
             return
         }
