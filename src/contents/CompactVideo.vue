@@ -34,7 +34,9 @@
                             <small class="text-shadow text-6 fw-bold">{{ duration }}</small>
                         </div>
                         <div ref="progress" class="video-progress position-relative">
-                            <div class="video-progress-now position-relative"
+                            <div class="d-flex h-100 position-absolute bg-11" :style="{ 'width': `${progress_left}px` }">
+                            </div>
+                            <div class="video-progress-now position-relative theme-shadow"
                                 :style="{ 'transform': `translateX(${progress_left}px)`, 'transition': transition }">
                             </div>
                         </div>
