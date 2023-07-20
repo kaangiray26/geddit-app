@@ -31,7 +31,7 @@ Download the APK from [GitHub Releases](https://github.com/kaangiray26/geddit-ap
 </div>
 
 ## How to make Geddit the default app for Reddit links?
-* [Check out this brief guide](https://github.com/kaangiray26/geddit-app/wiki/Enabling-App-Links)
+* [Check out this brief guide](https://github.com/kaangiray26/geddit-app/wiki/Enabling-App-Links) on how to enable app links for Geddit v1.3+
 
 ## Are you a developer?
 You can use the heart of this project, the [Geddit Library](https://github.com/kaangiray26/geddit-app/blob/main/src/js/geddit.js), to build your own read-only Reddit applications. Well, at least until Reddit decides to terminate their RSS/JSON feeds.
