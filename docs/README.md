@@ -3,7 +3,7 @@
         <img src="https://raw.githubusercontent.com/kaangiray26/geddit-app/main/src/public/images/logo_compressed.png" alt="Geddit Logo" width="80" height="80">
     </a>
     <h1 align="center">Geddit</h1>
-    <img alt="Website" src="https://img.shields.io/website?url=https%3A%2F%2Fwww.reddit.com%2Fuser%2Fkgb_26%2Fabout.json&logo=reddit&label=JSON%20Feed&cacheSeconds=0">
+    <img src="https://img.shields.io/endpoint?url=https://apt.izzysoft.de/fdroid/api/v1/shield/geddit.buzl.uk">
     <p align="center">
         An open-source, Reddit client for Android without using their API 
         <br />
