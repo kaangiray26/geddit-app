@@ -1,0 +1,12 @@
+Geddit is an open-source Reddit client that is designed to be fast, beautiful and simple. Its main objective is to not use the Reddit API directly, but instead use the RSS/JSON feeds to display content. This allows the app to view Reddit without being subject to API limits, changes and problems. Geddit works without a Reddit account, which also means that you can stay anonymous while browsing Reddit, if you are concerned about privacy.
+
+Some of the features of Geddit include:
+
+* View posts, comments, subreddits and users
+* View images, gifs, videos and self posts
+* Access NSFW content
+* View your subscribed subreddits
+* Save photos to your device
+* Share posts
+* Search for posts, subreddits and users
+* Support for app links

@@ -1,0 +1,4 @@
+* New video player with controls
+* Update manager
+* Support for default app links
+* Sane versioning
