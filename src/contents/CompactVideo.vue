@@ -90,6 +90,7 @@ const muted = ref(true);
 const has_audio = ref(false);
 const is_fullscreen = ref(false);
 const controls_visible = ref(true);
+const portrait = window.matchMedia("(orientation: portrait)")
 
 const dimensions = ref({
     width: 0,
@@ -212,23 +213,24 @@ async function setup() {
         transition.value = 'transform 250ms linear';
     }
 
-    window.onresize = () => {
-        progress_width.value = window.innerWidth - 32;
-    }
-
     wrapper.value.onfullscreenchange = () => {
         if (document.fullscreenElement) {
             is_fullscreen.value = true;
             hammer.value.get('swipe').set({ enable: true });
+            progress_width.value = window.innerWidth - 32;
+            // Add event listener for orientation change
+            portrait.onchange = () => {
+                progress_width.value = window.innerWidth - 32;
+            }
             return
         }
 
         video.value.muted = true;
         is_fullscreen.value = false;
         hammer.value.get('swipe').set({ enable: false });
+        // Remove event listener for orientation change
+        portrait.onchange = null;
     }
-
-    progress_width.value = window.innerWidth - 32;
 }
 
 function format_time(time) {
