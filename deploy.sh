@@ -15,6 +15,9 @@ printf "\nAdding files to docs...\n"
 # Copy README to docs
 cp README.md ./docs/
 
+# Copy version.json to docs
+cp version.json ./docs/
+
 # Copy geddit.js to docs
 cp ./src/js/geddit.js ./docs/
 
