@@ -1,16 +1,18 @@
 <template>
     <div ref="modalElement" class="modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered p-3 m-0">
-            <div class="modal-content rounded">
-                <div class="modal-header foreground rounded-0 border-0 pb-0">
+            <div class="modal-content foreground rounded">
+                <div class="modal-header foreground rounded-top border-0 pb-0">
                     <h5 class="modal-title text-6">A new version of Geddit is available!</h5>
                     <button type="button" class="btn btn-touch bi bi-x-lg text-6" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
-                <div class="modal-body foreground">
+                <div class="modal-body foreground rounded-bottom">
                     <div class="d-flex flex-column">
                         <h5 v-if="latest_release" class="text-11">{{ latest_release.tag_name }}</h5>
                         <div ref="body" class="release-body d-flex flex-column text-4 border rounded p-3" />
+                        <p class="text-4 mt-3 mb-0">Clicking the update button will download the latest release from our
+                            GitHub repository and bypass F-Droid's checks if you have downloaded the app from there.</p>
                         <button class="btn btn-touch bg-10 mt-3" @click="update">Update</button>
                         <button class="btn btn-touch bg-10 mt-2" @click="dont_ask">Don't ask again</button>
                     </div>
