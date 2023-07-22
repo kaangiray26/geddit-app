@@ -26,6 +26,10 @@ if (!localStorage.getItem("title_size")) {
     localStorage.setItem("title_size", JSON.stringify('small'));
 }
 
+if (!localStorage.getItem("check_for_updates")) {
+    localStorage.setItem("title_size", JSON.stringify(true));
+}
+
 // Set options
 document.body.setAttribute("title-size", JSON.parse(localStorage.getItem("title_size")));
 document.body.setAttribute("autoplay", JSON.parse(localStorage.getItem("autoplay")));

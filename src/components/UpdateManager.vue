@@ -1,13 +1,18 @@
 <template>
     <div ref="modalElement" class="modal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body foreground rounded">
+        <div class="modal-dialog modal-dialog-centered p-3 m-0">
+            <div class="modal-content rounded">
+                <div class="modal-header foreground rounded-0 border-0 pb-0">
+                    <h5 class="modal-title text-6">A new version of Geddit is available!</h5>
+                    <button type="button" class="btn btn-touch bi bi-x-lg text-6" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body foreground">
                     <div class="d-flex flex-column">
-                        <h3 class="fw-bold text-6">A new version of Geddit is available!</h3>
                         <h5 v-if="latest_release" class="text-11">{{ latest_release.tag_name }}</h5>
                         <div ref="body" class="release-body d-flex flex-column text-4 border rounded p-3" />
                         <button class="btn btn-touch bg-10 mt-3" @click="update">Update</button>
+                        <button class="btn btn-touch bg-10 mt-2" @click="dont_ask">Don't ask again</button>
                     </div>
                 </div>
             </div>
@@ -20,7 +25,7 @@ import { ref, onMounted, onBeforeUnmount, onBeforeMount } from 'vue';
 import { AppLauncher } from '@capacitor/app-launcher';
 import { Modal } from "bootstrap"
 
-const version = "v1.4";
+const version = "v1.3";
 
 const modal = ref(null);
 const body = ref(null);
@@ -72,6 +77,11 @@ function is_open() {
     return modal.value._isShown;
 }
 
+async function dont_ask() {
+    localStorage.setItem("check_for_updates", JSON.stringify(false));
+    hide();
+}
+
 defineExpose({
     show,
     hide,
@@ -79,6 +89,9 @@ defineExpose({
 })
 
 onBeforeMount(() => {
+    // Check if user wants to check for updates
+    let pref = JSON.parse(localStorage.getItem("check_for_updates"));
+    if (!pref) return;
     check_for_updates();
 })
 

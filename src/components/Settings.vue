@@ -21,6 +21,22 @@
                 </li>
             </ul>
         </div>
+        <h6 class="text-4">Check for updates</h6>
+        <div class="dropdown d-flex flex-column mb-3">
+            <button class="btn btn-3 fs-6 d-flex justify-content-between align-items-center dropdown-toggle" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="me-1">Default:</span>
+                <span class="badge bg-6 text-capitalize text-black">{{ check_for_updates }}</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end bg-3">
+                <li @click="change_updates(true)">
+                    <span class="dropdown-item text-4">True</span>
+                </li>
+                <li @click="change_updates(false)">
+                    <span class="dropdown-item text-4">False</span>
+                </li>
+            </ul>
+        </div>
         <h6 class="text-4">Title Font Size</h6>
         <div class="dropdown d-flex flex-column mb-3">
             <button class="btn btn-3 fs-6 d-flex justify-content-between align-items-center dropdown-toggle" type="button"
@@ -67,13 +83,13 @@
 
 <script setup>
 import { onBeforeMount, ref } from "vue";
-import { store } from '/js/store.js';
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 
 const autoplay = ref(null);
 const title_size = ref(null);
+const check_for_updates = ref(null);
 
 async function open_github() {
     window.open("https://github.com/kaangiray26/geddit-app", "_blank");
@@ -95,8 +111,14 @@ async function change_autoplay(value) {
     localStorage.setItem("autoplay", JSON.stringify(value));
 }
 
+async function change_updates(value) {
+    check_for_updates.value = value;
+    localStorage.setItem("check_for_updates", JSON.stringify(value));
+}
+
 onBeforeMount(() => {
     autoplay.value = JSON.parse(localStorage.getItem("autoplay"));
+    check_for_updates.value = JSON.parse(localStorage.getItem("check_for_updates"));
     title_size.value = JSON.parse(localStorage.getItem("title_size"));
 })
 </script>
