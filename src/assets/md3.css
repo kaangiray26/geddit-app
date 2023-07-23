@@ -90,6 +90,16 @@
     margin-left: auto;
 }
 
+.top-app-bar-leading-icon-container {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
 .top-app-bar-trailing-icon-container {
     width: 48px;
     height: 48px;
@@ -100,6 +110,7 @@
     padding-right: 16px;
 }
 
+.top-app-bar-leading-icon,
 .top-app-bar-trailing-icon {
     display: flex;
     font-size: 24px !important;

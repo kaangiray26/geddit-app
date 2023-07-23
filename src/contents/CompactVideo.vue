@@ -45,8 +45,8 @@
             </div>
         </div>
         <div v-if="play_promise" class="d-flex justify-content-center align-items-center cover-all position-absolute">
-            <div class="d-flex circle background p-2">
-                <div class="spinner-border background text-4" role="status"></div>
+            <div class="d-flex circle md-dark p-2">
+                <div class="spinner-border text-4" role="status"></div>
             </div>
         </div>
         <div v-show="has_audio" class="position-absolute bottom-0 start-0 m-2" @click.passive="mute">

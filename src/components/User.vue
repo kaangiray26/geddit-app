@@ -1,7 +1,7 @@
 <template>
     <div v-if="!data" class="d-flex justify-content-center align-items-center cover-all position-absolute">
-        <div class="d-flex circle bg-6 p-2">
-            <div class="spinner-border text-0" role="status"></div>
+        <div class="d-flex circle md-dark p-2">
+            <div class="spinner-border text-4" role="status"></div>
         </div>
     </div>
     <div v-else>

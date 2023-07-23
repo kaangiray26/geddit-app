@@ -1,4 +1,5 @@
 <template>
+    <TopAppBarPost ref="topbar" @params_changed="params_changed" />
     <li class="list-group-item foreground border-0 m-0 p-0">
         <div class="d-flex flex-column mb-2">
             <div class="d-flex flex-column p-3 pb-0" :class="{ 'sticky': post.stickied }">
@@ -63,6 +64,7 @@ import CompactVideo from '/contents/CompactVideo.vue';
 import CompactEmbed from '/contents/CompactEmbed.vue';
 import CompactLink from '/contents/CompactLink.vue';
 import CompactGallery from '/contents/CompactGallery.vue';
+import TopAppBarPost from './TopAppBarPost.vue';
 
 const router = useRouter();
 const type = ref(null);

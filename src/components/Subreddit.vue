@@ -1,12 +1,12 @@
 <template>
-    <TopBar ref="topbar" @params_changed="params_changed" />
     <div v-if="!data" class="d-flex justify-content-center align-items-center cover-all position-absolute">
-        <div class="d-flex circle bg-6 p-2">
-            <div class="spinner-border text-0" role="status"></div>
+        <div class="d-flex circle md-dark p-2">
+            <div class="spinner-border text-4" role="status"></div>
         </div>
     </div>
     <div v-else>
-        <div class="d-flex flex-column foreground p-3">
+        <TopAppBarSubreddit ref="topbar" :subreddit="data.title" @params_changed="params_changed" />
+        <div class="d-flex flex-column p-3 pt-0">
             <div class="banner d-flex justify-content-center align-items-center position-relative mb-2">
                 <img v-show="data.banner_img" :src="data.banner_img" class="cover vh-25 rounded">
                 <img v-show="icon" :src="icon" class="snoovatar position-absolute">
@@ -43,7 +43,7 @@ import { ref, onBeforeMount, onActivated, onDeactivated } from 'vue';
 import { useRouter } from 'vue-router';
 import { Geddit } from "/js/geddit.js";
 import Post from './CompactPost.vue';
-import TopBar from './TopBar.vue';
+import TopAppBarSubreddit from './TopAppBarSubreddit.vue';
 
 const router = useRouter();
 const geddit = new Geddit();
