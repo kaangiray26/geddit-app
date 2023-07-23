@@ -1,6 +1,32 @@
 <template>
-    <div class="background">
-        <ul class="nav nav-pills nav-fill">
+    <div class="navigation-bar">
+        <div class="navigation-bar-container">
+            <div class="navigation-bar-indicator">
+                <span class="material-icons">home</span>
+            </div>
+            <span class="label-medium">Home</span>
+        </div>
+        <div class="navigation-bar-container">
+            <div class="navigation-bar-indicator">
+                <span class="material-icons">search</span>
+            </div>
+            <span class="label-medium">Search</span>
+        </div>
+        <div class="navigation-bar-container">
+            <div class="navigation-bar-indicator">
+                <span class="material-icons">reorder</span>
+            </div>
+            <span class="label-medium">Subs</span>
+        </div>
+        <div class="navigation-bar-container">
+            <div class="navigation-bar-indicator">
+                <span class="material-icons">person</span>
+            </div>
+            <span class="label-medium">Library</span>
+        </div>
+    </div>
+    <!-- <div class="bg-4"> -->
+    <!-- <ul class="nav nav-pills nav-fill">
             <li class="nav-item">
                 <button class="nav-link fw-bold" aria-current="page" @click.passive="go_home">
                     <div class="d-flex flex-column align-items-center">
@@ -37,8 +63,8 @@
                     </div>
                 </router-link>
             </li>
-        </ul>
-    </div>
+        </ul> -->
+    <!-- </div> -->
 </template>
 
 <script setup>

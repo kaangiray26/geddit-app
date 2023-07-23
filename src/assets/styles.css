@@ -1,7 +1,8 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
 @import url("./nord.css");
-@import url("./video-js.css");
-@import url("video-theme.css");
+@import url("./md3.css");
+/* @import url("./video-js.css"); */
+/* @import url("video-theme.css"); */
 
 :root {
     --background: var(--nord0);

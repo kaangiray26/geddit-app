@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+/* Typography */
+.label-medium {
+    font-family: 'Roboto';
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0.5px
+}
+
+.navigation-bar {
+    width: 100vw;
+    height: 80px;
+    display: flex;
+    background-color: var(--nord6);
+    padding-top: 12px;
+    padding-bottom: 16px;
+}
+
+.navigation-bar-container+.navigation-bar-container {
+    margin-left: 8px;
+}
+
+.navigation-bar-container {
+    width: calc(100vw/4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.navigation-bar-indicator>i {
+    display: flex;
+    font-size: 24px !important;
+    line-height: 24px !important;
+}
+
+.navigation-bar-indicator {
+    width: 64px;
+    height: 32px;
+    margin-bottom: 4px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--nord4);
+}
