@@ -1,26 +1,27 @@
 <template>
     <div class="navigation-bar">
-        <div class="navigation-bar-container" @click.passive="go_home" :class="{ 'navigation-bar-active': path == '/' }">
+        <div class="navigation-bar-container" @touchstart.prevent="go_home"
+            :class="{ 'navigation-bar-active': path == '/' }">
             <div class="navigation-bar-indicator">
                 <span :class="home">home</span>
             </div>
             <span class="label-medium">Home</span>
         </div>
-        <div class="navigation-bar-container" @click.passive="go_search"
+        <div class="navigation-bar-container" @touchstart.prevent="go_search"
             :class="{ 'navigation-bar-active': path == '/search' }">
             <div class="navigation-bar-indicator">
                 <span :class="search">search</span>
             </div>
             <span class="label-medium">Search</span>
         </div>
-        <div class="navigation-bar-container" @click.passive="go_subreddits"
+        <div class="navigation-bar-container" @touchstart.prevent="go_subreddits"
             :class="{ 'navigation-bar-active': path == '/subreddits' }">
             <div class="navigation-bar-indicator">
                 <span :class="subreddits">reorder</span>
             </div>
             <span class="label-medium">Subs</span>
         </div>
-        <div class="navigation-bar-container" @click.passive="go_settings"
+        <div class="navigation-bar-container" @touchstart.prevent="go_settings"
             :class="{ 'navigation-bar-active': path == '/settings' }">
             <div class="navigation-bar-indicator">
                 <span :class="settings">person</span>

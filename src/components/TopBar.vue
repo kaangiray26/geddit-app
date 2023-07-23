@@ -1,30 +1,30 @@
 <template>
-    <div class="d-flex justify-content-between align-items-center foreground snap">
-        <div class="d-flex ms-3">
-            <h6 v-show="props.subreddit" class="text-6 text-capitalize me-2 mb-0">{{ props.subreddit }}</h6>
-            <span class="badge bg-10">{{ sort }}</span>
+    <div class="top-app-bar">
+        <div class="top-app-bar-headline">
+            <span class="title-large">{{ props.subreddit }}</span>
         </div>
-        <div class="d-flex">
-            <div>
-                <button type="button" class="btn btn-lg btn-touch bi bi-filter-left"
-                    @click.passive="open_sort_options"></button>
+        <div class="top-app-bar-trailing-icons">
+            <div class="top-app-bar-trailing-icon-container position-relative" @touchstart.prevent="open_menu_options">
+                <span class="top-app-bar-trailing-icon material-icons">more_vert</span>
+                <div v-show="menu_visible" class="menu" @touchstart.prevent="close_menu_options">
+                    <div v-show="menu_visible" class="menu-container">
+                        <div class="menu-item" @touchstart.prevent="refresh">
+                            <span class="material-icons">refresh</span>
+                            <span class="label-large">Refresh</span>
+                        </div>
+                        <div class="menu-item" @touchstart.prevent="clear_hidden">
+                            <span class="material-icons">restore</span>
+                            <span class="label-large">Clear hidden posts</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="dropdown">
-                <button type="button" class="btn btn-lg btn-touch bi bi-three-dots-vertical dropdown-toggle"
-                    data-bs-toggle="dropdown" aria-expanded="false"></button>
-                <ul class="dropdown-menu foreground theme-shadow">
-                    <li>
-                        <h6 class="dropdown-header">Options</h6>
-                    </li>
-                    <li>
-                        <button class="btn btn-touch dropdown-item text-4" @click.passive="refresh">Refresh</button>
-                    </li>
-                    <li>
-                        <button class="btn btn-touch dropdown-item text-4" @click.passive="clear_hidden">Clear Hidden
-                            Posts</button>
-                    </li>
-                </ul>
-            </div>
+        </div>
+    </div>
+    <div class="d-flex dps-16 md-dark">
+        <div class="chips-container" @touchstart.prevent="open_sort_options">
+            <span class=" material-icons">sort</span>
+            <span class="label-large">{{ display }}</span>
         </div>
     </div>
     <div ref="modalElement" class="modal" tabindex="-1">
@@ -69,9 +69,11 @@ const router = useRouter();
 const tab = ref('sort');
 const sort = ref("hot");
 const time = ref("day");
+const display = ref("hot");
 
 const modal = ref(null);
 const modalElement = ref(null);
+const menu_visible = ref(false);
 
 const emit = defineEmits(['params_changed'])
 
@@ -155,6 +157,16 @@ const time_types = [
     }
 ]
 
+async function open_menu_options(event) {
+    event.stopPropagation();
+    menu_visible.value = true;
+}
+
+async function close_menu_options(event) {
+    event.stopPropagation();
+    menu_visible.value = false;
+}
+
 async function open_sort_options() {
     modal.value.show();
 }
@@ -173,6 +185,7 @@ async function hide() {
 
 async function change_sort(sort_type) {
     sort.value = sort_type.value;
+    display.value = sort_type.name;
 
     if (sort.value == 'top' || sort.value == 'controversial') {
         tab.value = 'time';

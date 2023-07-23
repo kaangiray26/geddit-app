@@ -1,22 +1,39 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 /* Typography */
+.label-large {
+    font-family: 'Roboto';
+    line-height: 20px;
+    font-size: 14px;
+    letter-spacing: 0.1px;
+    font-weight: 500;
+}
+
 .label-medium {
     font-family: 'Roboto';
     font-size: 12px;
     font-weight: 500;
     line-height: 16px;
-    letter-spacing: 0.5px
+    letter-spacing: 0.5px;
 }
 
+.title-large {
+    font-family: 'Roboto';
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 28px;
+    letter-spacing: 0px;
+}
+
+/* Navigation bar */
 .navigation-bar {
     width: 100vw;
     height: 80px;
     display: flex;
     padding-top: 12px;
     padding-bottom: 16px;
-    background-color: var(--nord0);
     color: var(--nord4);
+    background-color: #262930;
 }
 
 .navigation-bar-container+.navigation-bar-container {
@@ -30,7 +47,7 @@
     align-items: center;
 }
 
-.navigation-bar-indicator>i {
+.navigation-bar-indicator>span {
     display: flex;
     font-size: 24px !important;
     line-height: 24px !important;
@@ -52,4 +69,129 @@
 
 .navigation-bar-active span {
     color: var(--nord5);
+}
+
+/* Top app bar */
+.top-app-bar {
+    width: 100vw;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    color: var(--nord4);
+    background-color: #1C1B20;
+}
+
+.top-app-bar-headline {
+    padding-left: 16px;
+}
+
+.top-app-bar-trailing-icons {
+    display: flex;
+    margin-left: auto;
+}
+
+.top-app-bar-trailing-icon-container {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.top-app-bar-trailing-icon {
+    display: flex;
+    font-size: 24px !important;
+    line-height: 24px !important;
+}
+
+/* Chips */
+.chips-container {
+    display: flex;
+    align-items: center;
+    height: 32px;
+    text-align: start;
+    border-radius: 8px;
+    border: 1px solid var(--nord4);
+    color: var(--nord4);
+}
+
+.chips-container>.material-icons {
+    display: flex;
+    font-size: 18px !important;
+    line-height: 18px !important;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.chips-container>.label-large {
+    padding-right: 16px;
+    text-transform: capitalize;
+}
+
+/* Menu */
+.menu {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.menu-container {
+    position: absolute;
+    top: 48px;
+    right: 16px;
+    min-width: 112px;
+    max-width: 280px;
+    border-radius: 12px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+    display: flex;
+    flex-direction: column;
+    background-color: #44474E;
+    z-index: 1;
+    /* elevation 3dp */
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    height: 48px;
+}
+
+.menu-item>.label-large {
+    white-space: nowrap;
+}
+
+.menu-item>.material-icons {
+    padding-right: 12px;
+}
+
+/* Paddings */
+.dps-16 {
+    padding-left: 16px;
+    padding-bottom: 16px;
+}
+
+/* Background colors */
+.md-dark {
+    background-color: #1C1B20;
+}
+
+/* Animations */
+@keyframes background-flash {
+    0% {
+        background-color: unset;
+    }
+
+    100% {
+        background-color: var(--nord3);
+    }
 }
