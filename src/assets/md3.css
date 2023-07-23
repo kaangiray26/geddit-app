@@ -13,9 +13,10 @@
     width: 100vw;
     height: 80px;
     display: flex;
-    background-color: var(--nord6);
     padding-top: 12px;
     padding-bottom: 16px;
+    background-color: var(--nord0);
+    color: var(--nord4);
 }
 
 .navigation-bar-container+.navigation-bar-container {
@@ -43,5 +44,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--nord4);
+}
+
+.navigation-bar-active>.navigation-bar-indicator {
+    background-color: var(--nord1);
+}
+
+.navigation-bar-active span {
+    color: var(--nord5);
 }
