@@ -25,6 +25,22 @@
     letter-spacing: 0px;
 }
 
+.headline-small {
+    font-family: 'Roboto';
+    line-height: 32px;
+    font-size: 24px;
+    letter-spacing: 0px;
+    font-weight: 400;
+}
+
+.body-large {
+    font-family: 'Roboto';
+    line-height: 24px;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    font-weight: 400;
+}
+
 /* Navigation bar */
 .navigation-bar {
     width: 100vw;
@@ -152,6 +168,7 @@
 }
 
 .menu-container {
+    z-index: 1;
     position: absolute;
     top: 48px;
     right: 16px;
@@ -165,9 +182,7 @@
     display: flex;
     flex-direction: column;
     background-color: #44474E;
-    z-index: 1;
-    /* elevation 3dp */
-    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
 }
 
 .menu-item {
@@ -183,6 +198,77 @@
 
 .menu-item>.material-icons {
     padding-right: 12px;
+}
+
+/* Dialog */
+.dialog {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.dialog-container {
+    z-index: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 280px;
+    max-width: 560px;
+    padding: 24px;
+    border-radius: 28px;
+    background-color: #44474E;
+    box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.2);
+}
+
+.dialog-title {
+    color: var(--nord4);
+    padding-bottom: 16px;
+}
+
+
+/* List */
+.list-container {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.list-item {
+    padding-right: 24px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    display: flex;
+    align-items: center;
+    color: var(--nord4);
+    height: 56px;
+}
+
+.list-item-leading-icon {
+    display: flex;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.list-item-leading-icon>.material-icons {
+    font-size: 24px !important;
+    line-height: 24px !important;
+}
+
+.list-item-trailing-icon {
+    display: flex;
+    padding-left: 16px;
+    margin-left: auto;
+}
+
+.list-item-trailing-icon>.material-icons {
+    font-size: 24px !important;
+    line-height: 24px !important;
 }
 
 /* Paddings */
