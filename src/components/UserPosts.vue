@@ -1,10 +1,11 @@
 <template>
-    <ul v-show="posts.length" class="list-group border-0 pt-0 mt-3">
+    <div class="cards">
         <CompactPost v-for="post in posts" :post="post.data" />
-    </ul>
-    <div v-show="!scroll_loaded" class="progress progress-alt" role="progressbar" aria-label="Basic example"
-        aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-        <div class="progress-bar progress-bar-alt"></div>
+    </div>
+    <div v-show="!scroll_loaded" class="md-progress-container">
+        <div class="md-progress">
+            <div class="md-progress-indicator"></div>
+        </div>
     </div>
 </template>
 

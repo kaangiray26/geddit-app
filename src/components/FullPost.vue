@@ -4,7 +4,7 @@
             <component :is="types[type]" :data="post.data" />
         </div>
         <div class="full-card-details">
-            <div class="d-flex align-items-center">
+            <div class="d-flex flex-wrap align-items-center">
                 <span class="label-medium text-11" @click.passive="open_subreddit">r/{{ post.data.subreddit
                 }}</span>
                 <span class="label-medium dmx-4">-</span>
@@ -47,7 +47,7 @@ import { Share } from '@capacitor/share';
 import { store, hide, unhide } from '/js/store.js'
 import Placeholder from '/contents/Placeholder.vue';
 import FullText from '/contents/FullText.vue';
-import CompactImage from '/contents/CompactImage.vue';
+import FullImage from '/contents/FullImage.vue';
 import FullVideo from '/contents/FullVideo.vue';
 import CompactEmbed from '/contents/CompactEmbed.vue';
 import CompactLink from '/contents/CompactLink.vue';
@@ -58,7 +58,7 @@ const type = ref(null);
 const types = {
     Placeholder,
     FullText,
-    CompactImage,
+    FullImage,
     FullVideo,
     CompactEmbed,
     CompactLink,
@@ -117,7 +117,7 @@ async function get_type() {
 
     // image
     if (props.post.data.domain == "i.redd.it") {
-        type.value = "CompactImage";
+        type.value = "FullImage";
         return
     }
 
@@ -135,7 +135,7 @@ async function get_type() {
 
     // Consider post hint
     if (props.post.data.post_hint == 'image') {
-        type.value = "CompactImage";
+        type.value = "FullImage";
         return
     }
 

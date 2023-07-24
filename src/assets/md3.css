@@ -304,6 +304,13 @@
     margin-right: 16px;
 }
 
+.list-item-leading-avatar>.material-icons {
+    display: flex;
+    font-size: 40px !important;
+    line-height: 40px !important;
+    margin-right: 16px;
+}
+
 .list-item-leading-icon>img {
     display: flex;
     width: 24px;
@@ -520,6 +527,82 @@
     line-height: 24px !important;
 }
 
+/* Tabs */
+.tabs {
+    height: 64px;
+    display: flex;
+}
+
+.tabs-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--nord4);
+}
+
+.tabs-3 {
+    width: calc(100%/3);
+}
+
+.tab-active {
+    height: 3px;
+    width: 100%;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    background-color: var(--nord4);
+}
+
+/* Progress */
+.md-progress-container {
+    display: flex;
+    width: 100%;
+    height: 4px;
+}
+
+.md-progress {
+    display: flex;
+    width: 100%;
+    height: 4px;
+    background-color: #E6E0E9;
+    overflow: hidden;
+}
+
+.md-progress-indicator {
+    height: 4px;
+    background-color: #6750A4;
+    animation: progress 2s cubic-bezier(0, 1, .5, 1) infinite;
+    transition: transform 250ms cubic-bezier(0, 1, .5, 1), width 250ms cubic-bezier(0, 1, .5, 1);
+}
+
+/* Filled button */
+.md-filled-button-with-icon {
+    height: 40px;
+    border-radius: 20px;
+    padding-left: 16px;
+    padding-right: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.md-filled-button-with-icon>.material-icons {
+    display: flex;
+    padding-right: 8px;
+    font-size: 24px !important;
+    line-height: 24px !important;
+}
+
+.md-filled-button {
+    height: 40px;
+    border-radius: 20px;
+    padding-left: 24px;
+    padding-right: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* Space between */
 .space-between-16+.space-between-16 {
     margin-top: 16px;
@@ -553,6 +636,10 @@
 
 .dp-16 {
     padding: 16px;
+}
+
+.dp-8 {
+    padding: 8px;
 }
 
 .dps-16 {
@@ -645,5 +732,21 @@
 
     100% {
         background-color: var(--nord3);
+    }
+}
+
+@keyframes progress {
+    0% {
+        width: 0%;
+    }
+
+    50% {
+        width: 100%;
+        transform: translateX(0);
+    }
+
+    100% {
+        width: 100%;
+        transform: translateX(100%);
     }
 }

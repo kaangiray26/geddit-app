@@ -12,28 +12,40 @@
                 <img v-show="icon" :src="icon" class="snoovatar position-absolute">
             </div>
             <div class="d-flex flex-column align-items-center mb-2">
-                <h6 class="title text-6 fw-bold">{{ data.title }}</h6>
-                <span class="text-5 mb-2">{{ data.display_name_prefixed }}</span>
-                <hr class="text-4 w-100 m-0 mb-2">
-                <small class="text-4">{{ get_description() }}</small>
+                <span class="title-large text-center text-4">{{ data.title }}</span>
+                <span class="title-medium text-center text-4">{{ data.display_name_prefixed }}</span>
+                <hr class="text-4 w-100 m-0 my-2">
+                <span class="label-medium text-center text-4">{{ get_description() }}</span>
             </div>
-            <div class="d-flex flex-column mb-2">
-                <div class="d-flex justify-content-center mb-2">
-                    <small class="text-5">{{ format_subscribers() }}</small>
-                    <small class="text-4 mx-2">·</small>
-                    <small class="text-4">{{ format_active() }}</small>
+            <div class="d-flex align-items-center justify-content-center mb-3">
+                <span class="label-medium text-10">
+                    {{ format_subscribers() }}
+                    <span class="text-4">members</span>
+                </span>
+                <span class="label-medium dmx-4 text-4">-</span>
+                <span class="label-medium text-10">
+                    {{ format_active() }}
+                    <span class="text-4">online</span>
+                </span>
+            </div>
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="md-filled-button-with-icon bg-10 text-4" v-show="!followed" @click.passive="follow">
+                    <span class="material-icons">bookmark_add</span>
+                    <span class="label-large">Follow</span>
                 </div>
-                <button v-show="!followed" type="button" class="btn btn-10 text-4" @click.passive="follow">Follow</button>
-                <button v-show="followed" type="button" class="btn btn-3 text-4"
-                    @click.passive="unfollow">Following</button>
+                <div class="md-filled-button-with-icon bg-3 text-4" v-show="followed" @click.passive="unfollow">
+                    <span class="material-icons">bookmark_added</span>
+                    <span class="label-large">Following</span>
+                </div>
             </div>
         </div>
         <div class="cards">
             <Post v-for="post in posts" :post="post.data" />
         </div>
-        <div v-if="!scroll_loaded" class="progress progress-alt" role="progressbar" aria-label="Basic example"
-            aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-            <div class="progress-bar progress-bar-alt"></div>
+        <div v-show="!scroll_loaded" class="md-progress-container">
+            <div class="md-progress">
+                <div class="md-progress-indicator"></div>
+            </div>
         </div>
     </div>
 </template>
@@ -77,7 +89,9 @@ async function follow() {
     let subs = JSON.parse(localStorage.getItem("subreddits"));
     subs.push({
         display_name: data.value.display_name,
-        icon_img: icon.value,
+        public_description: data.value.public_description.slice(0, 42) + '…',
+        subscribers: data.value.subscribers,
+        community_icon: icon.value,
     });
     localStorage.setItem("subreddits", JSON.stringify(subs));
     followed.value = true;
@@ -118,12 +132,12 @@ function format_subscribers() {
         return "private";
     }
 
-    return data.value.subscribers.toLocaleString() + " members";
+    return data.value.subscribers.toLocaleString();
 }
 
 function format_active() {
     if (data.value.active_user_count) {
-        return data.value.active_user_count.toLocaleString() + " online";
+        return data.value.active_user_count.toLocaleString();
     }
     return "private";
 }

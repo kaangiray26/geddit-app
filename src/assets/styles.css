@@ -200,7 +200,7 @@ video {
 }
 
 .progress-alt {
-    height: 0.25rem;
+    height: 4px;
     background-color: var(--background);
 }
 
@@ -253,6 +253,11 @@ video {
 
 .banner {
     min-height: 64px;
+}
+
+.banner>.cover {
+    height: 25vh;
+    background-color: #262930;
 }
 
 .search-bar {
@@ -491,4 +496,12 @@ option[selected] {
 
 .word-break {
     word-break: break-word;
+}
+
+.visibility-hidden {
+    visibility: hidden;
+}
+
+.display-flex {
+    display: flex;
 }

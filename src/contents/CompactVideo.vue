@@ -71,7 +71,6 @@
 import { ref, onBeforeUnmount, onBeforeMount, onMounted, onDeactivated } from 'vue';
 import Hls from 'hls.js';
 import { useIntersectionObserver } from '@vueuse/core'
-import Hammer from 'hammerjs';
 
 let hls = null;
 const video = ref(null);
@@ -244,26 +243,6 @@ function format_time(time) {
 // setup
 onMounted(() => {
     setup();
-    // hammer.value = new Hammer(video.value);
-    // hammer.value.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL, enable: false });
-
-    // hammer.value.on('swipeup swipedown', (event) => {
-    //     // prevent default
-    //     event.preventDefault();
-    //     if (!document.fullscreenElement) return;
-    //     document.exitFullscreen();
-    // })
-
-    // hammer.value.on('tap', (event) => {
-    //     // prevent default
-    //     event.preventDefault();
-    //     if (!document.fullscreenElement) {
-    //         wrapper.value.requestFullscreen();
-    //         return
-    //     }
-
-    //     controls_visible.value = !controls_visible.value;
-    // })
 })
 
 onBeforeMount(() => {

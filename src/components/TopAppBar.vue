@@ -1,5 +1,5 @@
 <template>
-    <div class="top-app-bar">
+    <div class="top-app-bar sticky-top">
         <div class="top-app-bar-headline">
             <span class="title-large">{{ props.subreddit }}</span>
         </div>
@@ -8,6 +8,10 @@
                 <span class="top-app-bar-trailing-icon material-icons">more_vert</span>
                 <div class="menu" v-show="menu_visible" @touchstart.prevent="close_menu_options">
                     <div class="menu-container">
+                        <div class="menu-item" @touchstart.prevent="scroll_top">
+                            <span class="material-icons">move_up</span>
+                            <span class="label-large">Scroll to top</span>
+                        </div>
                         <div class="menu-item" @touchstart.prevent="refresh">
                             <span class="material-icons">refresh</span>
                             <span class="label-large">Refresh</span>
@@ -202,5 +206,13 @@ async function change_time(time_type) {
     time.value = time_type.value;
     emit('params_changed');
     close_dialog();
+}
+
+async function scroll_top() {
+    let view = document.querySelector('.content-view');
+    view.scroll({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 </script>
