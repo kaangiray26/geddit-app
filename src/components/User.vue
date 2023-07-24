@@ -1,4 +1,9 @@
 <template>
+    <div v-if="!data" class="d-flex justify-content-center align-items-center cover-all position-absolute">
+        <div class="d-flex circle md-dark p-2">
+            <div class="spinner-border text-4" role="status"></div>
+        </div>
+    </div>
     <div v-if="data">
         <div class="d-flex flex-column p-3">
             <div class="banner d-flex justify-content-center align-items-center position-relative mb-3">
