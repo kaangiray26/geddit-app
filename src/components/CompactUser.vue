@@ -1,21 +1,19 @@
 <template>
-    <li class="list-group-item foreground border-0 rounded mb-3 mt-0 p-0" @click.passive="open_user">
-        <div class="d-flex justify-content-between align-items-center p-3">
-            <div class="d-flex align-items-center">
-                <div>
-                    <img :src="get_icon_src()" class="snoovatar-icon me-2">
-                </div>
-                <div class="d-flex flex-column">
-                    <div class="d-flex align-items-center">
-                        <h6 class="text-break text-4 m-0 me-2">{{ post.name }}</h6>
-                        <img v-if="post.is_gold" src="/images/premium.svg" class="icon-small">
-                    </div>
-                    <small class="text-4">{{ format_karma() }}</small>
-                    <small v-if="post.is_suspended" class="text-4">suspended</small>
-                </div>
-            </div>
+    <div class="list-item-3 md-foreground md-rounded-12 space-between-16" @click.passive="open_user">
+        <div class="list-item-leading-avatar">
+            <img :src="get_icon_src()">
         </div>
-    </li>
+        <div class="d-flex flex-column">
+            <div class="d-flex align-items-center">
+                <span class="body-large text-11">{{ post.name }}</span>
+                <img v-if="post.is_gold" src="/images/premium.svg" class="md-img-24 dms-8">
+            </div>
+            <div class="ellipsis">
+                <span class="body-medium">{{ format_karma() }}</span>
+            </div>
+            <span class="label-small" v-if="post.is_suspended">suspended</span>
+        </div>
+    </div>
 </template>
 
 <script setup>

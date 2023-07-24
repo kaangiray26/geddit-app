@@ -1,5 +1,5 @@
 <template>
-    <div class="card-container">
+    <div class="card-container space-between-16">
         <div class="card-content">
             <div :hidden="store.hidden.includes(post.id)">
                 <component :is="types[type]" :data="post" @open_post="open_post" />

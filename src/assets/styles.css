@@ -187,6 +187,10 @@ video {
     max-height: 25vh;
 }
 
+.text-post {
+    width: 100%;
+}
+
 .text-post>*:nth-last-child(1) {
     margin: 0;
 }
