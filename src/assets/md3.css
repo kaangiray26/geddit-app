@@ -41,6 +41,14 @@
     font-weight: 400;
 }
 
+.body-medium {
+    font-family: 'Roboto';
+    line-height: 20px;
+    font-size: 14px;
+    letter-spacing: 0.25px;
+    font-weight: 400;
+}
+
 .title-large {
     font-family: 'Roboto';
     line-height: 28px;
@@ -273,6 +281,15 @@
     height: 56px;
 }
 
+.list-item-full {
+    padding-right: 24px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    display: flex;
+    align-items: center;
+    color: var(--nord4);
+}
+
 .list-item-leading-icon {
     display: flex;
     padding-left: 16px;
@@ -294,6 +311,10 @@
     display: flex;
     font-size: 24px !important;
     line-height: 24px !important;
+}
+
+.list-item-divider+.list-item-divider {
+    border-top: 1px solid var(--nord0);
 }
 
 /* Cards */
@@ -405,6 +426,14 @@
 }
 
 /* Paddings */
+.dp-24 {
+    padding: 24px;
+}
+
+.dp-16 {
+    padding: 16px;
+}
+
 .dps-16 {
     padding-left: 16px;
 }

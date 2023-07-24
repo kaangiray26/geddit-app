@@ -1,5 +1,8 @@
 <template>
-    <div class="full-card-container">
+    <div class="full-card-container position-relative">
+        <div class="position-absolute top-0 start-0 dp-16" @click="go_back">
+            <span class="material-icons text-6">arrow_back</span>
+        </div>
         <div class="full-card-content">
             <component :is="types[type]" :data="post.data" />
         </div>
