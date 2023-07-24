@@ -1,5 +1,46 @@
 <template>
-    <li class="list-group-item foreground border-0 rounded m-3 mt-0 p-0 snap">
+    <div class="card-container">
+        <div class="card-content">
+            <div :hidden="store.hidden.includes(post.id)">
+                <component :is="types[type]" :data="post" @touchstart.stop="open_post" />
+            </div>
+        </div>
+        <div class="card-details">
+            <div class="d-flex align-items-center">
+                <span class="label-medium text-11" @touchstart.stop="open_subreddit">r/{{ post.subreddit
+                }}</span>
+                <span class="label-medium dmx-4">-</span>
+                <span class="label-medium">{{ post.domain }}</span>
+                <span class="label-medium dmx-4">-</span>
+                <span class="label-medium">{{ format_date() }}</span>
+            </div>
+            <span class="title-medium text-6 dpy-4">{{ post.title }}</span>
+            <span class="label-medium text-10" @touchstart.stop="open_user">u/{{ post.author }}</span>
+            <div class="d-flex align-items-center dpt-16">
+                <div class="md-icon-container-with-label">
+                    <span class="material-icons">arrow_upward</span>
+                    <span class="label-large">{{ format_num(post.score) }}</span>
+                </div>
+                <div class="md-icon-container-with-label">
+                    <span class="material-icons">chat</span>
+                    <span class="label-large">{{ format_num(post.num_comments) }}</span>
+                </div>
+                <div class="md-icon-container-with-label" @touchstart.stop="share">
+                    <span class="material-icons">share</span>
+                    <span class="label-large">Share</span>
+                </div>
+                <div class="md-icon-container-with-label" @touchstart.stop="hide_post">
+                    <span class="material-icons">hide_source</span>
+                    <span class="label-large">Hide</span>
+                </div>
+                <div class="md-icon-container-with-label" @touchstart.stop="open_post">
+                    <span class="material-icons">open_in_new</span>
+                    <span class="label-large">Open</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <li class="list-group-item foreground border-0 rounded m-3 mt-0 p-0">
         <div class="d-flex flex-column mb-2">
             <div class="d-flex flex-column p-3 pb-0" :class="{ 'sticky': post.stickied }">
                 <div class="d-flex flex-wrap align-items-center">
@@ -49,7 +90,7 @@
                 </button>
             </div>
         </div>
-    </li>
+    </li> -->
 </template>
 
 <script setup>

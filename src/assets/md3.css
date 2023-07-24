@@ -17,12 +17,12 @@
     letter-spacing: 0.5px;
 }
 
-.title-large {
+.label-small {
     font-family: 'Roboto';
-    font-size: 22px;
-    font-weight: 400;
-    line-height: 28px;
-    letter-spacing: 0px;
+    line-height: 16px;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    font-weight: 500;
 }
 
 .headline-small {
@@ -39,6 +39,30 @@
     font-size: 16px;
     letter-spacing: 0.5px;
     font-weight: 400;
+}
+
+.title-large {
+    font-family: 'Roboto';
+    line-height: 28px;
+    font-size: 22px;
+    letter-spacing: 0px;
+    font-weight: 400;
+}
+
+.title-medium {
+    font-family: 'Roboto';
+    line-height: 24px;
+    font-size: 16px;
+    letter-spacing: 0.15px;
+    font-weight: 500;
+}
+
+.title-small {
+    font-family: 'Roboto';
+    line-height: 20px;
+    font-size: 14px;
+    letter-spacing: 0.1px;
+    font-weight: 500;
 }
 
 /* Navigation bar */
@@ -181,7 +205,7 @@
     padding-right: 12px;
     display: flex;
     flex-direction: column;
-    background-color: #44474E;
+    background-color: #262930;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
 }
 
@@ -221,7 +245,7 @@
     max-width: 560px;
     padding: 24px;
     border-radius: 28px;
-    background-color: #44474E;
+    background-color: #262930;
     box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -267,14 +291,182 @@
 }
 
 .list-item-trailing-icon>.material-icons {
+    display: flex;
     font-size: 24px !important;
     line-height: 24px !important;
+}
+
+/* Cards */
+.cards {
+    display: flex;
+    flex-direction: column;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.card-container {
+    border-radius: 12px;
+    background-color: #262930;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.card-container+.card-container {
+    margin-top: 16px;
+}
+
+.card-content img {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    object-fit: cover;
+}
+
+.card-content video {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.card-content .md {
+    padding: 16px;
+    background-color: black;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.card-details {
+    display: flex;
+    flex-direction: column;
+    color: var(--nord4);
+    padding: 16px;
+}
+
+/* Full card  */
+.full-card-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.full-card-details {
+    display: flex;
+    flex-direction: column;
+    color: var(--nord4);
+    padding: 16px;
+}
+
+.full-card-content {
+    display: flex;
+    width: 100%;
+}
+
+.full-card-content img {
+    width: 100%;
+    height: auto;
+    max-height: unset;
+    object-fit: contain;
+}
+
+/* Icon container */
+.md-icon-container {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.md-icon-container>.material-icons {
+    display: flex;
+    font-size: 24px !important;
+    line-height: 24px !important;
+}
+
+/* Icon container with label */
+.md-icon-container-with-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: calc(100%/5);
+}
+
+.md-icon-container-with-label+.md-icon-container-with-label {
+    margin-left: 16px;
+}
+
+.md-icon-container-with-label>.material-icons {
+    display: flex;
+    font-size: 24px !important;
+    line-height: 24px !important;
+    margin-bottom: 4px;
 }
 
 /* Paddings */
 .dps-16 {
     padding-left: 16px;
+}
+
+.dpe-16 {
+    padding-right: 16px;
+}
+
+.dpe-8 {
+    padding-right: 8px;
+}
+
+.dpt-24 {
+    padding-top: 24px;
+}
+
+.dpt-16 {
+    padding-top: 16px;
+}
+
+.dpt-8 {
+    padding-top: 8px;
+}
+
+.dpt-4 {
+    padding-top: 4px;
+}
+
+.dpb-24 {
+    padding-bottom: 24px;
+}
+
+.dpb-16 {
     padding-bottom: 16px;
+}
+
+.dpb-8 {
+    padding-bottom: 8px;
+}
+
+.dpb-4 {
+    padding-bottom: 4px;
+}
+
+.dpy-8 {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.dpy-4 {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+/* Margins */
+.dme-8 {
+    margin-right: 8px;
+}
+
+.dmx-4 {
+    margin-left: 4px;
+    margin-right: 4px;
 }
 
 /* Background colors */

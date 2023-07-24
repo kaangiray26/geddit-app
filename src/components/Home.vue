@@ -5,9 +5,12 @@
         </div>
     </div>
     <TopAppBar ref="topbar" subreddit="Popular" @params_changed="params_changed" />
-    <ul class="list-group border-0 pt-0">
+    <!-- <ul class="list-group border-0 pt-0">
         <Post v-for="post in posts" :post="post.data" />
-    </ul>
+    </ul> -->
+    <div class="cards">
+        <Post v-for="post in posts" :post="post.data" />
+    </div>
     <div v-if="!scroll_loaded" class="progress progress-alt" role="progressbar" aria-label="Basic example" aria-valuenow="0"
         aria-valuemin="0" aria-valuemax="100">
         <div class="progress-bar progress-bar-alt"></div>

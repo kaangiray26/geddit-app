@@ -5,7 +5,7 @@
         </div>
     </div>
     <div v-else>
-        <div class="d-flex flex-column foreground p-3 snap">
+        <div class="d-flex flex-column foreground p-3">
             <div class="banner d-flex justify-content-center align-items-center position-relative mb-2">
                 <img :src="banner_img" class="cover vh-25 rounded">
                 <img :src="icon_img" class="snoovatar position-absolute">

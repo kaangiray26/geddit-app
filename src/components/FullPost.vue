@@ -1,55 +1,43 @@
 <template>
-    <TopAppBarPost ref="topbar" @params_changed="params_changed" />
-    <li class="list-group-item foreground border-0 m-0 p-0">
-        <div class="d-flex flex-column mb-2">
-            <div class="d-flex flex-column p-3 pb-0" :class="{ 'sticky': post.stickied }">
-                <div class="d-flex flex-wrap align-items-center">
-                    <small class="text-11 me-2" @click.passive="open_subreddit">{{ post.data.subreddit }}</small>
-                    <small class="text-4 me-2">{{ post.data.domain }}</small>
-                    <small class="text-4 me-2">{{ format_date() }}</small>
+    <div class="full-card-container">
+        <div class="full-card-content">
+            <component :is="types[type]" :data="post.data" />
+        </div>
+        <div class="full-card-details">
+            <div class="d-flex align-items-center">
+                <span class="label-medium text-11" @touchstart.stop="open_subreddit">r/{{ post.data.subreddit
+                }}</span>
+                <span class="label-medium dmx-4">-</span>
+                <span class="label-medium">{{ post.data.domain }}</span>
+                <span class="label-medium dmx-4">-</span>
+                <span class="label-medium">{{ format_date() }}</span>
+            </div>
+            <span class="title-medium text-6 dpy-4">{{ post.data.title }}</span>
+            <span class="label-medium text-10" @touchstart.stop="open_user">u/{{ post.data.author }}</span>
+            <div class="d-flex align-items-center dpt-16">
+                <div class="md-icon-container-with-label">
+                    <span class="material-icons">arrow_upward</span>
+                    <span class="label-large">{{ format_num(post.data.score) }}</span>
                 </div>
-                <h6 class="title fw-bold text-break text-6 mb-2">{{ post.data.title }}</h6>
-            </div>
-            <div class="d-flex px-3 mb-2" v-if="post.data.over_18">
-                <span class="badge bg-11">NSFW</span>
-            </div>
-            <div class="mx-3">
-                <component :is="types[type]" :data="post.data" />
+                <div class="md-icon-container-with-label">
+                    <span class="material-icons">chat</span>
+                    <span class="label-large">{{ format_num(post.data.num_comments) }}</span>
+                </div>
+                <div class="md-icon-container-with-label" @touchstart.stop="share">
+                    <span class="material-icons">share</span>
+                    <span class="label-large">Share</span>
+                </div>
+                <div class="md-icon-container-with-label" @touchstart.stop="hide_post">
+                    <span class="material-icons">hide_source</span>
+                    <span class="label-large">Hide</span>
+                </div>
+                <div class="md-icon-container-with-label" @touchstart.stop="go_back">
+                    <span class="material-icons">close_fullscreen</span>
+                    <span class="label-large">Close</span>
+                </div>
             </div>
         </div>
-        <div class="d-flex justify-content-between align-items-center pb-3 px-3">
-            <div class="d-flex flex-column">
-                <div class="d-flex flex-wrap">
-                    <small class="text-10" @click.passive="open_user">{{ post.data.author }}</small>
-                </div>
-                <div class="d-flex align-items-center">
-                    <div class="d-flex">
-                        <h6 class="color-upvote fw-bold m-0">{{ format_num(post.data.score) }}</h6>
-                    </div>
-                    <div class="d-flex mx-2">
-                        <small class="text-4">·</small>
-                    </div>
-                    <div class="d-flex text-4">
-                        <small class="bi bi-chat-fill me-1"></small>
-                        <small>{{ format_num(post.data.num_comments) }}</small>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex">
-                <button class="btn btn-touch bg-3 text-4 me-2" @click.passive="share">
-                    <span class="bi bi-share-fill"></span>
-                </button>
-                <button class="btn btn-touch bg-3 text-4 me-2" @click.passive="hide_post">
-                    <span class="bi"
-                        :class="{ 'bi-eye-fill': store.hidden.includes(post.data.id), 'bi-eye-slash-fill': !store.hidden.includes(post.data.id) }"></span>
-                </button>
-                <button class="btn btn-touch bg-3 text-4" @click.passive="go_back">
-                    <span class="bi bi-arrow-left"></span>
-                </button>
-            </div>
-        </div>
-        <hr class="text-6 m-0">
-    </li>
+    </div>
 </template>
 
 <script setup>
@@ -64,7 +52,6 @@ import CompactVideo from '/contents/CompactVideo.vue';
 import CompactEmbed from '/contents/CompactEmbed.vue';
 import CompactLink from '/contents/CompactLink.vue';
 import CompactGallery from '/contents/CompactGallery.vue';
-import TopAppBarPost from './TopAppBarPost.vue';
 
 const router = useRouter();
 const type = ref(null);

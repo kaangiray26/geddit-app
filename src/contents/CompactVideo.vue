@@ -2,7 +2,7 @@
     <div class="d-flex cover-50 position-relative background"
         :style="{ 'aspect-ratio': dimensions.width + '/' + dimensions.height + '!important' }">
         <div ref="wrapper" class="video-wrapper">
-            <video ref="video" class="position-relative theme-shadow" :poster="get_poster()" muted loop>
+            <video ref="video" class="position-relative" :poster="get_poster()" muted loop>
             </video>
             <div v-if="paused" class="video-paused">
                 <div class="d-flex circle bg-10 p-1 theme-shadow">

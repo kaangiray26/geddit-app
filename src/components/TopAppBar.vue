@@ -21,7 +21,7 @@
             </div>
         </div>
     </div>
-    <div class="d-flex dps-16 md-dark">
+    <div class="d-flex dps-16 dpb-16 md-dark">
         <div class="chips-container" @touchstart.stop="open_dialog">
             <span class=" material-icons">sort</span>
             <span class="label-large">{{ display }}</span>

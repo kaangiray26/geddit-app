@@ -7,10 +7,10 @@
     <div v-else>
         <FullPost :post="post" />
         <div class="d-flex flex-column">
-            <div class="foreground p-2">
+            <div class="p-2">
                 <h6 class="text-6 fw-bold m-0">Comments</h6>
             </div>
-            <div v-for="comment in comments" class="foreground border-bottom border-secondary p-2">
+            <div v-for="comment in comments" class="border-bottom border-secondary p-2">
                 <small :class="get_author_class(comment.data.author)" @click.passive="open_user(comment.data.author)">{{
                     comment.data.author }}</small>
                 <div class="text-4 text-post" v-html="markdown(comment.data.body_html)"></div>

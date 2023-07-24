@@ -126,6 +126,13 @@ video {
     max-height: 50vh;
 }
 
+.cover-25 {
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+    max-height: 25vh;
+}
+
 .contain {
     object-fit: contain;
     width: 100%;

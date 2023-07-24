@@ -22,7 +22,7 @@
             </div>
         </div>
     </div>
-    <div class="d-flex dps-16 md-dark">
+    <div class="d-flex dps-16 dpb-16 md-dark">
         <div class="chips-container" @touchstart.prevent="open_sort_options">
             <span class=" material-icons">sort</span>
             <span class="label-large">{{ display }}</span>
