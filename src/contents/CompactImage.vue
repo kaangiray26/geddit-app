@@ -1,10 +1,11 @@
 <template>
-    <img :src="image_options.preview" loading="lazy" :style="image_options.style">
+    <img :src="image_options.preview" loading="lazy" :style="image_options.style" @click.prevent="emit('open_post')">
 </template>
 
 <script setup>
 import { ref } from 'vue';
 
+const emit = defineEmits(['open_post']);
 const props = defineProps({
     data: {
         type: Object,

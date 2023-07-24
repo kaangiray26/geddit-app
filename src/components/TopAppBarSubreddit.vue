@@ -1,14 +1,13 @@
 <template>
     <div class="top-app-bar">
-        <div class="top-app-bar-leading-icon-container" @touchstart.prevent="go_back">
-            <span class="top-app-bar-leading-icon material-icons">arrow_back</span>
+        <div class="top-app-bar-headline">
+            <span class="title-large text-break text-truncate">{{ props.subreddit }}</span>
         </div>
-        <span class="title-large">{{ props.subreddit }}</span>
         <div class="top-app-bar-trailing-icons">
             <div class="top-app-bar-trailing-icon-container position-relative" @touchstart.prevent="open_menu_options">
                 <span class="top-app-bar-trailing-icon material-icons">more_vert</span>
-                <div v-show="menu_visible" class="menu" @touchstart.prevent="close_menu_options">
-                    <div v-show="menu_visible" class="menu-container">
+                <div class="menu" v-show="menu_visible" @touchstart.prevent="close_menu_options">
+                    <div class="menu-container">
                         <div class="menu-item" @touchstart.prevent="refresh">
                             <span class="material-icons">refresh</span>
                             <span class="label-large">Refresh</span>
@@ -23,36 +22,34 @@
         </div>
     </div>
     <div class="d-flex dps-16 dpb-16 md-dark">
-        <div class="chips-container" @touchstart.prevent="open_sort_options">
+        <div class="chips-container" @touchstart.stop="open_dialog">
             <span class=" material-icons">sort</span>
             <span class="label-large">{{ display }}</span>
         </div>
     </div>
-    <div ref="modalElement" class="modal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body foreground rounded">
-                    <ul class="list-group">
-                        <li v-show="tab == 'sort'" v-for="sort_type in sort_types" class="theme-list-item rounded"
-                            @click.passive="change_sort(sort_type)">
-                            <div class="d-flex justify-content-between align-items-center p-3">
-                                <div class="d-flex align-items-center">
-                                    <h6 :class="sort_type.icon" class="mb-0 me-3"></h6>
-                                    <h6 class="mb-0 me-3">{{ sort_type.name }}</h6>
-                                </div>
-                                <div v-show="sort_type.value == 'top' || sort_type.value == 'controversial'">
-                                    <h6 class="mb-0 bi bi-arrow-right"></h6>
-                                </div>
-                            </div>
-                        </li>
-                        <li v-show="tab == 'time'" v-for="time_type in time_types" class="theme-list-item rounded"
-                            @click.passive="change_time(time_type)">
-                            <div class="d-flex align-items-center p-3">
-                                <h6 :class="time_type.icon" class="mb-0 me-3"></h6>
-                                <h6 class="mb-0">{{ time_type.name }}</h6>
-                            </div>
-                        </li>
-                    </ul>
+    <div class="dialog" v-show="dialog_visible" @touchstart.stop="close_dialog">
+        <div class="dialog-container">
+            <div class="dialog-title">
+                <span class="headline-small">Sort options</span>
+            </div>
+            <div v-show="tab == 'sort'" class="list-container py-0">
+                <div class="list-item" v-for="sort_type in sort_types" @touchstart.stop="change_sort(sort_type)">
+                    <div class="list-item-leading-icon">
+                        <span class="material-icons">{{ sort_type.icon }}</span>
+                    </div>
+                    <span class="body-large">{{ sort_type.name }}</span>
+                    <div class="list-item-trailing-icon"
+                        v-show="sort_type.value == 'top' || sort_type.value == 'controversial'">
+                        <span class="material-icons">arrow_right</span>
+                    </div>
+                </div>
+            </div>
+            <div v-show="tab == 'time'" class="list-container py-0">
+                <div class="list-item" v-for="time_type in time_types" @touchstart.stop="change_time(time_type)">
+                    <div class="list-item-leading-icon">
+                        <span class="material-icons">{{ time_type.icon }}</span>
+                    </div>
+                    <span class="body-large">{{ time_type.name }}</span>
                 </div>
             </div>
         </div>
@@ -60,21 +57,22 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref } from 'vue';
 import { clear_hidden } from '/js/store.js';
 import { useRouter } from 'vue-router';
-import { Modal } from "bootstrap"
 
 const router = useRouter();
 
-const tab = ref('sort');
 const sort = ref("hot");
 const time = ref("day");
 const display = ref("hot");
 
-const modal = ref(null);
-const modalElement = ref(null);
+const tab = ref('sort');
+const temp_sort = ref("hot");
+const temp_display = ref("hot");
+
 const menu_visible = ref(false);
+const dialog_visible = ref(false);
 
 const emit = defineEmits(['params_changed'])
 
@@ -86,8 +84,6 @@ const props = defineProps({
 })
 
 defineExpose({
-    show,
-    hide,
     sort,
     time
 })
@@ -96,65 +92,65 @@ const sort_types = [
     {
         name: "Best",
         value: "best",
-        icon: "bi bi-rocket-takeoff-fill"
+        icon: "rocket_launch"
     },
     {
         name: "Hot",
         value: "hot",
-        icon: "bi bi-fire"
+        icon: "local_fire_department"
     },
     {
         name: "New",
         value: "new",
-        icon: "bi bi-clock-fill"
-    },
-    {
-        name: "Top",
-        value: "top",
-        icon: "bi bi-trophy-fill"
+        icon: "schedule"
     },
     {
         name: "Rising",
         value: "rising",
-        icon: "bi bi-lightning-charge-fill"
+        icon: "moving"
     },
     {
         name: "Controversial",
         value: "controversial",
-        icon: "bi bi-chat-text-fill"
-    }
+        icon: "forum"
+    },
+    {
+        name: "Top",
+        value: "top",
+        icon: "leaderboard"
+    },
 ]
 
 const time_types = [
     {
-        name: "Hour",
+        name: "Past hour",
         value: "hour",
-        icon: "bi bi-clock-history"
+        icon: "history"
     },
     {
-        name: "Day",
+        name: "Past 24 hours",
         value: "day",
-        icon: "bi bi-calendar-day"
+        icon: "today"
     },
     {
-        name: "Week",
+        name: "Past week",
         value: "week",
-        icon: "bi bi-calendar"
+        icon: "date_range"
     },
     {
-        name: "Month",
+        name: "Past month",
         value: "month",
-        icon: "bi bi-calendar2"
+        icon: "calendar_month"
     },
     {
-        name: "Year",
+        name: "Past year",
         value: "year",
-        icon: "bi bi-calendar3"
+        icon: "event_note"
     },
     {
-        name: "All",
+        name: "All time",
         value: "all",
-        icon: "bi bi-clock-fill"
+        icon: "stars"
     }
 ]
 
@@ -168,53 +164,43 @@ async function close_menu_options(event) {
     menu_visible.value = false;
 }
 
-async function open_sort_options() {
-    modal.value.show();
+async function open_dialog() {
+    dialog_visible.value = true;
+}
+
+async function close_dialog() {
+    dialog_visible.value = false;
+
+    // reset to default
+    tab.value = "sort";
+    temp_sort.value = "hot";
+    temp_display.value = "hot";
 }
 
 async function refresh() {
     router.go();
 }
 
-async function show() {
-    modal.value.show();
-}
-
-async function hide() {
-    modal.value.hide();
-}
-
 async function change_sort(sort_type) {
-    sort.value = sort_type.value;
     display.value = sort_type.name;
 
-    if (sort.value == 'top' || sort.value == 'controversial') {
+    if (sort_type.value == 'top' || sort_type.value == 'controversial') {
+        temp_display.value = sort_type.name;
+        temp_sort.value = sort_type.value;
         tab.value = 'time';
         return
     }
 
+    sort.value = sort_type.value;
     emit('params_changed');
-    hide();
+    close_dialog();
 }
 
 async function change_time(time_type) {
+    display.value = temp_display.value + ' ' + time_type.name;
+    sort.value = temp_sort.value;
     time.value = time_type.value;
     emit('params_changed');
-    hide();
+    close_dialog();
 }
-
-onMounted(() => {
-    // Init modal
-    modal.value = new Modal(modalElement.value, {
-        keyboard: false
-    })
-
-    modalElement.value.addEventListener('hidden.bs.modal', () => {
-        tab.value = 'sort';
-    })
-})
-
-onBeforeUnmount(() => {
-    modal.value.dispose();
-})
 </script>

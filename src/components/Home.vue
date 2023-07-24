@@ -5,9 +5,6 @@
         </div>
     </div>
     <TopAppBar ref="topbar" subreddit="Popular" @params_changed="params_changed" />
-    <!-- <ul class="list-group border-0 pt-0">
-        <Post v-for="post in posts" :post="post.data" />
-    </ul> -->
     <div class="cards">
         <Post v-for="post in posts" :post="post.data" />
     </div>

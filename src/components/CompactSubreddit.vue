@@ -1,5 +1,5 @@
 <template>
-    <li class="list-group-item foreground border-0 rounded m-3 mt-0 p-0" @click.passive="open_subreddit">
+    <li class="list-group-item foreground border-0 rounded mb-3 mt-0 p-0" @click.passive="open_subreddit">
         <div class="d-flex justify-content-between align-items-center p-3">
             <div class="d-flex align-items-center">
                 <div>

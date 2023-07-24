@@ -2,7 +2,8 @@
     <div class="d-flex cover-50 position-relative background"
         :style="{ 'aspect-ratio': dimensions.width + '/' + dimensions.height + '!important' }">
         <div ref="wrapper" class="video-wrapper">
-            <video ref="video" class="position-relative" :poster="get_poster()" muted loop>
+            <video ref="video" class="position-relative" :poster="get_poster()" muted loop
+                @click.prevent="emit('open_post')">
             </video>
             <div v-if="paused" class="video-paused">
                 <div class="d-flex circle bg-10 p-1 theme-shadow">
@@ -97,6 +98,7 @@ const dimensions = ref({
     height: 0
 });
 
+const emit = defineEmits('open_post');
 const props = defineProps({
     data: {
         type: Object,
@@ -242,26 +244,26 @@ function format_time(time) {
 // setup
 onMounted(() => {
     setup();
-    hammer.value = new Hammer(video.value);
-    hammer.value.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL, enable: false });
+    // hammer.value = new Hammer(video.value);
+    // hammer.value.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL, enable: false });
 
-    hammer.value.on('swipeup swipedown', (event) => {
-        // prevent default
-        event.preventDefault();
-        if (!document.fullscreenElement) return;
-        document.exitFullscreen();
-    })
+    // hammer.value.on('swipeup swipedown', (event) => {
+    //     // prevent default
+    //     event.preventDefault();
+    //     if (!document.fullscreenElement) return;
+    //     document.exitFullscreen();
+    // })
 
-    hammer.value.on('tap', (event) => {
-        // prevent default
-        event.preventDefault();
-        if (!document.fullscreenElement) {
-            wrapper.value.requestFullscreen();
-            return
-        }
+    // hammer.value.on('tap', (event) => {
+    //     // prevent default
+    //     event.preventDefault();
+    //     if (!document.fullscreenElement) {
+    //         wrapper.value.requestFullscreen();
+    //         return
+    //     }
 
-        controls_visible.value = !controls_visible.value;
-    })
+    //     controls_visible.value = !controls_visible.value;
+    // })
 })
 
 onBeforeMount(() => {

@@ -1,6 +1,6 @@
 <template>
     <div v-show="text">
-        <div class="text-wrap text-break background p-3">
+        <div class="text-wrap text-break">
             <div class="text-4 text-post" v-html="text" />
             <div class="d-flex justify-content-end">
                 <button type="button" class="btn btn-touch bi bi-translate" @click="translate"

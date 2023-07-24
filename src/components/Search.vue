@@ -1,5 +1,17 @@
 <template>
-    <div class="d-flex flex-column foreground p-3">
+    <div class="search-container">
+        <div class="search-leading-icon-container" @touchstart.prevent="go_back">
+            <span class="material-icons">arrow_back</span>
+        </div>
+        <div class="search-input">
+            <input ref="search_field" type="text" class="body-large" placeholder="Search Reddit" @input="search"
+                @keyup.enter="search">
+        </div>
+        <div class="search-trailing-icon-container" @touchstart.prevent="clear_input">
+            <span class="material-icons">clear</span>
+        </div>
+    </div>
+    <!-- <div class="d-flex flex-column foreground p-3 mb-3">
         <div class="d-flex align-items-center mb-3">
             <div class="input-group flex-fill">
                 <button id="button-addon1" type="button" class="btn btn-outline-4 text-4" @click.passive="go_back">
@@ -32,10 +44,10 @@
                 <span>Search for communities</span>
             </button>
         </div>
-    </div>
-    <ul v-show="results.length" class="list-group border-0 pt-0 mt-3">
+    </div> -->
+    <div class="cards">
         <component v-for="result in results" :post="result.data" :is="types[result.kind]" />
-    </ul>
+    </div>
     <div v-if="!scroll_loaded" class="progress progress-alt" role="progressbar" aria-label="Basic example" aria-valuenow="0"
         aria-valuemin="0" aria-valuemax="100">
         <div class="progress-bar progress-bar-alt"></div>
@@ -68,7 +80,7 @@ const section = ref('all');
 const search_field = ref(null);
 const scroll_loaded = ref(true);
 
-function debounce(func, timeout = 300) {
+function debounce(func, timeout = 500) {
     let timer;
     return (...args) => {
         clearTimeout(timer);
@@ -207,6 +219,11 @@ async function search_communities() {
     after.value = response.after;
 
     scroll_loaded.value = true;
+}
+
+async function clear_input() {
+    search_field.value.value = "";
+    search_field.value.focus();
 }
 
 function scroll_handle(el) {

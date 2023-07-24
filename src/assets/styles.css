@@ -439,6 +439,7 @@ option[selected] {
     left: 50%;
     position: absolute;
     transform: translate(-50%, -50%);
+    z-index: 1;
 }
 
 .video-progress {
@@ -455,6 +456,20 @@ option[selected] {
     cursor: pointer;
     border-radius: 50%;
     background-color: var(--nord4);
+}
+
+.video-fullscreen {
+    width: 100vw;
+    height: 100vh;
+    position: fixed !important;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: var(--background);
+}
+
+.video-fullscreen>video {
+    object-fit: contain !important;
 }
 
 .text-shadow {

@@ -5,7 +5,7 @@
         </div>
     </div>
     <div v-else>
-        <TopAppBarSubreddit ref="topbar" :subreddit="data.title" @params_changed="params_changed" />
+        <TopAppBarSubreddit ref="topbar" :subreddit="data.display_name_prefixed" @params_changed="params_changed" />
         <div class="d-flex flex-column p-3 pt-0">
             <div class="banner d-flex justify-content-center align-items-center position-relative mb-2">
                 <img v-show="data.banner_img" :src="data.banner_img" class="cover vh-25 rounded">
@@ -28,9 +28,9 @@
                     @click.passive="unfollow">Following</button>
             </div>
         </div>
-        <ul class="list-group border-0 pt-0 mt-3">
+        <div class="cards">
             <Post v-for="post in posts" :post="post.data" />
-        </ul>
+        </div>
         <div v-if="!scroll_loaded" class="progress progress-alt" role="progressbar" aria-label="Basic example"
             aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
             <div class="progress-bar progress-bar-alt"></div>

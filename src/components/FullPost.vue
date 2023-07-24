@@ -1,14 +1,11 @@
 <template>
-    <div class="full-card-container position-relative">
-        <div class="position-absolute top-0 start-0 dp-16" @click="go_back">
-            <span class="material-icons text-6">arrow_back</span>
-        </div>
+    <div class="full-card-container">
         <div class="full-card-content">
             <component :is="types[type]" :data="post.data" />
         </div>
         <div class="full-card-details">
             <div class="d-flex align-items-center">
-                <span class="label-medium text-11" @touchstart.stop="open_subreddit">r/{{ post.data.subreddit
+                <span class="label-medium text-11" @click.passive="open_subreddit">r/{{ post.data.subreddit
                 }}</span>
                 <span class="label-medium dmx-4">-</span>
                 <span class="label-medium">{{ post.data.domain }}</span>
@@ -16,7 +13,7 @@
                 <span class="label-medium">{{ format_date() }}</span>
             </div>
             <span class="title-medium text-6 dpy-4">{{ post.data.title }}</span>
-            <span class="label-medium text-10" @touchstart.stop="open_user">u/{{ post.data.author }}</span>
+            <span class="label-medium text-10" @click.passive="open_user">u/{{ post.data.author }}</span>
             <div class="d-flex align-items-center dpt-16">
                 <div class="md-icon-container-with-label">
                     <span class="material-icons">arrow_upward</span>
@@ -26,15 +23,15 @@
                     <span class="material-icons">chat</span>
                     <span class="label-large">{{ format_num(post.data.num_comments) }}</span>
                 </div>
-                <div class="md-icon-container-with-label" @touchstart.stop="share">
+                <div class="md-icon-container-with-label" @touchstart.prevent="share">
                     <span class="material-icons">share</span>
                     <span class="label-large">Share</span>
                 </div>
-                <div class="md-icon-container-with-label" @touchstart.stop="hide_post">
+                <div class="md-icon-container-with-label" @touchstart.prevent="hide_post">
                     <span class="material-icons">hide_source</span>
                     <span class="label-large">Hide</span>
                 </div>
-                <div class="md-icon-container-with-label" @touchstart.stop="go_back">
+                <div class="md-icon-container-with-label" @touchstart.prevent="go_back">
                     <span class="material-icons">close_fullscreen</span>
                     <span class="label-large">Close</span>
                 </div>
@@ -51,7 +48,7 @@ import { store, hide, unhide } from '/js/store.js'
 import Placeholder from '/contents/Placeholder.vue';
 import FullText from '/contents/FullText.vue';
 import CompactImage from '/contents/CompactImage.vue';
-import CompactVideo from '/contents/CompactVideo.vue';
+import FullVideo from '/contents/FullVideo.vue';
 import CompactEmbed from '/contents/CompactEmbed.vue';
 import CompactLink from '/contents/CompactLink.vue';
 import CompactGallery from '/contents/CompactGallery.vue';
@@ -62,7 +59,7 @@ const types = {
     Placeholder,
     FullText,
     CompactImage,
-    CompactVideo,
+    FullVideo,
     CompactEmbed,
     CompactLink,
     CompactGallery
@@ -114,7 +111,7 @@ function format_num(points) {
 async function get_type() {
     // video
     if (props.post.data.domain == "v.redd.it") {
-        type.value = "CompactVideo";
+        type.value = "FullVideo";
         return
     }
 
