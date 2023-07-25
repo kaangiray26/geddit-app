@@ -4,6 +4,7 @@ import { reactive } from "vue";
 
 const store = reactive({
     hidden: JSON.parse(localStorage.getItem('hidden_posts')) || [],
+    title_size: JSON.parse(localStorage.getItem("title_size")) || 'title-medium',
 })
 
 async function hide(id) {

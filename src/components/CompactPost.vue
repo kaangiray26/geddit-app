@@ -20,7 +20,7 @@
                 <span class="label-medium dmx-4">-</span>
                 <span class="label-medium">{{ format_date() }}</span>
             </div>
-            <span class="title-medium text-6 dpy-4" :class="{ 'text-truncate': store.hidden.includes(post.id) }">{{
+            <span class="text-6 dpy-4" :class="store.title_size, { 'text-truncate': store.hidden.includes(post.id) }">{{
                 post.title }}</span>
             <div class="d-flex align-items-center">
                 <span class="label-medium text-10" @click.passive="open_user">u/{{ post.author }}</span>

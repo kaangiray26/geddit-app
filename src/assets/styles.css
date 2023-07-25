@@ -42,18 +42,6 @@ hr {
     height: 100%;
 }
 
-body[title-size='small'] .title {
-    font-size: 1rem !important;
-}
-
-body[title-size='medium'] .title {
-    font-size: 1.25rem !important;
-}
-
-body[title-size='large'] .title {
-    font-size: 1.5rem !important;
-}
-
 video {
     width: 100%;
     height: auto;
@@ -504,4 +492,47 @@ option[selected] {
 
 .display-flex {
     display: flex;
+}
+
+.profile-container {
+    width: 100vw;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    color: var(--nord4);
+    background-color: #1C1B20;
+}
+
+.profile-headline {
+    padding-left: 16px;
+}
+
+.geddit-banner {
+    width: 100%;
+    height: 25vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Markdown Table */
+.full-text-post>.md {
+    width: 100vw;
+}
+
+.md table {
+    display: block;
+    white-space: nowrap;
+    overflow-x: scroll !important;
+}
+
+.md thead {
+    border-bottom: 1px solid var(--nord0);
+}
+
+.md th,
+.md td {
+    border: 1px solid var(--nord0);
+    background-color: var(--background);
 }

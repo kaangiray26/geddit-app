@@ -1,7 +1,7 @@
 <template>
     <div v-show="text">
         <div class="text-wrap text-break">
-            <div class="text-4 text-post" v-html="text" />
+            <div class="text-4 text-post full-text-post" v-html="text" />
             <div class="d-flex justify-content-end">
                 <button type="button" class="btn btn-touch bi bi-translate" @click="translate"
                     :disabled="btn_disabled"></button>

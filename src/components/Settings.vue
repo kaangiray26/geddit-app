@@ -1,82 +1,83 @@
 <template>
-    <div class="d-flex flex-column background cover-all p-3">
-        <h5 class="text-6">Settings</h5>
-        <button class="btn btn-10 fs-6 mb-3" @click.passive="open_gallery">
-            <span class="bi bi-images me-1"></span>
-            <span>Gallery</span>
-        </button>
-        <h6 class="text-4">Autoplay</h6>
-        <div class="dropdown d-flex flex-column mb-3">
-            <button class="btn btn-3 fs-6 d-flex justify-content-between align-items-center dropdown-toggle" type="button"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="me-1">Default:</span>
-                <span class="badge bg-6 text-capitalize text-black">{{ autoplay }}</span>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end bg-3">
-                <li @click="change_autoplay(true)">
-                    <span class="dropdown-item text-4">True</span>
-                </li>
-                <li @click="change_autoplay(false)">
-                    <span class="dropdown-item text-4">False</span>
-                </li>
-            </ul>
+    <div class="profile-container">
+        <div class="profile-headline">
+            <span class="title-large">Profile</span>
         </div>
-        <h6 class="text-4">Check for updates</h6>
-        <div class="dropdown d-flex flex-column mb-3">
-            <button class="btn btn-3 fs-6 d-flex justify-content-between align-items-center dropdown-toggle" type="button"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="me-1">Default:</span>
-                <span class="badge bg-6 text-capitalize text-black">{{ check_for_updates }}</span>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end bg-3">
-                <li @click="change_updates(true)">
-                    <span class="dropdown-item text-4">True</span>
-                </li>
-                <li @click="change_updates(false)">
-                    <span class="dropdown-item text-4">False</span>
-                </li>
-            </ul>
+    </div>
+    <div class="d-flex flex-column px-3">
+        <div class="d-flex md-dark dpb-16">
+            <div class="chips-container" @click.passive="open_gallery">
+                <span class=" material-icons">collections</span>
+                <span class="label-large">Gallery</span>
+            </div>
         </div>
-        <h6 class="text-4">Title Font Size</h6>
-        <div class="dropdown d-flex flex-column mb-3">
-            <button class="btn btn-3 fs-6 d-flex justify-content-between align-items-center dropdown-toggle" type="button"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="me-1">Default:</span>
-                <span class="badge bg-6 text-capitalize text-black">{{ title_size }}</span>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end bg-3">
-                <li @click="change_title_size('small')">
-                    <span class="dropdown-item text-4">Small</span>
-                </li>
-                <li @click="change_title_size('medium')">
-                    <span class="dropdown-item text-4">Medium</span>
-                </li>
-                <li @click="change_title_size('large')">
-                    <span class="dropdown-item text-4">Large</span>
-                </li>
-            </ul>
+        <div class="divider"></div>
+        <div class="list-container py-0">
+            <div class="list-item dps-16">
+                <span class="body-large">Autoplay</span>
+                <span class="list-item-trailing-icon">
+                    <div class="switch" :state="autoplay ? 'on' : 'off'" @click.passive="change_autoplay">
+                        <div class="switch-container">
+                            <span class="material-icons"></span>
+                        </div>
+                    </div>
+                </span>
+            </div>
+            <div class="list-item dps-16">
+                <span class="body-large">Check for updates</span>
+                <span class="list-item-trailing-icon">
+                    <div class="switch" :state="check_for_updates ? 'on' : 'off'" @click.passive="change_updates">
+                        <div class="switch-container">
+                            <span class="material-icons"></span>
+                        </div>
+                    </div>
+                </span>
+            </div>
         </div>
-        <hr class="text-6">
-        <div class="d-flex justify-content-center mb-1">
-            <div class="banner d-flex justify-content-center align-items-center position-relative theme-shadow">
-                <img src="/images/logo_background.jpg" class="cover-all rounded"
-                    alt="Photo by Pawel Czerwinski on Unsplash">
-                <div class="d-flex flex-column align-items-center position-absolute">
-                    <img src="/images/logo_compressed.png" class="snoovatar mb-2">
-                    <h6 class="fw-bold text-6 mb-0">Geddit App</h6>
+        <div class="divider"></div>
+        <div class="d-flex flex-column text-4 dpy-8">
+            <span class="body-large">Title size</span>
+            <div class="d-flex dpt-8">
+                <div class="chips-container" :checked="title_size == 'title-large'"
+                    @click.passive="change_title_size('title-large')">
+                    <span class="material-icons"></span>
+                    <span class="label-large">Large</span>
+                </div>
+                <div class="chips-container" :checked="title_size == 'title-medium'"
+                    @click.passive="change_title_size('title-medium')">
+                    <span class=" material-icons"></span>
+                    <span class="label-large">Medium</span>
+                </div>
+                <div class="chips-container" :checked="title_size == 'title-small'"
+                    @click.passive="change_title_size('title-small')">
+                    <span class=" material-icons"></span>
+                    <span class="label-large">Small</span>
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-center mb-3">
-            <small class="fw-bold fst-italic text-6">Made by users, for the users.</small>
-        </div>
-        <div class="d-flex flex-column text-4">
-            <div></div>
-            <span class="mb-2">Visit our GitHub Repo to learn how to build more apps with Geddit Library.</span>
-            <button type="button" class="btn btn-3 fs-6" @click.passive="open_github">
-                <span class="bi bi-github me-1"></span>
-                <span>GitHub</span>
-            </button>
+        <div class="d-flex flex-column">
+            <div class="geddit-banner">
+                <img src="/images/logo_background.jpg" class="cover-all object-fit-cover md-rounded-12 md-foreground"
+                    alt="Photo by Pawel Czerwinski on Unsplash">
+                <div class="d-flex flex-column align-items-center position-absolute">
+                    <img src="/images/logo_compressed.png" class="snoovatar">
+                    <span class="body-large text-6 text-shadow">Geddit</span>
+                </div>
+                <div class="d-flex position-absolute bottom-0 end-0 m-3">
+                    <div class="md-fab bg-0 text-4 el-3" @click.passive="open_github">
+                        <span class="material-icons bi bi-github"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-column text-4 dpt-4">
+                <div class="d-flex flex-column align-items-center justify-content-center">
+                    <span class="label-medium fst-italic">Made by users, for the users.</span>
+                    <div class="d-flex align-items-center dpt-4">
+                        <span class="material-icons dpe-4">directions_run</span>
+                        <span class="label-medium">kaangiray26</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -84,6 +85,7 @@
 <script setup>
 import { onBeforeMount, ref } from "vue";
 import { useRouter } from "vue-router";
+import { store } from "../js/store";
 
 const router = useRouter();
 
@@ -101,19 +103,19 @@ async function open_gallery() {
 
 async function change_title_size(value) {
     title_size.value = value;
-    document.body.setAttribute("title-size", value);
+    store.title_size = value;
     localStorage.setItem("title_size", JSON.stringify(value));
 }
 
-async function change_autoplay(value) {
-    autoplay.value = value;
-    document.body.setAttribute("autoplay", value);
-    localStorage.setItem("autoplay", JSON.stringify(value));
+async function change_autoplay() {
+    autoplay.value = !autoplay.value;
+    document.body.setAttribute("autoplay", autoplay.value);
+    localStorage.setItem("autoplay", JSON.stringify(autoplay.value));
 }
 
-async function change_updates(value) {
-    check_for_updates.value = value;
-    localStorage.setItem("check_for_updates", JSON.stringify(value));
+async function change_updates() {
+    check_for_updates.value = !check_for_updates.value;
+    localStorage.setItem("check_for_updates", JSON.stringify(check_for_updates.value));
 }
 
 onBeforeMount(() => {

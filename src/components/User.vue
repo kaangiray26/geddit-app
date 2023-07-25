@@ -88,7 +88,7 @@ async function setup() {
     let response = await geddit.getUser(router.currentRoute.value.params.id);
     if (!response) return;
 
-    banner_img.value = response.subreddit.banner_img.split("?")[0];
+    banner_img.value = response.subreddit.banner_img ? response.subreddit.banner_img.split("?")[0] : "/images/logo_background.jpg"
     icon_img.value = response.icon_img.split("?")[0];
     data.value = response;
 }
