@@ -1,59 +1,38 @@
 <template>
-    <div class="d-flex cover-50 position-relative background"
-        :style="{ 'aspect-ratio': dimensions.width + '/' + dimensions.height + '!important' }">
-        <div ref="wrapper" class="video-wrapper">
-            <video ref="video" class="position-relative" :poster="get_poster()" muted loop
-                @click.prevent="emit('open_post')">
-            </video>
-            <div v-if="paused" class="video-paused">
-                <div class="md-icon-button bg-10 el-3" @click.passive="play">
-                    <span class="material-icons">play_arrow</span>
-                </div>
+    <div ref="wrapper" class="video-wrapper" :class="{ 'video-fullscreen': is_fullscreen }">
+        <video ref="video" class="position-relative" :poster="get_poster()" muted loop
+            @touchend.prevent="controls_visible = !controls_visible" @scroll.stop="">
+        </video>
+        <div v-if="paused" class="video-paused">
+            <div class="md-icon-button bg-10 el-3" @click.passive="play">
+                <span class="material-icons">play_arrow</span>
             </div>
-            <div v-show="is_fullscreen">
-                <div class="video-controls d-flex flex-column flex-fill" :class="{ 'visually-hidden': !controls_visible }">
-                    <div class="d-flex justify-content-between position-relative">
-                        <div>
-                            <button v-show="has_audio" class="btn btn-touch px-3" @click.passive="mute">
-                                <span class="text-shadow fs-5 text-4 bi"
-                                    :class="{ 'bi-volume-mute-fill': muted, 'bi-volume-up-fill': !muted }"></span>
-                            </button>
-                        </div>
-                        <div>
-                            <button class="btn btn-touch px-3" @click.passive="playback">
-                                <span class="text-shadow fs-5 text-4 bi"
-                                    :class="{ 'bi-play-fill': paused, 'bi-pause-fill': !paused }"></span>
-                            </button>
-                        </div>
+        </div>
+        <div>
+            <div class="video-controls d-flex flex-column flex-fill" :class="{ 'visually-hidden': !controls_visible }">
+                <div class="video-play">
+                    <div class="md-icon-button md-foreground-50 el-3" @click.passive="playback">
+                        <span class="material-icons">{{ paused ? 'play_arrow' : 'pause' }}</span>
                     </div>
-                    <div class="d-flex flex-column px-3 pb-5 position-relative" @touchstart.passive="progress_start"
-                        @touchmove.passive="progress_move" @touchend.passive="progress_end">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <small class="text-shadow text-6 fw-bold">{{ currentTime }}</small>
-                            <small class="text-shadow text-6 fw-bold">{{ duration }}</small>
+                </div>
+                <div class="video-mute">
+                    <div class="md-icon-button md-foreground-50 el-3" v-show="has_audio" @click.passive="mute">
+                        <span class="material-icons">{{ muted ? 'volume_off' : 'volume_up' }}</span>
+                    </div>
+                </div>
+                <div class="d-flex flex-column px-3 pb-5 position-relative" @touchstart.passive="progress_start"
+                    @touchmove.passive="progress_move" @touchend.passive="progress_end">
+                    <div ref="progress" class="video-progress position-relative">
+                        <span class="label-large video-currentime">{{ currentTime }}</span>
+                        <span class="label-large video-duration">{{ duration }}</span>
+                        <div class="d-flex h-100 position-absolute bg-11" :style="{ 'width': `${progress_left}px` }">
                         </div>
-                        <div ref="progress" class="video-progress position-relative">
-                            <div class="d-flex h-100 position-absolute bg-11" :style="{ 'width': `${progress_left}px` }">
-                            </div>
-                            <div class="video-progress-now position-relative theme-shadow"
-                                :style="{ 'transform': `translateX(${progress_left}px)`, 'transition': transition }">
-                            </div>
+                        <div class="video-progress-now position-relative theme-shadow"
+                            :style="{ 'transform': `translateX(${progress_left}px)`, 'transition': transition }">
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div v-if="play_promise" class="d-flex justify-content-center align-items-center cover-all position-absolute">
-            <div class="d-flex circle md-dark p-2">
-                <div class="spinner-border text-4" role="status"></div>
-            </div>
-        </div>
-        <div class="md-icon-button md-foreground-50 position-absolute bottom-0 start-0 m-2" v-show="has_audio"
-            @click.passive="mute">
-            <span class="material-icons">{{ muted ? 'volume_off' : 'volume_up' }}</span>
-        </div>
-        <div class="md-foreground-50 md-rounded-12 position-absolute bottom-0 end-0 m-2 px-2 py-1">
-            <span class="label-large text-4">{{ remaining }}</span>
         </div>
     </div>
 </template>
@@ -65,12 +44,11 @@ import { useIntersectionObserver } from '@vueuse/core'
 
 let hls = null;
 const video = ref(null);
-const hammer = ref(null);
 const wrapper = ref(null);
 const remaining = ref(null);
 const play_promise = ref(null);
 const duration = ref(null);
-const currentTime = ref(null);
+const currentTime = ref('0:00');
 const progress = ref(null);
 const transition = ref(null);
 const progress_left = ref(0);
@@ -137,12 +115,14 @@ function get_poster() {
 
 async function progress_start() {
     video.value.pause();
+    // disable scrolling
+    document.querySelector('.content-view').style.overflowY = 'hidden';
 }
 
 async function progress_move(event) {
     let x = event.touches[0].clientX - 23;
     if (x < 0) x = 0;
-    if (x > progress_width.value) x = progress_width.value;
+    if (x >= progress_width.value) x = progress_width.value;
     progress_left.value = x;
     update_current_time(x)
 }
@@ -152,6 +132,8 @@ async function progress_end(event) {
     update_current_time(x).then(async () => {
         await video.value.play();
     })
+    // enable scrolling
+    document.querySelector('.content-view').style.overflowY = 'scroll';
 }
 
 async function update_current_time(x) {
@@ -205,24 +187,17 @@ async function setup() {
         transition.value = 'transform 250ms linear';
     }
 
-    wrapper.value.onfullscreenchange = () => {
-        if (document.fullscreenElement) {
+    portrait.onchange = () => {
+        progress_width.value = window.innerWidth - 32;
+        // landscape mode
+        if (window.innerWidth > window.innerHeight) {
             is_fullscreen.value = true;
-            hammer.value.get('swipe').set({ enable: true });
-            progress_width.value = window.innerWidth - 32;
-            // Add event listener for orientation change
-            portrait.onchange = () => {
-                progress_width.value = window.innerWidth - 32;
-            }
             return
         }
-
-        video.value.muted = true;
-        is_fullscreen.value = false;
-        hammer.value.get('swipe').set({ enable: false });
-        // Remove event listener for orientation change
-        portrait.onchange = null;
+        is_fullscreen.value = false
     }
+
+    progress_width.value = window.innerWidth - 32;
 }
 
 function format_time(time) {

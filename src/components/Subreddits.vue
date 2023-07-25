@@ -1,42 +1,27 @@
 <template>
-    <div class="d-flex flex-column foreground p-3 snap">
-        <div class="d-flex align-items-center mb-2">
-            <div class="input-group flex-fill">
-                <button id="button-addon1" type="button" class="btn btn-outline-4 text-4" @click.passive="go_back">
-                    <span class="bi bi-arrow-left"></span>
-                </button>
-                <input v-model="text" type="text" class="search-bar form-control" placeholder="Search Subreddits"
-                    aria-label="Search" @input="search" aria-describedby="button-addon1">
-            </div>
+    <div class="search-container sticky-top md-dark mb-0">
+        <div class="search-leading-icon-container" @touchstart.prevent="go_back">
+            <span class="material-icons">arrow_back</span>
+        </div>
+        <div class="search-input">
+            <input v-model="text" type="text" class="body-large" placeholder="Search Subreddits" @input="search">
+        </div>
+        <div class="search-trailing-icon-container" @touchstart.prevent="clear_input">
+            <span class="material-icons">clear</span>
         </div>
     </div>
-    <ul class="list-group border-0 pt-0 mt-3">
-        <li v-show="!subreddits.length" class="list-group-item background border-0 rounded m-3 mt-0 p-0">
-            <div class="d-flex justify-content-center align-items-center p-3">
-                <h6 class="fw-bold text-break text-6 m-0">Explore and follow some subreddits!</h6>
-            </div>
-        </li>
-        <li v-for="sub in subreddits" class="list-group-item foreground border-0 rounded m-3 mt-0 p-0"
-            @click.passive="open_subreddit(sub)">
-            <div class="d-flex justify-content-between align-items-center p-3">
-                <div class="d-flex align-items-center">
-                    <div class="me-2">
-                        <img :src="sub.icon_img" class="snoovatar-icon">
-                    </div>
-                    <div class="d-flex flex-column">
-                        <div class="d-flex align-items-center">
-                            <h6 class="text-break text-11 m-0 me-2">{{ sub.display_name }}</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-    </ul>
+    <div class="display-flex justify-content-center p-3" v-show="!subreddits.length">
+        <span class="title-medium text-4">Explore and follow some subreddits!</span>
+    </div>
+    <div v-show="subreddits.length" class="cards mt-3">
+        <CompactSubreddit v-for="subreddit in subreddits" :post="subreddit" />
+    </div>
 </template>
 
 <script setup>
 import { ref, onBeforeMount, onActivated } from 'vue';
 import { useRouter } from 'vue-router';
+import CompactSubreddit from './CompactSubreddit.vue';
 import Fuse from 'fuse.js';
 
 const router = useRouter();

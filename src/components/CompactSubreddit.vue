@@ -1,25 +1,20 @@
 <template>
-    <li class="list-group-item foreground border-0 rounded m-3 mt-0 p-0" @click.passive="open_subreddit">
-        <div class="d-flex justify-content-between align-items-center p-3">
-            <div class="d-flex align-items-center">
-                <div>
-                    <img :src="get_icon_src()" class="snoovatar-icon me-2">
-                </div>
-                <div class="d-flex flex-column">
-                    <div class="d-flex align-items-center">
-                        <h6 class="text-break text-11 m-0 me-2">{{ post.display_name }}</h6>
-                    </div>
-                    <div class="ellipsis mb-2">
-                        <small class="text-4">{{ get_description() }}</small>
-                    </div>
-                    <small class="text-4">{{ format_subscribers() }}</small>
-                </div>
-            </div>
+    <div class="list-item-3 md-foreground md-rounded-12 space-between-16" @click.passive="open_subreddit">
+        <div class="list-item-leading-avatar">
+            <img :src="icon_src" :class="icon_class">
         </div>
-    </li>
+        <div class="d-flex flex-column">
+            <span class="body-large text-11">{{ post.display_name }}</span>
+            <div class="ellipsis">
+                <span class="body-medium">{{ get_description() }}</span>
+            </div>
+            <span class="label-small">{{ format_subscribers() }}</span>
+        </div>
+    </div>
 </template>
 
 <script setup>
+import { ref, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -31,11 +26,16 @@ const props = defineProps({
     }
 })
 
+const icon_src = ref("");
+const icon_class = ref(null);
+
 function get_icon_src() {
     if (props.post.community_icon) {
-        return props.post.community_icon.split("?")[0];
+        icon_src.value = props.post.community_icon.split("?")[0];
+        return
     }
-    return "/images/subreddit.svg"
+    icon_src.value = "/images/subreddit_w.svg"
+    icon_class.value = "bg-3 dp-8"
 }
 
 function format_subscribers() {
@@ -54,4 +54,8 @@ function get_description() {
     txt.innerHTML = props.post.public_description;
     return txt.value;
 }
+
+onBeforeMount(() => {
+    get_icon_src();
+})
 </script>

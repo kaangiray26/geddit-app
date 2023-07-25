@@ -1,19 +1,24 @@
 <template>
     <div v-if="!post" class="d-flex justify-content-center align-items-center cover-all position-absolute">
-        <div class="d-flex circle bg-6 p-2">
-            <div class="spinner-border text-0" role="status"></div>
+        <div class="d-flex circle md-dark p-2">
+            <div class="spinner-border text-4" role="status"></div>
         </div>
     </div>
     <div v-else>
         <FullPost :post="post" />
-        <div class="d-flex flex-column">
-            <div class="foreground p-2">
-                <h6 class="text-6 fw-bold m-0">Comments</h6>
-            </div>
-            <div v-for="comment in comments" class="foreground border-bottom border-secondary p-2">
-                <small :class="get_author_class(comment.data.author)" @click.passive="open_user(comment.data.author)">{{
-                    comment.data.author }}</small>
-                <div class="text-4 text-post" v-html="markdown(comment.data.body_html)"></div>
+        <div class="d-flex dp-16">
+            <span class="title-small text-4">Comments</span>
+        </div>
+        <div class="list-container py-0">
+            <div class="list-item-full list-item-divider" v-for="comment in comments">
+                <div class="list-item-leading-icon">
+                    <span class="material-icons">face</span>
+                </div>
+                <div class="d-flex flex-column">
+                    <span class="label-small dpb-4 text-10" @click.passive="open_user(comment.data.author)">{{
+                        comment.data.author }}</span>
+                    <span class="body-medium" v-html="markdown(comment.data.body_html)"></span>
+                </div>
             </div>
         </div>
     </div>

@@ -7,7 +7,7 @@
                 </keep-alive>
             </router-view>
         </div>
-        <Toolbar />
+        <NavigationBar />
         <ImageViewer ref="image_viewer" />
         <GalleryViewer ref="gallery_viewer" />
         <UpdateManager ref="update_manager" />
@@ -20,7 +20,7 @@ import { useRouter } from 'vue-router';
 import { save_hidden } from '/js/store.js';
 import { App } from '@capacitor/app';
 import { Toast } from '@capacitor/toast';
-import Toolbar from './Toolbar.vue';
+import NavigationBar from './NavigationBar.vue';
 import ImageViewer from './ImageViewer.vue';
 import GalleryViewer from './GalleryViewer.vue';
 import UpdateManager from './UpdateManager.vue';

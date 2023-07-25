@@ -1,13 +1,11 @@
 <template>
-    <div class="d-flex cover-50 position-relative">
-        <div class="wrapper theme-shadow">
-            <div v-for="image in images">
-                <img :src="image.preview" @click.passive="fullscreen(image)">
-                <div class="position-absolute top-0 end-0 m-2">
-                    <div class="d-flex position-relative">
-                        <div class="position-absolute background cover-all opacity-75 rounded"></div>
-                        <small class="gallery-indicator position-relative text-4 px-1" :length="images.length"></small>
-                    </div>
+    <div class="wrapper">
+        <div v-for="image in images">
+            <img :src="image.preview" @click.prevent="emit('open_post')">
+            <div class="position-absolute top-0 end-0 m-2">
+                <div class="d-flex position-relative">
+                    <div class="position-absolute background cover-all opacity-75 rounded"></div>
+                    <small class="gallery-indicator position-relative text-4 px-1" :length="images.length"></small>
                 </div>
             </div>
         </div>
@@ -16,8 +14,8 @@
 
 <script setup>
 import { onMounted, ref } from 'vue';
-import { open_image_viewer } from "/js/event.js";
 
+const emit = defineEmits(['open_post']);
 const props = defineProps({
     data: {
         type: Object,
@@ -40,15 +38,6 @@ async function get_sources() {
             'aspect-ratio': `${item.p.pop().x} / ${item.p.pop().y}}`
         }
     }))
-}
-
-async function fullscreen(image) {
-    open_image_viewer({
-        src: image.src,
-        title: props.data.title,
-        num_comments: props.data.num_comments,
-        id: props.data.id,
-    });
 }
 
 // setup

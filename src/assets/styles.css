@@ -1,10 +1,9 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
 @import url("./nord.css");
-@import url("./video-js.css");
-@import url("video-theme.css");
+@import url("./md3.css");
 
 :root {
-    --background: var(--nord0);
+    --background: #1C1B20;
     --foreground: var(--nord1);
 }
 
@@ -41,18 +40,6 @@ hr {
 
 #app {
     height: 100%;
-}
-
-body[title-size='small'] .title {
-    font-size: 1rem !important;
-}
-
-body[title-size='medium'] .title {
-    font-size: 1.25rem !important;
-}
-
-body[title-size='large'] .title {
-    font-size: 1.5rem !important;
 }
 
 video {
@@ -127,6 +114,13 @@ video {
     max-height: 50vh;
 }
 
+.cover-25 {
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+    max-height: 25vh;
+}
+
 .contain {
     object-fit: contain;
     width: 100%;
@@ -181,6 +175,10 @@ video {
     max-height: 25vh;
 }
 
+.text-post {
+    width: 100%;
+}
+
 .text-post>*:nth-last-child(1) {
     margin: 0;
 }
@@ -190,7 +188,7 @@ video {
 }
 
 .progress-alt {
-    height: 0.25rem;
+    height: 4px;
     background-color: var(--background);
 }
 
@@ -243,6 +241,11 @@ video {
 
 .banner {
     min-height: 64px;
+}
+
+.banner>.cover {
+    height: 25vh;
+    background-color: #262930;
 }
 
 .search-bar {
@@ -376,6 +379,14 @@ video {
     scroll-snap-type: x mandatory;
 }
 
+.card-content .wrapper>div {
+    height: auto !important;
+}
+
+.card-content .wrapper>div>img {
+    height: 100% !important;
+}
+
 .wrapper>div {
     width: 100%;
     height: 100%;
@@ -424,6 +435,36 @@ option[selected] {
     position: absolute;
 }
 
+.video-currentime {
+    text-shadow: #000 0 0 10px;
+    color: var(--nord6);
+    font-weight: 700;
+    position: absolute;
+    left: 0;
+    top: -25px;
+}
+
+.video-duration {
+    text-shadow: #000 0 0 10px;
+    color: var(--nord6);
+    font-weight: 700;
+    position: absolute;
+    right: 0;
+    top: -25px;
+}
+
+.video-play {
+    position: absolute;
+    right: 16px;
+    bottom: 92px;
+}
+
+.video-mute {
+    position: absolute;
+    left: 16px;
+    bottom: 92px;
+}
+
 .video-wrapper:fullscreen>video {
     object-fit: contain !important;
 }
@@ -433,6 +474,7 @@ option[selected] {
     left: 50%;
     position: absolute;
     transform: translate(-50%, -50%);
+    z-index: 1;
 }
 
 .video-progress {
@@ -451,6 +493,20 @@ option[selected] {
     background-color: var(--nord4);
 }
 
+.video-fullscreen {
+    width: 100vw;
+    height: 100vh;
+    position: fixed !important;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: var(--background);
+}
+
+.video-fullscreen>video {
+    object-fit: contain !important;
+}
+
 .text-shadow {
     text-shadow: #000 0 0 10px;
 }
@@ -466,4 +522,73 @@ option[selected] {
 
 .word-break {
     word-break: break-word;
+}
+
+.visibility-hidden {
+    visibility: hidden;
+}
+
+.display-flex {
+    display: flex;
+}
+
+.profile-container {
+    width: 100vw;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    color: var(--nord4);
+    background-color: #1C1B20;
+}
+
+.profile-headline {
+    padding-left: 16px;
+}
+
+.geddit-banner {
+    width: 100%;
+    height: 25vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Markdown Table */
+.full-text-post>.md {
+    width: 100vw;
+}
+
+.md table {
+    display: block;
+    white-space: nowrap;
+    overflow-x: scroll !important;
+}
+
+.md thead {
+    border-bottom: 1px solid var(--nord0);
+}
+
+.md th,
+.md td {
+    border: 1px solid var(--nord0);
+    background-color: var(--background);
+}
+
+.text-controls {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.text-controls>.md-fab {
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    margin-right: 16px;
+    margin-bottom: 16px;
+    z-index: 1;
 }

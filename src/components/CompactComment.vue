@@ -1,49 +1,59 @@
 <template>
-    <li class="list-group-item foreground border-0 rounded m-3 mt-0 p-0">
-        <div class="d-flex flex-column mb-2">
-            <div class="d-flex flex-column p-3 pb-0">
-                <div class="d-flex flex-wrap">
-                    <small class="text-11 me-2" @click.passive="open_subreddit">{{ post.subreddit }}</small>
-                    <small class="text-4">{{ format_date() }}</small>
-                </div>
-                <h6 class="title text-break text-4 mb-2">{{ post.link_title }}</h6>
-            </div>
-            <div class="d-flex flex-column background p-3">
-                <div class="text-4 text-post" v-html="markdown(post.body_html)"></div>
+    <div class="card-container space-between-16">
+        <div class="card-content">
+            <div class="d-flex cover-25 text-wrap text-break text-truncate overflow-hidden" @click.passive="open_post">
+                <div class="text-4 text-post" v-html="markdown(post.body_html)" />
             </div>
         </div>
-        <div class="d-flex justify-content-between align-items-center pb-3 px-3">
-            <div class="d-flex flex-column">
-                <div class="d-flex flex-wrap">
-                    <small class="text-10" @click.passive="open_user">{{ post.author }}</small>
-                </div>
-                <div class="d-flex align-items-center">
-                    <div class="d-flex">
-                        <h6 class="color-upvote fw-bold m-0">{{ format_num(post.score) }}</h6>
-                    </div>
-                    <div class="d-flex mx-2">
-                        <small class="text-4">·</small>
-                    </div>
-                    <div class="d-flex text-4">
-                        <small class="bi bi-chat-fill me-1"></small>
-                        <small>{{ format_num(post.num_comments) }}</small>
-                    </div>
+        <div class="card-details" :class="{ 'sticky': post.stickied }">
+            <div v-if="post.over_18" class="d-flex dpb-16">
+                <div class="chips-container bg-11 border-0">
+                    <span class=" material-icons">18_up_rating</span>
+                    <span class="label-large">NSFW</span>
                 </div>
             </div>
-            <div class="d-flex">
-                <button class="btn btn-touch text-4 me-2" @click.passive="share">
-                    <span class="bi bi-share-fill"></span>
-                </button>
-                <button class="btn btn-touch-border text-4" @click.passive="open_post">
-                    <span class="bi bi-arrow-right"></span>
-                </button>
+            <div class="d-flex align-items-center">
+                <span class="label-medium text-11" @click.passive="open_subreddit">r/{{ post.subreddit
+                }}</span>
+                <span class="label-medium dmx-4">-</span>
+                <span class="label-medium">{{ post.domain }}</span>
+                <span class="label-medium dmx-4">-</span>
+                <span class="label-medium">{{ format_date() }}</span>
+            </div>
+            <span class="title-medium text-6 dpy-4" :class="{ 'text-truncate': store.hidden.includes(post.id) }">{{
+                post.link_title }}</span>
+            <div class="d-flex align-items-center">
+                <span class="label-medium text-10" @click.passive="open_user">u/{{ post.author }}</span>
+            </div>
+            <div class="d-flex align-items-center dpt-16">
+                <div class="md-icon-container-with-label">
+                    <span class="material-icons">arrow_upward</span>
+                    <span class="label-large">{{ format_num(post.score) }}</span>
+                </div>
+                <div class="md-icon-container-with-label">
+                    <span class="material-icons">chat</span>
+                    <span class="label-large">{{ format_num(post.num_comments) }}</span>
+                </div>
+                <div class="md-icon-container-with-label" @click.passive="share">
+                    <span class="material-icons">share</span>
+                    <span class="label-large">Share</span>
+                </div>
+                <div class="md-icon-container-with-label" @click.passive="hide_post">
+                    <span class="material-icons">hide_source</span>
+                    <span class="label-large">Hide</span>
+                </div>
+                <div class="md-icon-container-with-label" @click.passive="open_post">
+                    <span class="material-icons">open_in_new</span>
+                    <span class="label-large">Open</span>
+                </div>
             </div>
         </div>
-    </li>
+    </div>
 </template>
 
 <script setup>
 import { useRouter } from 'vue-router';
+import { store, hide, unhide } from '/js/store.js'
 
 const router = useRouter();
 
@@ -54,6 +64,14 @@ const props = defineProps({
     }
 })
 
+async function hide_post() {
+    if (!store.hidden.includes(props.post.id)) {
+        hide(props.post.id)
+        return
+    }
+    unhide(props.post.id)
+}
+
 function format_num(points) {
     if (points > 1000000) return (points / 1000000).toFixed(1) + "M";
     if (points > 1000) return (points / 1000).toFixed(1) + "K";
@@ -61,7 +79,7 @@ function format_num(points) {
 }
 
 async function open_post() {
-    router.push(`/post/${props.post.id}`);
+    router.push(`/post/${props.post.link_id.split("_").pop()}`);
 }
 
 async function open_user() {
