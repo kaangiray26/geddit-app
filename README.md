@@ -3,8 +3,10 @@
         <img src="https://raw.githubusercontent.com/kaangiray26/geddit-app/main/src/public/images/logo_compressed.png" alt="Geddit Logo" width="80" height="80">
     </a>
     <h1 align="center">Geddit</h1>
-    <a href="https://apt.izzysoft.de/packages/geddit.buzl.uk/">
-        <img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" width=256>
+    <a href="https://f-droid.org/packages/geddit.buzl.uk">
+        <img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+        alt="Get it on F-Droid"
+        width="256">
     </a>
     <p align="center">
         An open-source, Reddit client for Android without using their API 
