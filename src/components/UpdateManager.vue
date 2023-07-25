@@ -27,7 +27,7 @@ import { ref, onMounted, onBeforeUnmount, onBeforeMount } from 'vue';
 import { AppLauncher } from '@capacitor/app-launcher';
 import { Modal } from "bootstrap"
 
-const version = "v1.5";
+const version = "v1.6";
 
 const modal = ref(null);
 const body = ref(null);
