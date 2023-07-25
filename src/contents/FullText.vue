@@ -1,25 +1,33 @@
 <template>
     <div v-show="text">
         <div class="text-wrap text-break">
-            <div class="text-4 text-post full-text-post" v-html="text" />
-            <div class="d-flex justify-content-end">
+            <div class="position-relative">
+                <div class="text-4 text-post full-text-post position-relative" v-html="text"
+                    @contextmenu.prevent="controls_visible = true" />
+                <div class="text-controls" v-show="controls_visible" @click.passive="controls_visible = false">
+                    <div class="md-fab md-foreground el-3" @click.passive="translate">
+                        <span class="material-icons text-4">translate</span>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="d-flex justify-content-end">
                 <button type="button" class="btn btn-touch bi bi-translate" @click="translate"
                     :disabled="btn_disabled"></button>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import { CapacitorHttp } from '@capacitor/core';
 
 const text = ref(null);
+const controls_visible = ref(false);
 const translated = ref(false);
 
 const origin = ref(1);          // 0: original, 1: translated
 const texts = ref(['', '']);    // original, translated
-
-const btn_disabled = ref(false);
 
 const props = defineProps({
     data: {
@@ -39,31 +47,27 @@ async function get_sources() {
 }
 
 async function translate() {
-    btn_disabled.value = true;
-    let p = document.querySelector("p");
+    let md = document.querySelector(".md");
 
     if (!translated.value) {
-        texts.value[0] = p.textContent;
+        texts.value[0] = md.textContent;
 
-        let translation = await fetch("https://lingva.ml/api/v1/auto/en/" + encodeURIComponent(texts.value[0]))
+        let translation = await fetch("https://lingva.garudalinux.org/api/v1/auto/en/" + encodeURIComponent(texts.value[0]))
             .then(res => res.json())
             .then(res => res.translation)
             .catch(err => null);
         if (!translation) {
-            btn_disabled.value = false;
             return
         }
 
-        p.innerText = translation
+        md.innerText = translation
         texts.value[1] = translation;
         translated.value = true;
-        btn_disabled.value = false;
         return
     }
 
     origin.value = (origin.value + 1) % 2;
     p.innerText = texts.value[origin.value];
-    btn_disabled.value = false;
 }
 
 // setup

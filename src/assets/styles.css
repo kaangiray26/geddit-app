@@ -566,3 +566,21 @@ option[selected] {
     border: 1px solid var(--nord0);
     background-color: var(--background);
 }
+
+.text-controls {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.text-controls>.md-fab {
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    margin-right: 16px;
+    margin-bottom: 16px;
+    z-index: 1;
+}

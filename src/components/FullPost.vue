@@ -23,15 +23,15 @@
                     <span class="material-icons">chat</span>
                     <span class="label-large">{{ format_num(post.data.num_comments) }}</span>
                 </div>
-                <div class="md-icon-container-with-label" @touchstart.prevent="share">
+                <div class="md-icon-container-with-label" @click.passive="share">
                     <span class="material-icons">share</span>
                     <span class="label-large">Share</span>
                 </div>
-                <div class="md-icon-container-with-label" @touchstart.prevent="hide_post">
+                <div class="md-icon-container-with-label" @click.passive="hide_post">
                     <span class="material-icons">hide_source</span>
                     <span class="label-large">Hide</span>
                 </div>
-                <div class="md-icon-container-with-label" @touchstart.prevent="go_back">
+                <div class="md-icon-container-with-label" @click.passive="go_back">
                     <span class="material-icons">close_fullscreen</span>
                     <span class="label-large">Close</span>
                 </div>

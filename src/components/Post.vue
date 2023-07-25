@@ -15,7 +15,7 @@
                     <span class="material-icons">face</span>
                 </div>
                 <div class="d-flex flex-column">
-                    <span class="label-small dpb-4 text-10" @touchstart.stop="open_user(comment.data.author)">{{
+                    <span class="label-small dpb-4 text-10" @click.passive="open_user(comment.data.author)">{{
                         comment.data.author }}</span>
                     <span class="body-medium" v-html="markdown(comment.data.body_html)"></span>
                 </div>
