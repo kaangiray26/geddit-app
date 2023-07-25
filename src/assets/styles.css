@@ -379,6 +379,14 @@ video {
     scroll-snap-type: x mandatory;
 }
 
+.card-content .wrapper>div {
+    height: auto !important;
+}
+
+.card-content .wrapper>div>img {
+    height: 100% !important;
+}
+
 .wrapper>div {
     width: 100%;
     height: 100%;
