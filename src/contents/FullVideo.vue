@@ -4,32 +4,27 @@
             @touchend.prevent="controls_visible = !controls_visible" @scroll.stop="">
         </video>
         <div v-if="paused" class="video-paused">
-            <div class="d-flex circle bg-10 p-1 theme-shadow">
-                <button type="button" class="btn btn-touch" @click.passive="play">
-                    <span class="bi bi-play-fill text-6"></span>
-                </button>
+            <div class="md-icon-button bg-10 el-3" @click.passive="play">
+                <span class="material-icons">play_arrow</span>
             </div>
         </div>
         <div>
             <div class="video-controls d-flex flex-column flex-fill" :class="{ 'visually-hidden': !controls_visible }">
+                <div class="video-play">
+                    <div class="md-icon-button md-foreground-50 el-3" @click.passive="playback">
+                        <span class="material-icons">{{ paused ? 'play_arrow' : 'pause' }}</span>
+                    </div>
+                </div>
+                <div class="video-mute">
+                    <div class="md-icon-button md-foreground-50 el-3" v-show="has_audio" @click.passive="mute">
+                        <span class="material-icons">{{ muted ? 'volume_off' : 'volume_up' }}</span>
+                    </div>
+                </div>
                 <div class="d-flex flex-column px-3 pb-5 position-relative" @touchstart.passive="progress_start"
                     @touchmove.passive="progress_move" @touchend.passive="progress_end">
                     <div ref="progress" class="video-progress position-relative">
-                        <div class="video-mute">
-                            <button v-show="has_audio" class="btn btn-touch px-3" @click.passive="mute">
-                                <span class="text-shadow fs-5 text-4 bi"
-                                    :class="{ 'bi-volume-mute-fill': muted, 'bi-volume-up-fill': !muted }"></span>
-                            </button>
-                        </div>
-                        <div class="video-play">
-                            <button class="btn btn-touch px-3" @click.passive="playback">
-                                <span class="text-shadow fs-5 text-4 bi"
-                                    :class="{ 'bi-play-fill': paused, 'bi-pause-fill': !paused }"></span>
-                            </button>
-                        </div>
-                        <small class="video-currentime">{{ currentTime
-                        }}</small>
-                        <small class="video-duration">{{ duration }}</small>
+                        <span class="label-large video-currentime">{{ currentTime }}</span>
+                        <span class="label-large video-duration">{{ duration }}</span>
                         <div class="d-flex h-100 position-absolute bg-11" :style="{ 'width': `${progress_left}px` }">
                         </div>
                         <div class="video-progress-now position-relative theme-shadow"

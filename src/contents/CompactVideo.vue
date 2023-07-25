@@ -6,10 +6,8 @@
                 @click.prevent="emit('open_post')">
             </video>
             <div v-if="paused" class="video-paused">
-                <div class="d-flex circle bg-10 p-1 theme-shadow">
-                    <button type="button" class="btn btn-touch" @click.passive="play">
-                        <span class="bi bi-play-fill text-6"></span>
-                    </button>
+                <div class="md-icon-button bg-10 el-3" @click.passive="play">
+                    <span class="material-icons">play_arrow</span>
                 </div>
             </div>
             <div v-show="is_fullscreen">
@@ -50,19 +48,12 @@
                 <div class="spinner-border text-4" role="status"></div>
             </div>
         </div>
-        <div v-show="has_audio" class="position-absolute bottom-0 start-0 m-2" @click.passive="mute">
-            <div class="position-relative">
-                <div class="position-absolute background cover-all opacity-75 circle"></div>
-                <button class="position-relative btn btn-touch circle bi px-2 py-1"
-                    :class="{ 'bi-volume-mute-fill': muted, 'bi-volume-up-fill': !muted }">
-                </button>
-            </div>
+        <div class="md-icon-button md-foreground-50 position-absolute bottom-0 start-0 m-2" v-show="has_audio"
+            @click.passive="mute">
+            <span class="material-icons">{{ muted ? 'volume_off' : 'volume_up' }}</span>
         </div>
-        <div class="position-absolute bottom-0 end-0 m-2">
-            <div class="d-flex position-relative">
-                <div class="position-absolute background cover-all opacity-75 rounded"></div>
-                <small class="position-relative text-4 px-1">{{ remaining }}</small>
-            </div>
+        <div class="md-foreground-50 md-rounded-12 position-absolute bottom-0 end-0 m-2 px-2 py-1">
+            <span class="label-large text-4">{{ remaining }}</span>
         </div>
     </div>
 </template>

@@ -616,6 +616,22 @@
     align-items: center;
 }
 
+.md-icon-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.md-icon-button>.material-icons {
+    display: flex;
+    color: var(--nord4);
+    font-size: 24px !important;
+    line-height: 24px !important;
+}
+
 /* FAB */
 .md-fab {
     width: 56px;
@@ -823,6 +839,10 @@
 
 .md-foreground {
     background-color: #262930;
+}
+
+.md-foreground-50 {
+    background-color: rgba(38, 41, 48, 0.5)
 }
 
 /* Round */

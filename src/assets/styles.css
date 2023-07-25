@@ -447,14 +447,14 @@ option[selected] {
 
 .video-play {
     position: absolute;
-    right: -16px;
-    top: -60px;
+    right: 16px;
+    bottom: 92px;
 }
 
 .video-mute {
     position: absolute;
-    left: -16px;
-    top: -60px;
+    left: 16px;
+    bottom: 92px;
 }
 
 .video-wrapper:fullscreen>video {
