@@ -12,27 +12,24 @@
         </div>
         <div>
             <div class="video-controls d-flex flex-column flex-fill" :class="{ 'visually-hidden': !controls_visible }">
-                <div class="d-flex justify-content-between position-relative">
-                    <div>
-                        <button v-show="has_audio" class="btn btn-touch px-3" @click.passive="mute">
-                            <span class="text-shadow fs-5 text-4 bi"
-                                :class="{ 'bi-volume-mute-fill': muted, 'bi-volume-up-fill': !muted }"></span>
-                        </button>
-                    </div>
-                    <div>
-                        <button class="btn btn-touch px-3" @click.passive="playback">
-                            <span class="text-shadow fs-5 text-4 bi"
-                                :class="{ 'bi-play-fill': paused, 'bi-pause-fill': !paused }"></span>
-                        </button>
-                    </div>
-                </div>
                 <div class="d-flex flex-column px-3 pb-5 position-relative" @touchstart.passive="progress_start"
                     @touchmove.passive="progress_move" @touchend.passive="progress_end">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <small class="text-shadow text-6 fw-bold">{{ currentTime }}</small>
-                        <small class="text-shadow text-6 fw-bold">{{ duration }}</small>
-                    </div>
                     <div ref="progress" class="video-progress position-relative">
+                        <div class="video-mute">
+                            <button v-show="has_audio" class="btn btn-touch px-3" @click.passive="mute">
+                                <span class="text-shadow fs-5 text-4 bi"
+                                    :class="{ 'bi-volume-mute-fill': muted, 'bi-volume-up-fill': !muted }"></span>
+                            </button>
+                        </div>
+                        <div class="video-play">
+                            <button class="btn btn-touch px-3" @click.passive="playback">
+                                <span class="text-shadow fs-5 text-4 bi"
+                                    :class="{ 'bi-play-fill': paused, 'bi-pause-fill': !paused }"></span>
+                            </button>
+                        </div>
+                        <small class="video-currentime">{{ currentTime
+                        }}</small>
+                        <small class="video-duration">{{ duration }}</small>
                         <div class="d-flex h-100 position-absolute bg-11" :style="{ 'width': `${progress_left}px` }">
                         </div>
                         <div class="video-progress-now position-relative theme-shadow"
@@ -56,7 +53,7 @@ const wrapper = ref(null);
 const remaining = ref(null);
 const play_promise = ref(null);
 const duration = ref(null);
-const currentTime = ref(null);
+const currentTime = ref('0:00');
 const progress = ref(null);
 const transition = ref(null);
 const progress_left = ref(0);
@@ -130,7 +127,7 @@ async function progress_start() {
 async function progress_move(event) {
     let x = event.touches[0].clientX - 23;
     if (x < 0) x = 0;
-    if (x > progress_width.value) x = progress_width.value;
+    if (x >= progress_width.value) x = progress_width.value;
     progress_left.value = x;
     update_current_time(x)
 }

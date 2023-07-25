@@ -427,6 +427,36 @@ option[selected] {
     position: absolute;
 }
 
+.video-currentime {
+    text-shadow: #000 0 0 10px;
+    color: var(--nord6);
+    font-weight: 700;
+    position: absolute;
+    left: 0;
+    top: -25px;
+}
+
+.video-duration {
+    text-shadow: #000 0 0 10px;
+    color: var(--nord6);
+    font-weight: 700;
+    position: absolute;
+    right: 0;
+    top: -25px;
+}
+
+.video-play {
+    position: absolute;
+    right: -16px;
+    top: -60px;
+}
+
+.video-mute {
+    position: absolute;
+    left: -16px;
+    top: -60px;
+}
+
 .video-wrapper:fullscreen>video {
     object-fit: contain !important;
 }
