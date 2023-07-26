@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <div v-for="image in images">
-            <img :src="image.preview" @click.prevent="emit('open_post')">
+            <img class="ct" :src="image.preview" @click.prevent="emit('open_post')">
             <div class="position-absolute top-0 end-0 m-2">
                 <div class="d-flex position-relative">
                     <div class="position-absolute background cover-all opacity-75 rounded"></div>

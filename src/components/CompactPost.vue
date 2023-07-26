@@ -1,8 +1,8 @@
 <template>
-    <div class="card-container space-between-16">
-        <div class="card-header" :class="{ 'sticky': post.stickied }">
+    <div class="card-container space-between-16 position-relative" @click.passive="handle_touch">
+        <div class="card-header position-relative" :class="{ 'sticky': post.stickied }">
             <div class="d-flex flex-wrap align-items-center text-4">
-                <span class="label-medium text-11" @click.passive="open_subreddit">r/{{ post.subreddit
+                <span class="label-medium text-11 ct" @click.passive="open_subreddit">r/{{ post.subreddit
                 }}</span>
                 <span class="label-medium dmx-4">-</span>
                 <span class="label-medium">{{ post.domain }}</span>
@@ -12,15 +12,15 @@
             <span class="text-6 dpy-4" :class="store.title_size, { 'text-truncate': store.hidden.includes(post.id) }">{{
                 post.title }}</span>
             <div class="d-flex align-items-center">
-                <span class="label-medium text-10" @click.passive="open_user">u/{{ post.author }}</span>
+                <span class="label-medium text-10 ct" @click.passive="open_user">u/{{ post.author }}</span>
             </div>
         </div>
-        <div class="card-content">
+        <div class="card-content position-relative">
             <div :hidden="store.hidden.includes(post.id)">
                 <component :is="types[type]" :data="post" @open_post="open_post" />
             </div>
         </div>
-        <div class="card-details">
+        <div class="card-details position-relative">
             <div v-if="post.over_18" class="d-flex dpb-16">
                 <div class="chips-container bg-11 border-0">
                     <span class=" material-icons">18_up_rating</span>
@@ -36,17 +36,17 @@
                     <span class="material-icons">chat</span>
                     <span class="label-large">{{ format_num(post.num_comments) }}</span>
                 </div>
-                <div class="md-icon-container-with-label" @click.passive="share">
-                    <span class="material-icons">share</span>
-                    <span class="label-large">Share</span>
+                <div class="md-icon-container-with-label ct" @click.passive="share">
+                    <span class="material-icons ct">share</span>
+                    <span class="label-large ct">Share</span>
                 </div>
-                <div class="md-icon-container-with-label" @click.passive="hide_post">
-                    <span class="material-icons">hide_source</span>
-                    <span class="label-large">Hide</span>
+                <div class="md-icon-container-with-label ct" @click.passive="hide_post">
+                    <span class="material-icons ct">hide_source</span>
+                    <span class="label-large ct">Hide</span>
                 </div>
-                <div class="md-icon-container-with-label" @click.passive="open_post">
-                    <span class="material-icons">open_in_new</span>
-                    <span class="label-large">Open</span>
+                <div class="md-icon-container-with-label ct" @click.passive="open_post">
+                    <span class="material-icons ct">open_in_new</span>
+                    <span class="label-large ct">Open</span>
                 </div>
             </div>
         </div>
@@ -87,6 +87,11 @@ const props = defineProps({
         required: true
     }
 })
+
+async function handle_touch(event) {
+    if (event.target.classList.contains('ct')) return
+    open_post()
+}
 
 async function share() {
     await Share.share({

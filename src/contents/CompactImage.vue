@@ -1,5 +1,6 @@
 <template>
-    <img :src="image_options.preview" loading="lazy" :style="image_options.style" @click.prevent="emit('open_post')">
+    <img class="ct" :src="image_options.preview" loading="lazy" :style="image_options.style"
+        @click.prevent="emit('open_post')">
 </template>
 
 <script setup>

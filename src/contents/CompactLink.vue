@@ -1,8 +1,8 @@
 <template>
     <div class="d-flex cover-50 position-relative md-background md-rounded-12" :style="image_options.style">
-        <img class="position-relative cover-50" loading="lazy" v-if="!fallback" :src="image_options.preview"
+        <img class="position-relative cover-50 ct" loading="lazy" v-if="!fallback" :src="image_options.preview"
             @click.passive="open_link" @error="fallback = true">
-        <div class="w-100 d-flex flex-fill ratio-16-9 md-background md-rounded-12 p-3 justify-content-center align-items-center"
+        <div class="w-100 d-flex flex-fill ratio-16-9 md-background md-rounded-12 p-3 justify-content-center align-items-center ct"
             v-if="fallback" @click.passive="open_link">
             <p class="w-100 word-break fw-bold text-4 p-3 m-0">Image Missing</p>
         </div>
