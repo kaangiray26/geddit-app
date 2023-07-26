@@ -144,7 +144,7 @@ async function get_type() {
         return
     }
 
-    if (props.post.data.url.startsWith('https://www.reddit.com/gallery/')) {
+    if (props.post.data.url_overridden_by_dest.startsWith('https://www.reddit.com/gallery/')) {
         type.value = "CompactGallery";
         return
     }

@@ -35,7 +35,7 @@ async function get_sources() {
         src: item.s.u.split("?")[0].replace("preview", "i"),
         preview: item.p.pop().u.replaceAll("&amp;", "&"),
         style: {
-            'aspect-ratio': `${item.p.pop().x} / ${item.p.pop().y}}`
+            'aspect-ratio': item.p ? `${item.p.slice(-1)[0].x} / ${item.p.slice(-1)[0].y}` : `${item.s.x} / ${item.s.y}`
         }
     }))
 }

@@ -47,7 +47,7 @@ const section = ref('all');
 const search_field = ref(null);
 const scroll_loaded = ref(true);
 
-function debounce(func, timeout = 500) {
+function debounce(func, timeout = 750) {
     let timer;
     return (...args) => {
         clearTimeout(timer);

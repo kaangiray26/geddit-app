@@ -1,6 +1,6 @@
 <template>
     <div class="card-container space-between-16">
-        <div class="card-header">
+        <div class="card-header" :class="{ 'sticky': post.stickied }">
             <div class="d-flex flex-wrap align-items-center">
                 <span class="label-medium text-11" @click.passive="open_subreddit">r/{{ post.subreddit
                 }}</span>
@@ -20,7 +20,7 @@
                 <component :is="types[type]" :data="post" @open_post="open_post" />
             </div>
         </div>
-        <div class="card-details" :class="{ 'sticky': post.stickied }">
+        <div class="card-details">
             <div v-if="post.over_18" class="d-flex dpb-16">
                 <div class="chips-container bg-11 border-0">
                     <span class=" material-icons">18_up_rating</span>
@@ -172,7 +172,7 @@ async function get_type() {
         return
     }
 
-    if (props.post.url.startsWith('https://www.reddit.com/gallery/')) {
+    if (props.post.url_overridden_by_dest.startsWith('https://www.reddit.com/gallery/')) {
         type.value = "CompactGallery";
         return
     }

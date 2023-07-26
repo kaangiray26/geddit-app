@@ -12,7 +12,8 @@
         <div class="list-container py-0">
             <div class="list-item-full list-item-divider" v-for="comment in comments">
                 <div class="list-item-leading-icon">
-                    <span class="material-icons">face</span>
+                    <span class="material-icons">{{ comment.data.author == 'AutoModerator' ? 'local_police' : 'face'
+                    }}</span>
                 </div>
                 <div class="d-flex flex-column">
                     <span class="label-small dpb-4 text-10" @click.passive="open_user(comment.data.author)">{{
@@ -39,6 +40,8 @@ const comments = ref([]);
 async function setup() {
     let response = await geddit.getSubmissionComments(router.currentRoute.value.params.id);
     if (!response) return;
+
+    console.log(response);
 
     post.value = response.submission;
     comments.value = response.comments.slice(0, -1)
