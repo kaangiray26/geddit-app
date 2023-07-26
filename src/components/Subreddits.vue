@@ -1,5 +1,5 @@
 <template>
-    <div class="search-container sticky-top md-dark mb-0">
+    <div class="search-container sticky-top md-background mb-0">
         <div class="search-leading-icon-container" @touchstart.prevent="go_back">
             <span class="material-icons">arrow_back</span>
         </div>

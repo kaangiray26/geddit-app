@@ -1,5 +1,5 @@
 <template>
-    <div v-show="text" class="d-flex cover-25 text-wrap text-break text-truncate overflow-hidden"
+    <div v-show="text" class="d-flex cover-25 text-wrap text-break text-truncate overflow-hidden md-rounded-12"
         @click.prevent="emit('open_post')">
         <div class="text-4 text-post" v-html="text" />
     </div>

@@ -1,17 +1,6 @@
 <template>
     <div class="card-container space-between-16">
-        <div class="card-content">
-            <div :hidden="store.hidden.includes(post.id)">
-                <component :is="types[type]" :data="post" @open_post="open_post" />
-            </div>
-        </div>
-        <div class="card-details" :class="{ 'sticky': post.stickied }">
-            <div v-if="post.over_18" class="d-flex dpb-16">
-                <div class="chips-container bg-11 border-0">
-                    <span class=" material-icons">18_up_rating</span>
-                    <span class="label-large">NSFW</span>
-                </div>
-            </div>
+        <div class="card-header">
             <div class="d-flex flex-wrap align-items-center">
                 <span class="label-medium text-11" @click.passive="open_subreddit">r/{{ post.subreddit
                 }}</span>
@@ -25,7 +14,20 @@
             <div class="d-flex align-items-center">
                 <span class="label-medium text-10" @click.passive="open_user">u/{{ post.author }}</span>
             </div>
-            <div class="d-flex align-items-center dpt-16">
+        </div>
+        <div class="card-content">
+            <div :hidden="store.hidden.includes(post.id)">
+                <component :is="types[type]" :data="post" @open_post="open_post" />
+            </div>
+        </div>
+        <div class="card-details" :class="{ 'sticky': post.stickied }">
+            <div v-if="post.over_18" class="d-flex dpb-16">
+                <div class="chips-container bg-11 border-0">
+                    <span class=" material-icons">18_up_rating</span>
+                    <span class="label-large">NSFW</span>
+                </div>
+            </div>
+            <div class="d-flex align-items-center">
                 <div class="md-icon-container-with-label">
                     <span class="material-icons">arrow_upward</span>
                     <span class="label-large">{{ format_num(post.score) }}</span>

@@ -5,7 +5,7 @@
         </div>
     </div>
     <div class="d-flex flex-column px-3">
-        <div class="d-flex md-dark dpb-16">
+        <div class="d-flex md-background dpb-16">
             <div class="chips-container" @click.passive="open_gallery">
                 <span class=" material-icons">collections</span>
                 <span class="label-large">Gallery</span>

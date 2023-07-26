@@ -1,12 +1,12 @@
 <template>
-    <div class="d-flex cover-50 position-relative background"
+    <div class="d-flex cover-50 position-relative md-rounded-12 md-background"
         :style="{ 'aspect-ratio': dimensions.width + '/' + dimensions.height + '!important' }">
         <div ref="wrapper" class="video-wrapper">
             <video ref="video" class="position-relative" :poster="get_poster()" muted loop
                 @click.prevent="emit('open_post')">
             </video>
             <div v-if="paused" class="video-paused">
-                <div class="md-icon-button bg-10 el-3" @click.passive="play">
+                <div class="md-icon-button md-foreground-50 el-3" @click.passive="play">
                     <span class="material-icons">play_arrow</span>
                 </div>
             </div>
@@ -44,7 +44,7 @@
             </div>
         </div>
         <div v-if="play_promise" class="d-flex justify-content-center align-items-center cover-all position-absolute">
-            <div class="d-flex circle md-dark p-2">
+            <div class="d-flex circle md-background p-2">
                 <div class="spinner-border text-4" role="status"></div>
             </div>
         </div>

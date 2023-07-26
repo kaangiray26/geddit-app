@@ -81,7 +81,7 @@
     padding-top: 12px;
     padding-bottom: 16px;
     color: var(--nord4);
-    background-color: #262930;
+    background-color: var(--md-foreground);
 }
 
 .navigation-bar-container+.navigation-bar-container {
@@ -126,7 +126,7 @@
     display: flex;
     align-items: center;
     color: var(--nord4);
-    background-color: #1C1B20;
+    background-color: var(--background);
 }
 
 .top-app-bar-headline {
@@ -226,7 +226,7 @@
     padding-right: 12px;
     display: flex;
     flex-direction: column;
-    background-color: #262930;
+    background-color: var(--md-foreground);
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
 }
 
@@ -266,7 +266,7 @@
     max-width: 560px;
     padding: 24px;
     border-radius: 28px;
-    background-color: #262930;
+    background-color: var(--md-foreground);
     box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -377,13 +377,28 @@
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
 }
 
-/* .card-container+.card-container {
-    margin-top: 16px;
-} */
+.card-header {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+}
+
+.card-content {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.card-content iframe {
+    max-height: 50vh;
+    object-fit: cover;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16/9 !important;
+    position: relative !important;
+}
 
 .card-content img {
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+    border-radius: 12px;
     width: 100% !important;
     height: auto !important;
     max-height: 50vh !important;
@@ -391,19 +406,17 @@
 }
 
 .card-content video {
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+    border-radius: 12px;
 }
 
 .card-content .md {
     padding: 16px;
-    background-color: black;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+    background-color: var(--background);
+    border-radius: 12px;
 }
 
-.full-card-content .md {
-    padding: 16px;
+.card-content iframe {
+    border-radius: 12px;
 }
 
 .card-details {
@@ -436,6 +449,14 @@
     height: auto !important;
     max-height: unset !important;
     object-fit: contain !important;
+}
+
+.full-card-content .md {
+    padding: 16px;
+}
+
+.full-card-content iframe {
+    width: 100%;
 }
 
 /* Icon container */
@@ -832,8 +853,8 @@
 }
 
 /* Background colors */
-.md-dark {
-    background-color: #1C1B20;
+.md-background {
+    background-color: var(--background);
 }
 
 .md-foreground {
@@ -875,3 +896,5 @@
         transform: translateX(100%);
     }
 }
+
+/* Baseline color scheme tokens */

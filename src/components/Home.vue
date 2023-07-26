@@ -1,6 +1,6 @@
 <template>
     <div v-if="!posts.length" class="d-flex justify-content-center align-items-center cover-all position-absolute">
-        <div class="d-flex circle md-dark p-2">
+        <div class="d-flex circle md-background p-2">
             <div class="spinner-border text-4" role="status"></div>
         </div>
     </div>

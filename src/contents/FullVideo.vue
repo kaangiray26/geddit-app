@@ -4,7 +4,7 @@
             @touchend.prevent="controls_visible = !controls_visible" @scroll.stop="">
         </video>
         <div v-if="paused" class="video-paused">
-            <div class="md-icon-button bg-10 el-3" @click.passive="play">
+            <div class="md-icon-button md-foreground-50 el-3" @click.passive="play">
                 <span class="material-icons">play_arrow</span>
             </div>
         </div>

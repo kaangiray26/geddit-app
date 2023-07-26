@@ -3,8 +3,10 @@
 @import url("./md3.css");
 
 :root {
-    --background: #1C1B20;
+    /* --background: #1C1B20; */
+    --background: #000000;
     --foreground: var(--nord1);
+    --md-foreground: #262930;
 }
 
 ::-webkit-scrollbar {
@@ -23,15 +25,6 @@ body {
     margin: 0;
     height: 100%;
     background-color: var(--background);
-}
-
-iframe {
-    max-height: 50vh;
-    object-fit: cover;
-    width: 100% !important;
-    height: auto !important;
-    aspect-ratio: 16/9 !important;
-    position: relative !important;
 }
 
 hr {
@@ -381,6 +374,7 @@ video {
 
 .card-content .wrapper>div {
     height: auto !important;
+    border-radius: 12px;
 }
 
 .card-content .wrapper>div>img {
@@ -538,7 +532,7 @@ option[selected] {
     display: flex;
     align-items: center;
     color: var(--nord4);
-    background-color: #1C1B20;
+    background-color: var(--background);
 }
 
 .profile-headline {
