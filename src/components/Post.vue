@@ -9,16 +9,23 @@
         <div class="d-flex dp-16">
             <span class="title-small text-4">Comments</span>
         </div>
-        <div class="list-container py-0">
-            <div class="list-item-full list-item-divider" v-for="comment in comments">
-                <div class="list-item-leading-icon">
-                    <span class="material-icons">{{ comment.data.author == 'AutoModerator' ? 'local_police' : 'face'
-                    }}</span>
-                </div>
-                <div class="d-flex flex-column">
-                    <span class="label-small dpb-4 text-10" @click.passive="open_user(comment.data.author)">{{
-                        comment.data.author }}</span>
-                    <span class="body-medium" v-html="markdown(comment.data.body_html)"></span>
+        <div class="list-container overflow-x-scroll dpy-16">
+            <div v-for="comment in comments">
+                <div v-show="comment.kind == 't1'" class="list-item-full list-item-divider pe-0">
+                    <div v-show="comment.depth" class="comment-depth-container">
+                        <div class="comment-depth" v-for="depth in comment.depth">
+                            <div class="comment-depth-line"></div>
+                        </div>
+                    </div>
+                    <div class="list-item-leading-icon">
+                        <span class="material-icons">{{ comment.author == 'AutoModerator' ? 'local_police' : 'face'
+                        }}</span>
+                    </div>
+                    <div class="comment-body">
+                        <span class="label-small dpb-4 text-10" @click.passive="open_user(comment.author)">{{
+                            comment.author }}</span>
+                        <span class="body-medium" v-html="markdown(comment.body)"></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -40,11 +47,18 @@ const comments = ref([]);
 async function setup() {
     let response = await geddit.getSubmissionComments(router.currentRoute.value.params.id);
     if (!response) return;
-
-    console.log(response);
-
     post.value = response.submission;
-    comments.value = response.comments.slice(0, -1)
+
+    // Get all replies for all comments in the post with Promise all as a single array
+    Promise.all(response.comments.map(async (comment) => {
+        return await get_all_replies(comment);
+    }))
+        .then(replies => {
+            comments.value = replies.flat();
+            document.querySelector('.list-container').scroll({
+                left: 0,
+            })
+        })
 }
 
 function decodeHtml(html) {
@@ -66,6 +80,30 @@ function get_author_class(author) {
     return 'bg-10 text-6 rounded px-1';
 }
 
+async function get_all_replies(comment, depth = 0) {
+    let replies = [];
+    if (comment.kind == "more") {
+        replies.push({
+            kind: "more",
+            children: comment.data.children,
+        })
+        return replies;
+    }
+
+    replies.push({
+        kind: "t1",
+        author: comment.data.author,
+        body: comment.data.body_html,
+        depth: depth,
+    })
+
+    if (!comment.data.replies) return replies;
+    comment.data.replies.data.children.map(async (reply) => {
+        replies.push(...await get_all_replies(reply, depth + 1));
+    })
+    return replies;
+}
+
 onBeforeMount(() => {
     if (!router.currentRoute.value.params.id) {
         router.back();
@@ -77,9 +115,9 @@ onBeforeMount(() => {
 
 onActivated(() => {
     // Scroll to top
-    let view = document.querySelector('.content-view');
-    view.scroll({
+    document.querySelector('.content-view').scroll({
         top: 0,
+        left: 0,
     })
 })
 </script>

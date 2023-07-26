@@ -550,7 +550,9 @@ option[selected] {
 
 /* Markdown Table */
 .full-text-post>.md {
-    width: 100vw;
+    width: 100%;
+    border-radius: 12px;
+    background-color: var(--md-foreground);
 }
 
 .md table {
@@ -585,4 +587,35 @@ option[selected] {
     margin-right: 16px;
     margin-bottom: 16px;
     z-index: 1;
+}
+
+.comment-depth-container {
+    display: flex;
+    flex-shrink: 0;
+}
+
+.comment-depth {
+    width: 56px;
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    position: relative;
+}
+
+.comment-depth-line {
+    position: absolute;
+    width: 1px;
+    height: calc(100% + 16px);
+    background-color: var(--nord4);
+    /* Vertically center the middle point */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.comment-body {
+    display: flex;
+    flex-shrink: 0;
+    max-width: calc(100vw - 56px);
+    flex-direction: column;
+    padding-right: 56px;
 }
