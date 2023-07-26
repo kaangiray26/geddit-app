@@ -828,6 +828,11 @@
     padding-bottom: 4px;
 }
 
+.dpx-16 {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
 .dpy-16 {
     padding-top: 16px;
     padding-bottom: 16px;

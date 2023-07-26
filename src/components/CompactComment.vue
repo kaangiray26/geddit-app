@@ -1,7 +1,7 @@
 <template>
     <div class="card-container space-between-16">
         <div class="card-header">
-            <div class="d-flex flex-wrap align-items-center">
+            <div class="d-flex flex-wrap align-items-center text-4">
                 <span class="label-medium text-11" @click.passive="open_subreddit">r/{{ post.subreddit
                 }}</span>
                 <span class="label-medium dmx-4">-</span>

@@ -4,7 +4,7 @@
             <component :is="types[type]" :data="post.data" />
         </div>
         <div class="full-card-details">
-            <div class="d-flex flex-wrap align-items-center">
+            <div class="d-flex flex-wrap align-items-center text-4">
                 <span class="label-medium text-11" @click.passive="open_subreddit">r/{{ post.data.subreddit
                 }}</span>
                 <span class="label-medium dmx-4">-</span>
@@ -51,7 +51,7 @@ import FullImage from '/contents/FullImage.vue';
 import FullVideo from '/contents/FullVideo.vue';
 import CompactEmbed from '/contents/CompactEmbed.vue';
 import CompactLink from '/contents/CompactLink.vue';
-import CompactGallery from '/contents/CompactGallery.vue';
+import FullGallery from '/contents/FullGallery.vue';
 
 const router = useRouter();
 const type = ref(null);
@@ -62,7 +62,7 @@ const types = {
     FullVideo,
     CompactEmbed,
     CompactLink,
-    CompactGallery
+    FullGallery
 }
 
 const props = defineProps({
@@ -145,7 +145,7 @@ async function get_type() {
     }
 
     if (props.post.data.url_overridden_by_dest.startsWith('https://www.reddit.com/gallery/')) {
-        type.value = "CompactGallery";
+        type.value = "FullGallery";
         return
     }
 }

@@ -8,6 +8,7 @@ import Subreddit from '/components/Subreddit.vue';
 import Subreddits from '/components/Subreddits.vue';
 import Settings from '/components/Settings.vue';
 import Gallery from '/components/Gallery.vue';
+import Preview from '/components/Preview.vue';
 
 const routes = [
     {
@@ -76,6 +77,15 @@ const routes = [
             component: "user"
         }
     },
+    // Catch all other file requests
+    {
+        path: "/preview/:id/:ext",
+        component: Preview,
+        name: "preview",
+        meta: {
+            component: "preview"
+        }
+    }
 ];
 
 const router = createRouter({

@@ -1,7 +1,7 @@
 <template>
     <div class="text-wrap text-break w-100">
         <div class="position-relative">
-            <div class="text-4 text-post full-text-post position-relative dp-16" v-html="text"
+            <div class="text-4 text-post full-text-post position-relative" v-html="text"
                 @contextmenu.prevent="controls_visible = true" />
             <div class="text-controls" v-show="controls_visible" @click.passive="controls_visible = false">
                 <div class="md-fab md-foreground el-3" @click.passive="translate">
@@ -16,8 +16,8 @@
 import { ref } from 'vue';
 
 const text = ref(null);
-const controls_visible = ref(false);
 const translated = ref(false);
+const controls_visible = ref(false);
 
 const origin = ref(1);          // 0: original, 1: translated
 const texts = ref(['', '']);    // original, translated

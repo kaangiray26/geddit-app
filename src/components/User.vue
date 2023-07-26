@@ -4,48 +4,46 @@
             <div class="spinner-border text-4" role="status"></div>
         </div>
     </div>
-    <div v-if="data">
-        <div class="d-flex flex-column p-3">
-            <div class="banner d-flex justify-content-center align-items-center position-relative mb-3">
-                <img :src="banner_img" class="cover md-rounded-12">
-                <img :src="icon_img" class="snoovatar position-absolute">
+    <div v-else class="d-flex flex-column p-3">
+        <div class="banner d-flex justify-content-center align-items-center position-relative mb-3">
+            <img :src="banner_img" class="cover md-rounded-12">
+            <img :src="icon_img" class="snoovatar position-absolute">
+        </div>
+        <div class="d-flex flex-column text-4 dpb-16">
+            <span class="title-large">{{ data.name }}</span>
+            <div class="d-flex align-items-center text-4">
+                <span class="label-medium">{{ format_karma() }} karma</span>
+                <span class="label-medium dmx-4">-</span>
+                <span class="label-medium">{{ format_date() }}</span>
             </div>
-            <div class="d-flex flex-column text-4 dpb-16">
-                <span class="title-large">{{ data.name }}</span>
-                <div class="d-flex align-items-center text-4">
-                    <span class="label-medium">{{ format_karma() }} karma</span>
-                    <span class="label-medium dmx-4">-</span>
-                    <span class="label-medium">{{ format_date() }}</span>
+        </div>
+        <div class="tabs">
+            <div class="tabs-container tabs-3" @click.passive="switch_to_overview">
+                <span class="material-icons">face</span>
+                <div class="d-flex flex-column align-items-center">
+                    <span class="title-small">Overview</span>
+                    <div class="tab-active" :class="{ 'visibility-hidden': type != 'UserOverview' }"></div>
                 </div>
             </div>
-            <div class="tabs">
-                <div class="tabs-container tabs-3" @click.passive="switch_to_overview">
-                    <span class="material-icons">face</span>
-                    <div class="d-flex flex-column align-items-center">
-                        <span class="title-small">Overview</span>
-                        <div class="tab-active" :class="{ 'visibility-hidden': type != 'UserOverview' }"></div>
-                    </div>
+            <div class="tabs-container tabs-3" @click.passive="switch_to_posts">
+                <span class="material-icons">feed</span>
+                <div class="d-flex flex-column align-items-center">
+                    <span class="title-small">Posts</span>
+                    <div class="tab-active" :class="{ 'visibility-hidden': type != 'UserPosts' }"></div>
                 </div>
-                <div class="tabs-container tabs-3" @click.passive="switch_to_posts">
-                    <span class="material-icons">feed</span>
-                    <div class="d-flex flex-column align-items-center">
-                        <span class="title-small">Posts</span>
-                        <div class="tab-active" :class="{ 'visibility-hidden': type != 'UserPosts' }"></div>
-                    </div>
-                </div>
-                <div class="tabs-container tabs-3" @click.passive="switch_to_comments">
-                    <span class="material-icons">comment</span>
-                    <div class="d-flex flex-column align-items-center">
-                        <span class="title-small">Comments</span>
-                        <div class="tab-active" :class="{ 'visibility-hidden': type != 'UserComments' }"></div>
-                    </div>
+            </div>
+            <div class="tabs-container tabs-3" @click.passive="switch_to_comments">
+                <span class="material-icons">comment</span>
+                <div class="d-flex flex-column align-items-center">
+                    <span class="title-small">Comments</span>
+                    <div class="tab-active" :class="{ 'visibility-hidden': type != 'UserComments' }"></div>
                 </div>
             </div>
         </div>
-        <keep-alive>
-            <component ref="component" :is="types[type]"></component>
-        </keep-alive>
     </div>
+    <keep-alive>
+        <component ref="component" :is="types[type]"></component>
+    </keep-alive>
 </template>
 
 <script setup>
@@ -106,6 +104,7 @@ function format_date() {
 }
 
 function scroll_handle(el) {
+    if (!component.value) return;
     if (el.target.scrollTop + el.target.clientHeight >= el.target.scrollHeight - window.innerWidth && component.value.scroll_loaded && component.value.after) {
         component.value.scroll();
     }
@@ -114,7 +113,9 @@ function scroll_handle(el) {
 async function handle_page_route(page) {
     if (page == 'submitted') {
         type.value = 'UserPosts'
-    } else if (page == 'comments') {
+        return
+    }
+    if (page == 'comments') {
         type.value = 'UserComments'
     }
 }

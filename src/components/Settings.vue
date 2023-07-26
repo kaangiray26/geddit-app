@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="divider"></div>
-        <div class="list-container py-0">
+        <div class="list-container py-8">
             <div class="list-item dps-16">
                 <span class="body-large">Autoplay</span>
                 <span class="list-item-trailing-icon">
@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="divider"></div>
-        <div class="d-flex flex-column text-4 dpy-8">
+        <div class="d-flex flex-column text-4 dpy-16">
             <span class="body-large">Title size</span>
             <div class="d-flex dpt-8">
                 <div class="chips-container" :checked="title_size == 'title-large'"
