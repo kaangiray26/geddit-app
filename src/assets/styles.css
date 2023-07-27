@@ -3,7 +3,6 @@
 @import url("./md3.css");
 
 :root {
-    /* --background: #1C1B20; */
     --background: #000000;
     --foreground: var(--nord1);
     --md-foreground: #262930;
@@ -651,4 +650,11 @@ option[selected] {
     width: 100%;
     height: 100%;
     object-fit: contain;
+}
+
+.zoom {
+    width: 100%;
+    height: auto;
+    position: relative;
+    transform-origin: 0px 0px;
 }
