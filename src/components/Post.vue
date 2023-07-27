@@ -119,12 +119,15 @@ async function touchstart(event) {
 }
 
 async function touchmove(event) {
+    // Get the difference between the start and current touch position
     let deltaX = event.touches[0].clientX - start_x.value;
     let deltaY = event.touches[0].clientY - start_y.value;
 
+    // Scroll the axis by the difference and momentum
     axisX.value.scrollLeft -= deltaX;
     axisY.value.scrollTop -= deltaY;
 
+    // Set the start position to the current position
     start_x.value = event.touches[0].clientX;
     start_y.value = event.touches[0].clientY;
 
