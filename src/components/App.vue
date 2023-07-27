@@ -77,6 +77,12 @@ async function back_handler() {
 
 async function url_handler(event) {
     let url = new URL(event.url);
+
+    if (url.host == "preview.redd.it") {
+        router.push('/preview' + url.pathname.split(".").join("/"));
+        return
+    }
+
     router.push(url.pathname + url.search);
     return
 }

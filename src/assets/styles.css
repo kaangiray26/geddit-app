@@ -3,7 +3,6 @@
 @import url("./md3.css");
 
 :root {
-    /* --background: #1C1B20; */
     --background: #000000;
     --foreground: var(--nord1);
     --md-foreground: #262930;
@@ -178,6 +177,18 @@ video {
 
 .md>p {
     margin: 0;
+}
+
+.md img {
+    display: flex;
+    width: 100%;
+    height: auto;
+}
+
+.md video {
+    display: flex;
+    width: 100%;
+    height: auto;
 }
 
 .progress-alt {
@@ -548,9 +559,17 @@ option[selected] {
     position: relative;
 }
 
+.full-text-post {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 16px;
+}
+
 /* Markdown Table */
 .full-text-post>.md {
-    width: 100vw;
+    width: 100%;
+    border-radius: 12px;
+    background-color: var(--md-foreground);
 }
 
 .md table {
@@ -585,4 +604,57 @@ option[selected] {
     margin-right: 16px;
     margin-bottom: 16px;
     z-index: 1;
+}
+
+.comment-depth-container {
+    display: flex;
+    flex-shrink: 0;
+}
+
+.comment-depth {
+    width: 56px;
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    position: relative;
+}
+
+.comment-depth-line {
+    position: absolute;
+    width: 1px;
+    height: calc(100% + 16px);
+    background-color: var(--nord4);
+    /* Vertically center the middle point */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.comment-body {
+    display: flex;
+    flex-shrink: 0;
+    max-width: calc(100vw - 56px);
+    flex-direction: column;
+    padding-right: 56px;
+    word-break: break-word;
+}
+
+.preview-container {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-color: var(--background);
+}
+
+.preview {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.zoom {
+    width: 100%;
+    height: auto;
+    position: relative;
+    transform-origin: 0px 0px;
 }

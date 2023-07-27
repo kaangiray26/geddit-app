@@ -1,5 +1,19 @@
 <template>
     <div class="card-container space-between-16">
+        <div class="card-header">
+            <div class="d-flex flex-wrap align-items-center text-4">
+                <span class="label-medium text-11" @click.passive="open_subreddit">r/{{ post.subreddit
+                }}</span>
+                <span class="label-medium dmx-4">-</span>
+                <span class="label-medium">{{ post.domain }}</span>
+                <span class="label-medium dmx-4">-</span>
+                <span class="label-medium">{{ format_date() }}</span>
+            </div>
+            <span class="text-6 dpy-4" :class="store.title_size">{{ post.link_title }}</span>
+            <div class="d-flex align-items-center">
+                <span class="label-medium text-10" @click.passive="open_user">u/{{ post.author }}</span>
+            </div>
+        </div>
         <div class="card-content">
             <div class="d-flex cover-25 text-wrap text-break text-truncate overflow-hidden" @click.passive="open_post">
                 <div class="text-4 text-post" v-html="markdown(post.body_html)" />
@@ -13,19 +27,6 @@
                 </div>
             </div>
             <div class="d-flex align-items-center">
-                <span class="label-medium text-11" @click.passive="open_subreddit">r/{{ post.subreddit
-                }}</span>
-                <span class="label-medium dmx-4">-</span>
-                <span class="label-medium">{{ post.domain }}</span>
-                <span class="label-medium dmx-4">-</span>
-                <span class="label-medium">{{ format_date() }}</span>
-            </div>
-            <span class="title-medium text-6 dpy-4" :class="{ 'text-truncate': store.hidden.includes(post.id) }">{{
-                post.link_title }}</span>
-            <div class="d-flex align-items-center">
-                <span class="label-medium text-10" @click.passive="open_user">u/{{ post.author }}</span>
-            </div>
-            <div class="d-flex align-items-center dpt-16">
                 <div class="md-icon-container-with-label">
                     <span class="material-icons">arrow_upward</span>
                     <span class="label-large">{{ format_num(post.score) }}</span>

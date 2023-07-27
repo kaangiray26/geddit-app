@@ -30,6 +30,10 @@ if (!localStorage.getItem("check_for_updates")) {
     localStorage.setItem("check_for_updates", JSON.stringify(true));
 }
 
+if (!localStorage.getItem("in_app_browser")) {
+    localStorage.setItem("in_app_browser", JSON.stringify(true));
+}
+
 // Set options
 document.body.setAttribute("autoplay", JSON.parse(localStorage.getItem("autoplay")));
 

@@ -227,7 +227,7 @@
     display: flex;
     flex-direction: column;
     background-color: var(--md-foreground);
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: -3px 3px 3px rgba(0, 0, 0, 0.3);
 }
 
 .menu-item {
@@ -299,12 +299,12 @@
     padding-top: 8px;
     padding-bottom: 8px;
     display: flex;
-    align-items: center;
     color: var(--nord4);
 }
 
 .list-item-leading-icon {
     display: flex;
+    align-items: center;
     padding-left: 16px;
     padding-right: 16px;
 }
@@ -358,7 +358,7 @@
     padding-top: 12px;
     padding-bottom: 12px;
     display: flex;
-    align-items: start;
+    align-items: center;
     color: var(--nord4);
     height: 88px;
 }
@@ -826,6 +826,16 @@
 
 .dpb-4 {
     padding-bottom: 4px;
+}
+
+.dpx-16 {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.dpy-16 {
+    padding-top: 16px;
+    padding-bottom: 16px;
 }
 
 .dpy-8 {

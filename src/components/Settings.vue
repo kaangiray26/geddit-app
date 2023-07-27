@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="divider"></div>
-        <div class="list-container py-0">
+        <div class="list-container py-8">
             <div class="list-item dps-16">
                 <span class="body-large">Autoplay</span>
                 <span class="list-item-trailing-icon">
@@ -33,9 +33,19 @@
                     </div>
                 </span>
             </div>
+            <div class="list-item dps-16">
+                <span class="body-large">Use in-app browser</span>
+                <span class="list-item-trailing-icon">
+                    <div class="switch" :state="in_app_browser ? 'on' : 'off'" @click.passive="change_browser">
+                        <div class="switch-container">
+                            <span class="material-icons"></span>
+                        </div>
+                    </div>
+                </span>
+            </div>
         </div>
         <div class="divider"></div>
-        <div class="d-flex flex-column text-4 dpy-8">
+        <div class="d-flex flex-column text-4 dpy-16">
             <span class="body-large">Title size</span>
             <div class="d-flex dpt-8">
                 <div class="chips-container" :checked="title_size == 'title-large'"
@@ -92,6 +102,7 @@ const router = useRouter();
 const autoplay = ref(null);
 const title_size = ref(null);
 const check_for_updates = ref(null);
+const in_app_browser = ref(null);
 
 async function open_github() {
     window.open("https://github.com/kaangiray26/geddit-app", "_blank");
@@ -118,9 +129,15 @@ async function change_updates() {
     localStorage.setItem("check_for_updates", JSON.stringify(check_for_updates.value));
 }
 
+async function change_browser() {
+    in_app_browser.value = !in_app_browser.value;
+    localStorage.setItem("in_app_browser", JSON.stringify(in_app_browser.value));
+}
+
 onBeforeMount(() => {
     autoplay.value = JSON.parse(localStorage.getItem("autoplay"));
     check_for_updates.value = JSON.parse(localStorage.getItem("check_for_updates"));
+    in_app_browser.value = JSON.parse(localStorage.getItem("in_app_browser"));
     title_size.value = JSON.parse(localStorage.getItem("title_size"));
 })
 </script>

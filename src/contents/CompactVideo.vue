@@ -2,26 +2,26 @@
     <div class="d-flex cover-50 position-relative md-rounded-12 md-background"
         :style="{ 'aspect-ratio': dimensions.width + '/' + dimensions.height + '!important' }">
         <div ref="wrapper" class="video-wrapper">
-            <video ref="video" class="position-relative" :poster="get_poster()" muted loop
+            <video ref="video" class="position-relative ct" :poster="get_poster()" muted loop
                 @click.prevent="emit('open_post')">
             </video>
             <div v-if="paused" class="video-paused">
-                <div class="md-icon-button md-foreground-50 el-3" @click.passive="play">
-                    <span class="material-icons">play_arrow</span>
+                <div class="md-icon-button md-foreground-50 el-3 ct" @click.passive="play">
+                    <span class="material-icons ct">play_arrow</span>
                 </div>
             </div>
             <div v-show="is_fullscreen">
                 <div class="video-controls d-flex flex-column flex-fill" :class="{ 'visually-hidden': !controls_visible }">
                     <div class="d-flex justify-content-between position-relative">
                         <div>
-                            <button v-show="has_audio" class="btn btn-touch px-3" @click.passive="mute">
-                                <span class="text-shadow fs-5 text-4 bi"
+                            <button v-show="has_audio" class="btn btn-touch px-3 ct" @click.passive="mute">
+                                <span class="text-shadow fs-5 text-4 bi ct"
                                     :class="{ 'bi-volume-mute-fill': muted, 'bi-volume-up-fill': !muted }"></span>
                             </button>
                         </div>
                         <div>
-                            <button class="btn btn-touch px-3" @click.passive="playback">
-                                <span class="text-shadow fs-5 text-4 bi"
+                            <button class="btn btn-touch px-3 ct" @click.passive="playback">
+                                <span class="text-shadow fs-5 text-4 bi ct"
                                     :class="{ 'bi-play-fill': paused, 'bi-pause-fill': !paused }"></span>
                             </button>
                         </div>
@@ -48,9 +48,9 @@
                 <div class="spinner-border text-4" role="status"></div>
             </div>
         </div>
-        <div class="md-icon-button md-foreground-50 position-absolute bottom-0 start-0 m-2" v-show="has_audio"
+        <div class="md-icon-button md-foreground-50 position-absolute bottom-0 start-0 m-2 ct" v-show="has_audio"
             @click.passive="mute">
-            <span class="material-icons">{{ muted ? 'volume_off' : 'volume_up' }}</span>
+            <span class="material-icons ct">{{ muted ? 'volume_off' : 'volume_up' }}</span>
         </div>
         <div class="md-foreground-50 md-rounded-12 position-absolute bottom-0 end-0 m-2 px-2 py-1">
             <span class="label-large text-4">{{ remaining }}</span>

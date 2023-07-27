@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <div v-for="image in images">
-            <img class="ct" :src="image.preview" @click.prevent="emit('open_post')">
+            <img :src="image.src" @click.prevent="emit('open_post')">
             <div class="position-absolute top-0 end-0 m-2">
                 <div class="d-flex position-relative">
                     <div class="position-absolute background cover-all opacity-75 rounded"></div>
@@ -32,11 +32,7 @@ async function get_sources() {
     let items = order.map(id => props.data.media_metadata[id]);
 
     images.value = items.map(item => ({
-        src: item.s.u ? item.s.u.split("?")[0].replace("preview", "i") : item.s.gif,
-        preview: item.p.pop().u.replaceAll("&amp;", "&"),
-        style: {
-            'aspect-ratio': item.p ? `${item.p.slice(-1)[0].x} / ${item.p.slice(-1)[0].y}` : `${item.s.x} / ${item.s.y}`
-        }
+        src: item.s.u ? item.s.u.split("?")[0].replace("preview", "i") : item.s.gif
     }))
 }
 

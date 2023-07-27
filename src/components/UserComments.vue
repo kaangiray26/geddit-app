@@ -25,7 +25,6 @@ const scroll_loaded = ref(true);
 async function get_comments() {
     if (!scroll_loaded.value) return;
     scroll_loaded.value = false;
-
     posts.value = [];
     after.value = null;
 

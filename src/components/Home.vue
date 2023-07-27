@@ -5,7 +5,7 @@
         </div>
     </div>
     <TopAppBar ref="topbar" subreddit="Popular" @params_changed="params_changed" />
-    <div class="cards">
+    <div class="cards dpb-16">
         <Post v-for="post in posts" :post="post.data" />
     </div>
     <div v-show="!scroll_loaded" class="md-progress-container">

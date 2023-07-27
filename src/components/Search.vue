@@ -11,7 +11,7 @@
             <span class="material-icons">clear</span>
         </div>
     </div>
-    <div v-show="results.length" class="cards mt-3">
+    <div v-show="results.length" class="cards dpy-16">
         <component v-for="result in results" :post="result.data" :is="types[result.kind]" />
     </div>
     <div v-show="!scroll_loaded" class="md-progress-container">

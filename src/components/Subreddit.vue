@@ -39,7 +39,7 @@
                 </div>
             </div>
         </div>
-        <div class="cards">
+        <div class="cards dpb-16">
             <Post v-for="post in posts" :post="post.data" />
         </div>
         <div v-show="!scroll_loaded" class="md-progress-container">
