@@ -18,8 +18,15 @@ const props = defineProps({
 })
 
 async function open_link() {
-    await Browser.open({
-        url: props.data.url
-    })
+    let pref = JSON.parse(localStorage.getItem("in_app_browser"));
+    if (pref) {
+        await Browser.open({
+            url: props.data.url
+        })
+        return
+    }
+    window.open(props.data.url, '_blank')
+
+
 }
 </script>
