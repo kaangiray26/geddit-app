@@ -43,6 +43,16 @@
                     </div>
                 </span>
             </div>
+            <div class="list-item dps-16">
+                <span class="body-large">Share old reddit links</span>
+                <span class="list-item-trailing-icon">
+                    <div class="switch" :state="share_old_reddit ? 'on' : 'off'" @click.passive="change_old_reddit">
+                        <div class="switch-container">
+                            <span class="material-icons"></span>
+                        </div>
+                    </div>
+                </span>
+            </div>
         </div>
         <div class="divider"></div>
         <div class="d-flex flex-column text-4 dpy-16">
@@ -103,6 +113,7 @@ const autoplay = ref(null);
 const title_size = ref(null);
 const check_for_updates = ref(null);
 const in_app_browser = ref(null);
+const share_old_reddit = ref(null);
 
 async function open_github() {
     window.open("https://github.com/kaangiray26/geddit-app", "_blank");
@@ -134,10 +145,16 @@ async function change_browser() {
     localStorage.setItem("in_app_browser", JSON.stringify(in_app_browser.value));
 }
 
+async function change_old_reddit() {
+    share_old_reddit.value = !share_old_reddit.value;
+    localStorage.setItem("share_old_reddit", JSON.stringify(share_old_reddit.value));
+}
+
 onBeforeMount(() => {
     autoplay.value = JSON.parse(localStorage.getItem("autoplay"));
     check_for_updates.value = JSON.parse(localStorage.getItem("check_for_updates"));
     in_app_browser.value = JSON.parse(localStorage.getItem("in_app_browser"));
+    share_old_reddit.value = JSON.parse(localStorage.getItem("share_old_reddit"));
     title_size.value = JSON.parse(localStorage.getItem("title_size"));
 })
 </script>
