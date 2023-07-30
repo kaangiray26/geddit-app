@@ -35,7 +35,7 @@ if (!localStorage.getItem("in_app_browser")) {
 }
 
 if (!localStorage.getItem("share_old_reddit")) {
-    localStorage.setItem("share_old_reddit", JSON.stringify(true));
+    localStorage.setItem("share_old_reddit", JSON.stringify(false));
 }
 
 // Set options

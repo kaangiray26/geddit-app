@@ -44,7 +44,7 @@
                 </span>
             </div>
             <div class="list-item dps-16">
-                <span class="body-large">Share old reddit links</span>
+                <span class="body-large">Share old.reddit links</span>
                 <span class="list-item-trailing-icon">
                     <div class="switch" :state="share_old_reddit ? 'on' : 'off'" @click.passive="change_old_reddit">
                         <div class="switch-container">
