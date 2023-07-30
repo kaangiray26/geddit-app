@@ -73,11 +73,6 @@
                     <img src="/images/logo_compressed.png" class="snoovatar">
                     <span class="body-large text-6 text-shadow">Geddit</span>
                 </div>
-                <div class="d-flex position-absolute bottom-0 end-0 m-3">
-                    <div class="md-fab bg-0 text-4 el-3" @click.passive="open_github">
-                        <span class="material-icons bi bi-github"></span>
-                    </div>
-                </div>
             </div>
             <div class="d-flex flex-column text-4 dpt-4">
                 <div class="d-flex flex-column align-items-center justify-content-center">
@@ -87,6 +82,12 @@
                         <span class="label-medium">kaangiray26</span>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center dpt-16">
+            <div class="md-filled-button-with-icon bg-3 text-4">
+                <span class="material-icons">bug_report</span>
+                <span class="label-large" @click.passive="open_github">Report a bug</span>
             </div>
         </div>
     </div>

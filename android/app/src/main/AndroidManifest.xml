@@ -8,6 +8,8 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme"
     android:largeHeap="true"
+    android:requestLegacyExternalStorage="true"
+    android:requestRawExternalStorageAccess="true"
   >
         <activity
       android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
@@ -56,5 +58,4 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 </manifest>

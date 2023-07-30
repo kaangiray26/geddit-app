@@ -1,11 +1,14 @@
 <template>
-    <div class="d-flex flex-column background cover-all">
+    <div class="d-flex flex-column">
         <div class="m-3">
             <h5 class="text-6 mb-0">Gallery</h5>
         </div>
+        <div class="display-flex justify-content-center p-3" v-show="!images.length">
+            <span class="title-medium text-4">No images found.</span>
+        </div>
         <div v-show="edit_mode">
             <div class="d-flex mb-1">
-                <button class="btn btn-touch" @click="delete_images">
+                <button class="btn btn-touch" @click.passive="delete_images">
                     <div class="d-flex flex-column text-6 btn-touch">
                         <span class="bi bi-trash-fill"></span>
                         <span>Delete</span>
@@ -38,8 +41,8 @@ const selected_items = ref([]);
 async function delete_image(fname) {
     new Promise(async (resolve, reject) => {
         await Filesystem.deleteFile({
-            path: "Geddit/" + fname,
-            directory: Directory.External
+            path: "geddit/" + fname,
+            directory: Directory.Documents
         });
         resolve();
     })
@@ -80,8 +83,8 @@ async function right_clicked(image) {
 
 async function load_images() {
     let response = await Filesystem.readdir({
-        path: "Geddit/",
-        directory: Directory.External
+        path: "geddit/",
+        directory: Directory.Documents
     });
 
     images.value = response.files.map(f => ({

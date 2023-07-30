@@ -18,6 +18,7 @@
 import { ref, computed, onBeforeMount, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { save_hidden } from '/js/store.js';
+import { Filesystem, Directory } from '@capacitor/filesystem';
 import { App } from '@capacitor/app';
 import { Toast } from '@capacitor/toast';
 import NavigationBar from './NavigationBar.vue';
@@ -107,6 +108,17 @@ onBeforeMount(() => {
 
     // Add event listeners for saving the store
     window.onbeforeunload = save_hidden;
+
+    // Create if the geddit folder does not exist
+    Filesystem.stat({
+        path: "geddit",
+        directory: Directory.Documents
+    }).catch(() => {
+        Filesystem.mkdir({
+            path: "geddit",
+            directory: Directory.Documents
+        })
+    })
 })
 
 onMounted(() => {
