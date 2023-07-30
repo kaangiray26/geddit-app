@@ -94,7 +94,7 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-center dpt-16">
+        <div class="d-flex justify-content-center dpy-16">
             <div class="md-filled-button-with-icon bg-3 text-4">
                 <span class="material-icons">bug_report</span>
                 <span class="label-large" @click.passive="open_github">Report a bug</span>
