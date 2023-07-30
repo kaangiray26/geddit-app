@@ -73,8 +73,9 @@ const props = defineProps({
 })
 
 async function share() {
+    let redditDomain = JSON.parse(localStorage.getItem("share_old_reddit")) ? "https://old.reddit.com" : "https://www.reddit.com";
     await Share.share({
-        url: "https://www.reddit.com" + props.post.data.permalink,
+        url: redditDomain + props.post.data.permalink,
     });
 }
 

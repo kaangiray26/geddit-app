@@ -94,8 +94,9 @@ async function handle_touch(event) {
 }
 
 async function share() {
+    let redditDomain = JSON.parse(localStorage.getItem("share_old_reddit")) ? "https://old.reddit.com" : "https://www.reddit.com";
     await Share.share({
-        url: "https://www.reddit.com" + props.post.permalink,
+        url: redditDomain + props.post.permalink,
     });
 }
 

@@ -34,6 +34,10 @@ if (!localStorage.getItem("in_app_browser")) {
     localStorage.setItem("in_app_browser", JSON.stringify(true));
 }
 
+if (!localStorage.getItem("share_old_reddit")) {
+    localStorage.setItem("share_old_reddit", JSON.stringify(false));
+}
+
 // Set options
 document.body.setAttribute("autoplay", JSON.parse(localStorage.getItem("autoplay")));
 
