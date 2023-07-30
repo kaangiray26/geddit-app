@@ -621,10 +621,10 @@ option[selected] {
 }
 
 .comment-depth {
-    width: 56px;
+    width: 8px;
     display: flex;
     flex-shrink: 0;
-    justify-content: center;
+    justify-content: start;
     position: relative;
 }
 
@@ -640,10 +640,7 @@ option[selected] {
 
 .comment-body {
     display: flex;
-    flex-shrink: 0;
-    max-width: calc(100vw - 56px);
     flex-direction: column;
-    padding-right: 56px;
     word-break: break-word;
 }
 
