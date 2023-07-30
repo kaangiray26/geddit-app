@@ -18,12 +18,12 @@
                         </div>
                     </div>
                     <div class="comment-body">
-                        <div class="d-flex">
-                            <div class="list-item-leading-icon">
+                        <div class="d-flex align-items-center dpb-4">
+                            <div class="list-item-leading-icon ps-0 dpe-8">
                                 <span class="material-icons">{{ comment.author == 'AutoModerator' ? 'local_police' : 'face'
                                 }}</span>
                             </div>
-                            <span class="label-small dpb-4 text-10" @click.passive="open_user(comment.author)">{{
+                            <span class="label-small text-10" @click.passive="open_user(comment.author)">{{
                                 comment.author }}</span>
                         </div>
                         <span class="body-medium" v-html="markdown(comment.body)"></span>
