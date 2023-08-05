@@ -26,18 +26,18 @@
         </div>
     </div>
     <div class="d-flex dps-16 dpb-16 md-background">
-        <div class="chips-container" @touchstart.stop="open_dialog">
+        <div class="chips-container" @click.stop="open_dialog">
             <span class=" material-icons">sort</span>
             <span class="label-large">{{ display }}</span>
         </div>
     </div>
-    <div class="dialog" v-show="dialog_visible" @touchstart.stop="close_dialog">
+    <div class="dialog" v-show="dialog_visible" @click.stop="close_dialog">
         <div class="dialog-container">
             <div class="dialog-title">
                 <span class="headline-small">Sort options</span>
             </div>
             <div v-show="tab == 'sort'" class="list-container py-0">
-                <div class="list-item" v-for="sort_type in sort_types" @touchstart.stop="change_sort(sort_type)">
+                <div class="list-item" v-for="sort_type in sort_types" @click.stop="change_sort(sort_type)">
                     <div class="list-item-leading-icon">
                         <span class="material-icons">{{ sort_type.icon }}</span>
                     </div>
@@ -49,7 +49,7 @@
                 </div>
             </div>
             <div v-show="tab == 'time'" class="list-container py-0">
-                <div class="list-item" v-for="time_type in time_types" @touchstart.stop="change_time(time_type)">
+                <div class="list-item" v-for="time_type in time_types" @click.stop="change_time(time_type)">
                     <div class="list-item-leading-icon">
                         <span class="material-icons">{{ time_type.icon }}</span>
                     </div>
