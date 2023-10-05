@@ -14,6 +14,7 @@
 
 <script setup>
 import { onMounted, ref } from 'vue';
+import { blurFunc } from '/js/functions.js'
 
 const emit = defineEmits(['open_post']);
 const props = defineProps({
@@ -35,7 +36,8 @@ async function get_sources() {
         src: item.s.u ? item.s.u.split("?")[0].replace("preview", "i") : item.s.gif,
         preview: item.p.pop().u.replaceAll("&amp;", "&"),
         style: {
-            'aspect-ratio': item.p ? `${item.p.slice(-1)[0].x} / ${item.p.slice(-1)[0].y}` : `${item.s.x} / ${item.s.y}`
+            'aspect-ratio': item.p ? `${item.p.slice(-1)[0].x} / ${item.p.slice(-1)[0].y}` : `${item.s.x} / ${item.s.y}`,
+            'filter': blurFunc.IfOver18(props.data.over_18)
         }
     }))
 }

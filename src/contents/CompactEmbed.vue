@@ -28,7 +28,7 @@ async function get_sources() {
     // Create iframe
     src.value = props.data.secure_media_embed.media_domain_url + '?responsive=true&is_nightmode=true';
     if (props.data.secure_media_embed.width && props.data.secure_media_embed.height) {
-        style.value = `aspect-ratio: ${props.data.secure_media_embed.width}/${props.data.secure_media_embed.height};`;
+        style.value = `aspect-ratio: ${props.data.secure_media_embed.width}/${props.data.secure_media_embed.height}; filter: blur(32px)`;
     }
 
     iframe.value = true;

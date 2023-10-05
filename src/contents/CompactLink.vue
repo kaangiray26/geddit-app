@@ -12,6 +12,7 @@
 <script setup>
 import { ref } from 'vue';
 import { Browser } from '@capacitor/browser';
+import { blurFunc } from '/js/functions.js'
 
 const props = defineProps({
     data: {
@@ -28,7 +29,8 @@ async function get_sources() {
         image_options.value = {
             preview: props.data.thumbnail,
             style: {
-                'aspect-ratio': `${props.data.thumbnail.width} / ${props.data.thumbnail.height}}`
+                'aspect-ratio': `${props.data.thumbnail.width} / ${props.data.thumbnail.height}}`,
+                'filter': blurFunc.IfOver18(props.data.over_18)
             }
         }
         return;
@@ -37,7 +39,8 @@ async function get_sources() {
     image_options.value = {
         preview: props.data.preview.images[0].resolutions.pop().url.replaceAll("&amp;", "&"),
         style: {
-            'aspect-ratio': `${props.data.preview.images[0].resolutions.slice(-1)[0].width} / ${props.data.preview.images[0].resolutions.slice(-1)[0].height}`
+            'aspect-ratio': `${props.data.preview.images[0].resolutions.slice(-1)[0].width} / ${props.data.preview.images[0].resolutions.slice(-1)[0].height}`,
+            'filter': blurFunc.IfOver18(props.data.over_18)
         }
     }
 }

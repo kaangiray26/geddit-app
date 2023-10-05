@@ -44,6 +44,16 @@
                 </span>
             </div>
             <div class="list-item dps-16">
+                <span class="body-large">Blur NSFW</span>
+                <span class="list-item-trailing-icon">
+                    <div class="switch" :state="blur_nsfw ? 'on' : 'off'" @click.passive="change_nsfw">
+                        <div class="switch-container">
+                            <span class="material-icons"></span>
+                        </div>
+                    </div>
+                </span>
+            </div>
+            <div class="list-item dps-16">
                 <span class="body-large">Share old.reddit links</span>
                 <span class="list-item-trailing-icon">
                     <div class="switch" :state="share_old_reddit ? 'on' : 'off'" @click.passive="change_old_reddit">
@@ -114,6 +124,7 @@ const autoplay = ref(null);
 const title_size = ref(null);
 const check_for_updates = ref(null);
 const in_app_browser = ref(null);
+const blur_nsfw = ref(null);
 const share_old_reddit = ref(null);
 
 async function open_github() {
@@ -146,6 +157,11 @@ async function change_browser() {
     localStorage.setItem("in_app_browser", JSON.stringify(in_app_browser.value));
 }
 
+async function change_nsfw() {
+    blur_nsfw.value = !blur_nsfw.value;
+    localStorage.setItem("blur_nsfw", JSON.stringify(blur_nsfw.value));
+}
+
 async function change_old_reddit() {
     share_old_reddit.value = !share_old_reddit.value;
     localStorage.setItem("share_old_reddit", JSON.stringify(share_old_reddit.value));
@@ -155,6 +171,7 @@ onBeforeMount(() => {
     autoplay.value = JSON.parse(localStorage.getItem("autoplay"));
     check_for_updates.value = JSON.parse(localStorage.getItem("check_for_updates"));
     in_app_browser.value = JSON.parse(localStorage.getItem("in_app_browser"));
+    blur_nsfw.value = JSON.parse(localStorage.getItem("blur_nsfw"));
     share_old_reddit.value = JSON.parse(localStorage.getItem("share_old_reddit"));
     title_size.value = JSON.parse(localStorage.getItem("title_size"));
 })

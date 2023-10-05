@@ -5,6 +5,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import { blurFunc } from '/js/functions.js'
 
 const emit = defineEmits(['open_post']);
 const props = defineProps({
@@ -22,7 +23,8 @@ async function get_sources() {
             src: props.data.url,
             preview: props.data.url,
             style: {
-                'aspect-ratio': `${props.data.thumbnail.width} / ${props.data.thumbnail.height}}`
+                'aspect-ratio': `${props.data.thumbnail.width} / ${props.data.thumbnail.height}}`,
+                'filter': blurFunc.IfOver18(props.data.over_18)
             }
         }
         return;
@@ -32,7 +34,8 @@ async function get_sources() {
         src: props.data.url,
         preview: props.data.preview.images[0].resolutions.pop().url.replaceAll("&amp;", "&"),
         style: {
-            'aspect-ratio': `${props.data.preview.images[0].resolutions.slice(-1)[0].width} / ${props.data.preview.images[0].resolutions.slice(-1)[0].height}`
+            'aspect-ratio': `${props.data.preview.images[0].resolutions.slice(-1)[0].width} / ${props.data.preview.images[0].resolutions.slice(-1)[0].height}`,
+            'filter': blurFunc.IfOver18(props.data.over_18)
         }
     }
 }
