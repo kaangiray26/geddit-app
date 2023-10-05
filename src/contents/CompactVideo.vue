@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex cover-50 position-relative md-rounded-12 md-background"
-        :style="{ 'aspect-ratio': dimensions.width + '/' + dimensions.height + '!important' }">
+        :style="{ 'aspect-ratio': dimensions.width + '/' + dimensions.height + '!important', 'filter': blurFunc.IfOver18(props.data.over_18) }">
         <div ref="wrapper" class="video-wrapper">
             <video ref="video" class="position-relative ct" :poster="get_poster()" muted loop
                 @click.prevent="emit('open_post')">
@@ -62,6 +62,7 @@
 import { ref, onBeforeUnmount, onBeforeMount, onMounted, onDeactivated } from 'vue';
 import Hls from 'hls.js';
 import { useIntersectionObserver } from '@vueuse/core'
+import { blurFunc } from '/js/functions.js'
 
 let hls = null;
 const video = ref(null);
@@ -76,6 +77,7 @@ const transition = ref(null);
 const progress_left = ref(0);
 const progress_width = ref(0);
 
+// Pausar aca con localStorage
 const paused = ref(true);
 const muted = ref(true);
 const has_audio = ref(false);
@@ -238,6 +240,7 @@ onMounted(() => {
 
 onBeforeMount(() => {
     useIntersectionObserver(video, ([{ isIntersecting }]) => {
+        //  && !JSON.parse(localStorage.getItem("blur_nsfw"))
         if (isIntersecting && document.body.getAttribute('autoplay') == 'true') {
             play();
             return
