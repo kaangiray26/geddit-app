@@ -9,7 +9,7 @@
         width="256">
     </a>
     <p align="center">
-        An open-source, Reddit client for Android without using their API 
+        An open-source, Reddit client for Android without using the public JSON feed
         <br />
         <div align="center">
             <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/kaangiray26/geddit-app?style=flat-square">
